@@ -66,6 +66,7 @@ class DealCard extends StatelessWidget {
                           color: secondaryColor,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
                           ),
                         ),
                       ),
@@ -89,7 +90,42 @@ class DealCard extends StatelessWidget {
               ),
               color: backGroundColor,
             ),
-            child: Container(),
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: width * (9 / 1920),
+                    top: width * (9 / 1920),
+                    bottom: width * (9 / 1920),
+                  ),
+                  child: Container(
+                    width: width * (452 / 1920),
+                    height: width * (62 / 1920),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: width * (9 / 1920),
+                    right: width * (9 / 1920),
+                    bottom: width * (9 / 1920),
+                  ),
+                  child: Container(
+                    width: width * (129 / 1920),
+                    height: width * (71 / 1920),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
