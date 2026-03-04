@@ -17,8 +17,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
   bool isClicked1 = false;
   @override
   Widget build(BuildContext context) {
-    double preWidth = MediaQuery.of(context).size.width;
-    double width = preWidth * 1920 / 1536;
+    double width = MediaQuery.of(context).size.width;
     return !widget.isClicked
         ? SizedBox(
             width: width * (160 / 1920),
