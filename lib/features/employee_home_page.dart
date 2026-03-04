@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/widgets/app_bar_component.dart';
-import 'package:untitled1/core/widgets/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/core/widgets/internal_chat_button.dart';
 import 'package:untitled1/core/widgets/page_header.dart';
 
 class EmployeeHomePage extends StatefulWidget {
