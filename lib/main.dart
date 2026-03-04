@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/features/employee_home_page.dart';
+import 'package:untitled1/core/widgets/deal_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: EmployeeHomePage()),
+      home: Scaffold(body: DealCard()),
     );
   }
 }
