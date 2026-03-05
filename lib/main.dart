@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/widgets/deal_card.dart';
+import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 
 void main() {
   runApp(const MyApp());

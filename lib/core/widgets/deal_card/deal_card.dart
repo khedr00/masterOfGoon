@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/core/widgets/deal_card/deal_card_section1.dart';
+import 'package:untitled1/core/widgets/deal_card/deal_card_section2.dart';
+import 'package:untitled1/core/widgets/deal_card/deal_card_section3.dart';
 
 class DealCard extends StatelessWidget {
   const DealCard({super.key});
@@ -20,63 +23,13 @@ class DealCard extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: width * (136 / 1920),
-                    height: width * (52 / 1920),
-                    decoration: BoxDecoration(
-                      color: backGroundColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: width * (9 / 1920)),
-                      child: Container(
-                        width: width * (136 / 1920),
-                        height: width * (43 / 1920),
-                        decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: width * (331 / 1920),
-                    height: width * (194 / 1920),
-                    decoration: BoxDecoration(
-                      color: backGroundColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        bottom: width * (9 / 1920),
-                        left: width * (9 / 1920),
-                        right: width * (9 / 1920),
-                      ),
-                      child: Container(
-                        width: width * (331 / 1920),
-                        height: width * (194 / 1920),
-                        decoration: BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                children: [DealCardSection1(), DealCardSection2()],
               ),
+              DealCardSection3(),
             ],
           ),
         ),
+        // القطعة الفوقانية بالنص - العنوان ونسبة النجاح
         Positioned(
           left: width * (136 / 1920),
           top: 0,
