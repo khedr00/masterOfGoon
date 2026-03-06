@@ -1,10 +1,5 @@
 class Photo {
-  Photo({
-    required this.photo,
-    required this.aiDescription,
-    required this.description,
-  });
-  final String description;
+  Photo({required this.photo, required this.aiDescription});
   final String aiDescription;
   final String photo;
 }

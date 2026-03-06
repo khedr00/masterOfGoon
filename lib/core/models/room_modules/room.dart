@@ -1,3 +1,4 @@
+import 'package:untitled1/core/models/out_door_place.dart';
 import 'package:untitled1/core/models/photo.dart';
 
 enum RoomType {
@@ -21,6 +22,7 @@ class Room {
     required this.photos,
     required this.roomSqft,
     required this.paintingDescription,
+    this.balcony,
   });
 
   final RoomType type;
@@ -28,4 +30,5 @@ class Room {
   final List<Photo> photos;
   final double roomSqft;
   final String paintingDescription;
+  final OutDoorPlace? balcony;
 }

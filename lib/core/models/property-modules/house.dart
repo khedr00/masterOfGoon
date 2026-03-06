@@ -1,8 +1,8 @@
 import 'package:untitled1/core/models/out_door_place.dart';
 import 'package:untitled1/core/models/property-modules/propetry.dart';
 
-class Villa extends Property {
-  Villa({
+class House extends Property {
+  House({
     required super.outDoorPhotos,
     required super.address,
     required super.constructionYear,

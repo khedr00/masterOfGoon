@@ -1,8 +1,7 @@
-import 'package:untitled1/core/models/out_door_place.dart';
 import 'package:untitled1/core/models/property-modules/propetry.dart';
 
-class Villa extends Property {
-  Villa({
+class Apartment extends Property {
+  Apartment({
     required super.outDoorPhotos,
     required super.address,
     required super.constructionYear,
@@ -14,7 +13,6 @@ class Villa extends Property {
     required super.primaryPhoto,
     required super.simpleDescription,
     required super.sqft,
-    required this.numberOfFloors,
     required super.numberOfRooms,
     required super.fullDescription,
     required super.outSidePainting,
@@ -25,15 +23,14 @@ class Villa extends Property {
     required super.publicPark,
     required super.school,
     required super.university,
-    required this.garden,
-    required this.pool,
-    required this.parking,
     required super.furnitureState,
     required super.falseCeilings,
+    required this.floorNumber,
+    required this.elevator,
+    required this.buildingParking,
     required super.avaliableInternet,
   });
-  final int numberOfFloors;
-  final OutDoorPlace garden;
-  final OutDoorPlace pool;
-  final OutDoorPlace parking;
+  final int floorNumber;
+  final bool elevator;
+  final bool buildingParking;
 }
