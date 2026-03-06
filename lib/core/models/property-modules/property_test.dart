@@ -1,4 +1,4 @@
-class Property {
+class PropertyTest {
   final int id;
   final String nameCode;
   final String propertyType;
@@ -35,7 +35,7 @@ class Property {
   final int constructionYear;
   final bool isAvilable;
 
-  Property({
+  PropertyTest({
     required this.isAvilable,
     required this.id,
     required this.nameCode,
@@ -73,8 +73,8 @@ class Property {
     required this.constructionYear,
   });
 
-  factory Property.fromJson(Map<String, dynamic> json) {
-    return Property(
+  factory PropertyTest.fromJson(Map<String, dynamic> json) {
+    return PropertyTest(
       id: json['id'],
       nameCode: json['nameCode'],
       propertyType: json['propertyType'],

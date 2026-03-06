@@ -1,0 +1,17 @@
+import 'package:untitled1/core/models/room_modules/room.dart';
+
+class Bedroom extends Room {
+  Bedroom({
+    required super.description,
+    required super.photos,
+    required super.type,
+    required this.numberOfBeds,
+    required this.mirrorSize,
+    required this.numberOfClosets,
+    required super.roomSqft,
+    required super.paintingDescription,
+  });
+  final int numberOfBeds;
+  final int numberOfClosets;
+  final double mirrorSize;
+}
