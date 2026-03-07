@@ -1,6 +1,6 @@
-import 'package:untitled1/core/models/room_modules/room.dart';
+import 'package:untitled1/core/modules/room_modules/room.dart';
 
-enum SinkType { a, b }
+enum SinkType { singleBowl, doubleBowl }
 
 enum Direction { east, west, north, south }
 
@@ -10,10 +10,13 @@ class Kitchen extends Room {
     required super.photos,
     required super.type,
     required this.sinkType,
-    required this.windowDirections,
+    required this.windowDirection,
+    required this.hasCabinets,
     required super.roomSqft,
     required super.paintingDescription,
   });
+
   final SinkType sinkType;
-  final Direction windowDirections;
+  final Direction windowDirection;
+  final bool hasCabinets;
 }

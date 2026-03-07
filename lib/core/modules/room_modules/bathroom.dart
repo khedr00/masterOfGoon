@@ -1,8 +1,8 @@
-import 'package:untitled1/core/models/room_modules/room.dart';
+import 'package:untitled1/core/modules/room_modules/room.dart';
 
-enum HeaterType { kasan, sunPoweredBourds, electricalHeater }
+enum HeaterType { boiler, solarHeater, electricHeater }
 
-enum ToiletType { arabian, english }
+enum ToiletType { arabic, western }
 
 class Bathroom extends Room {
   Bathroom({
@@ -10,12 +10,14 @@ class Bathroom extends Room {
     required super.photos,
     required super.type,
     required this.heaterType,
-    required this.isBanio,
+    required this.hasBathtub,
     required this.toiletType,
+    required this.hasMirrorCabinet,
     required super.roomSqft,
     required super.paintingDescription,
   });
-  final bool isBanio;
+  final bool hasBathtub;
   final HeaterType heaterType;
   final ToiletType toiletType;
+  final bool hasMirrorCabinet;
 }

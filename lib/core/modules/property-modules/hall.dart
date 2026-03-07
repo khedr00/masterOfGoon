@@ -1,8 +1,8 @@
-import 'package:untitled1/core/models/out_door_place.dart';
-import 'package:untitled1/core/models/property-modules/propetry.dart';
+import 'package:untitled1/core/modules/outdoor_modules/out_door_place.dart';
+import 'package:untitled1/core/modules/property-modules/propetry.dart';
 
-class Store extends Property {
-  Store({
+class Hall extends Property {
+  Hall({
     required super.outDoorPhotos,
     required super.address,
     required super.constructionYear,
@@ -17,19 +17,15 @@ class Store extends Property {
     required this.floorNumber,
     required super.numberOfRooms,
     required super.fullDescription,
-    required super.outSidePainting,
-    required super.busStop,
-    required super.hospital,
-    required super.markets,
-    required super.pharmacy,
-    required super.publicPark,
-    required super.school,
-    required super.university,
+    required super.outsidePainting,
 
     required super.furnitureState,
-    required super.falseCeilings,
+
     required super.avaliableInternet,
     required this.interface,
+    required super.rooms,
+    required super.nearbyPlaces,
+    required super.catagory,
   });
   final int floorNumber;
   final OutDoorPlace interface;

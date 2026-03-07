@@ -1,5 +1,5 @@
-import 'package:untitled1/core/models/out_door_place.dart';
-import 'package:untitled1/core/models/property-modules/propetry.dart';
+import 'package:untitled1/core/modules/outdoor_modules/out_door_place.dart';
+import 'package:untitled1/core/modules/property-modules/propetry.dart';
 
 class House extends Property {
   House({
@@ -17,23 +17,16 @@ class House extends Property {
     required this.numberOfFloors,
     required super.numberOfRooms,
     required super.fullDescription,
-    required super.outSidePainting,
-    required super.busStop,
-    required super.hospital,
-    required super.markets,
-    required super.pharmacy,
-    required super.publicPark,
-    required super.school,
-    required super.university,
-    required this.garden,
-    required this.pool,
-    required this.parking,
+    required super.outsidePainting,
+
+    required this.outDoorPlaces,
     required super.furnitureState,
-    required super.falseCeilings,
+
     required super.avaliableInternet,
+    required super.rooms,
+    required super.nearbyPlaces,
+    required super.catagory,
   });
   final int numberOfFloors;
-  final OutDoorPlace garden;
-  final OutDoorPlace pool;
-  final OutDoorPlace parking;
+  final List<OutDoorPlace> outDoorPlaces;
 }

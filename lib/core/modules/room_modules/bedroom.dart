@@ -1,4 +1,4 @@
-import 'package:untitled1/core/models/room_modules/room.dart';
+import 'package:untitled1/core/modules/room_modules/room.dart';
 
 class Bedroom extends Room {
   Bedroom({

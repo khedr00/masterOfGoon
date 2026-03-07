@@ -1,4 +1,4 @@
-import 'package:untitled1/core/models/photo.dart';
+import 'package:untitled1/core/modules/photo.dart';
 
 class OutDoorPlace {
   OutDoorPlace({
