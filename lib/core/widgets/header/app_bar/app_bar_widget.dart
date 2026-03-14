@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/widgets/app_bar_component.dart';
+import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
 class AppBarWidget extends StatefulWidget {

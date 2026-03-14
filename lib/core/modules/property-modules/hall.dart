@@ -1,4 +1,3 @@
-import 'package:untitled1/core/modules/outdoor_modules/out_door_place.dart';
 import 'package:untitled1/core/modules/property-modules/propetry.dart';
 
 class Hall extends Property {
@@ -18,15 +17,11 @@ class Hall extends Property {
     required super.numberOfRooms,
     required super.fullDescription,
     required super.outsidePainting,
-
     required super.furnitureState,
-
     required super.avaliableInternet,
-    required this.interface,
     required super.rooms,
     required super.nearbyPlaces,
     required super.catagory,
   });
   final int floorNumber;
-  final OutDoorPlace interface;
 }
