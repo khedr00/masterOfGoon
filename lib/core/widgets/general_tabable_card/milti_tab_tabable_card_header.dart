@@ -41,6 +41,30 @@ class MultiTabTabableCardHeader extends StatelessWidget {
         ),
       );
     }
+    if (index == -1) {
+      return Container(
+        height: width * (52 / 1920),
+        width: width * (179 / 1920),
+        decoration: BoxDecoration(
+          color: color.primaryColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(width * (10 / 1920)),
+            topRight: Radius.circular(width * (10 / 1920)),
+            bottomLeft: Radius.circular(width * (30 / 1920)),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            tabName,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'NunitoSans-Bold',
+              fontSize: width * (20 / 1920),
+            ),
+          ),
+        ),
+      );
+    }
     return Container(
       height: width * (52 / 1920),
       width: width * (207 / 1920),

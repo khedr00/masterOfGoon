@@ -16,48 +16,50 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: backGroundColor,
-      body: Column(
-        children: [
-          // PageHeader(),
-          // DealCard(),
-          GenaralTabableCard(
-            tabs: [
-              TabOfTabableCard(
-                tabName: 'test',
-                tabColors: ThemeColor(
-                  primaryColor: Colors.blue,
-                  secondaryColor: Colors.pink,
+      body: Center(
+        child: Column(
+          children: [
+            // PageHeader(),
+            // DealCard(),
+            GenaralTabableCard(
+              tabs: [
+                TabOfTabableCard(
+                  tabName: 'test',
+                  tabColors: ThemeColor(
+                    primaryColor: Colors.blue,
+                    secondaryColor: Colors.pink,
+                  ),
+                  bodyOfTheTab: Container(color: Colors.red),
                 ),
-                bodyOfTheTab: Container(color: Colors.red),
-              ),
-              TabOfTabableCard(
-                tabName: 'test1',
-                tabColors: ThemeColor(
-                  primaryColor: Colors.purple,
-                  secondaryColor: Colors.pink,
+                TabOfTabableCard(
+                  tabName: 'test1',
+                  tabColors: ThemeColor(
+                    primaryColor: Colors.purple,
+                    secondaryColor: Colors.pink,
+                  ),
+                  bodyOfTheTab: Container(color: Colors.green),
                 ),
-                bodyOfTheTab: Container(color: Colors.green),
-              ),
-              TabOfTabableCard(
-                tabName: 'test2',
-                tabColors: ThemeColor(
-                  primaryColor: Colors.brown,
-                  secondaryColor: Colors.pink,
+                TabOfTabableCard(
+                  tabName: 'test2',
+                  tabColors: ThemeColor(
+                    primaryColor: Colors.brown,
+                    secondaryColor: Colors.pink,
+                  ),
+                  bodyOfTheTab: Container(color: Colors.yellow),
                 ),
-                bodyOfTheTab: Container(color: Colors.yellow),
-              ),
-              TabOfTabableCard(
-                tabName: 'test3',
-                tabColors: ThemeColor(
-                  primaryColor: Colors.yellow,
-                  secondaryColor: Colors.pink,
+                TabOfTabableCard(
+                  tabName: 'test3',
+                  tabColors: ThemeColor(
+                    primaryColor: Colors.yellow,
+                    secondaryColor: Colors.pink,
+                  ),
+                  bodyOfTheTab: Container(color: Colors.yellow),
                 ),
-                bodyOfTheTab: Container(color: Colors.yellow),
-              ),
-            ],
-            fullCardWidth: width * (1000 / 1920),
-          ),
-        ],
+              ],
+              fullCardWidth: width * (1000 / 1920),
+            ),
+          ],
+        ),
       ),
     );
   }
