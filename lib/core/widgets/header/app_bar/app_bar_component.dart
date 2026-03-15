@@ -14,7 +14,6 @@ class AppBarComponent extends StatefulWidget {
 }
 
 class _AppBarComponentState extends State<AppBarComponent> {
-  bool isClicked1 = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

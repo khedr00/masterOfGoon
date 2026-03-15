@@ -19,6 +19,16 @@ class GenaralTabableCard extends StatefulWidget {
 
 class _GenaralTabableCardState extends State<GenaralTabableCard> {
   List<Widget> orderOfTabs = [];
+  List<bool> isTabed = [];
+
+  void fillIsTabed() {
+    // isTabed = List.filled(widget.tabs.length, false);
+    for (int i = 0; i < widget.tabs.length; i++) {
+      isTabed.add(false);
+    }
+    isTabed[0] = true;
+  }
+
   void reset(List<Widget> param) {
     for (int i = 0; i < widget.tabs.length; i++) {
       orderOfTabs.add(
@@ -27,6 +37,10 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
           child: GestureDetector(
             onTap: () {
               setState(() {
+                for (int i = 0; i < widget.tabs.length; i++) {
+                  isTabed[i] = false;
+                }
+                isTabed[i] = true;
                 orderOfTabs.clear();
                 reset(orderOfTabs);
                 Widget tempClickedTab = orderOfTabs.elementAt(i);
@@ -41,9 +55,10 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
             },
             child: MultiTabTabableCardHeader(
               tabName: widget.tabs[i].tabName,
-              isTabed: false,
+              isTabed: isTabed[i],
               color: widget.tabs[i].tabColors,
               index: i == (widget.tabs.length - 1) ? -1 : i,
+              trueTabed: isTabed,
             ),
           ),
         ),
@@ -53,6 +68,7 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
 
   @override
   void initState() {
+    fillIsTabed();
     reset(orderOfTabs);
     super.initState();
   }
@@ -60,30 +76,6 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    // for (int i = 0; i < widget.tabs.length; i++) {
-    //   orderOfTabs.add(
-    //     OrderOfTabs(
-    //       index: i,
-    //       child: GestureDetector(
-    //         onTap: () {
-    //           setState(() {
-    //             orderOfTabs = orderOfTabs;
-    //             Widget tempClickedTab = orderOfTabs.elementAt(i);
-    //             orderOfTabs.removeAt(i);
-    //             orderOfTabs.insert(0, tempClickedTab);
-    //             print(orderOfTabs);
-    //           });
-    //         },
-    //         child: MultiTabTabableCardHeader(
-    //           tabName: widget.tabs[i].tabName,
-    //           isTabed: false,
-    //           color: widget.tabs[i].tabColors,
-    //           index: i == (widget.tabs.length - 1) ? -1 : i,
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
     return Container(
       width: widget.fullCardWidth,
       decoration: BoxDecoration(
