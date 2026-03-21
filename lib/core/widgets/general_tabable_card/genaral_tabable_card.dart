@@ -9,9 +9,11 @@ class GenaralTabableCard extends StatefulWidget {
     super.key,
     required this.tabs,
     required this.fullCardWidth,
+    required this.fullCardHeight,
   });
   final List<TabOfTabableCard> tabs;
   final double fullCardWidth;
+  final double fullCardHeight;
 
   @override
   State<GenaralTabableCard> createState() => _GenaralTabableCardState();
@@ -20,7 +22,7 @@ class GenaralTabableCard extends StatefulWidget {
 class _GenaralTabableCardState extends State<GenaralTabableCard> {
   List<Widget> orderOfTabs = [];
   List<bool> isTabed = [];
-
+  int bodyTabed = 0;
   void fillIsTabed() {
     // isTabed = List.filled(widget.tabs.length, false);
     for (int i = 0; i < widget.tabs.length; i++) {
@@ -41,6 +43,7 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
                   isTabed[i] = false;
                 }
                 isTabed[i] = true;
+                bodyTabed = i;
                 orderOfTabs.clear();
                 reset(orderOfTabs);
                 Widget tempClickedTab = orderOfTabs.elementAt(i);
@@ -90,6 +93,26 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
               children: List.generate(widget.tabs.length, (int i) {
                 return orderOfTabs[i];
               }),
+            ),
+          ),
+          SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(width * (30 / 1920)),
+                  bottomLeft: Radius.circular(width * (30 / 1920)),
+                  bottomRight: Radius.circular(width * (30 / 1920)),
+                ),
+                border: Border.all(
+                  color: widget.tabs[bodyTabed].tabColors.primaryColor,
+                  width: width * (4 / 1920),
+                ),
+              ),
+              child: SizedBox(
+                height: widget.fullCardHeight,
+                width: widget.fullCardWidth - (width * (4 / 1920)),
+                child: widget.tabs[bodyTabed].bodyOfTheTab,
+              ),
             ),
           ),
         ],

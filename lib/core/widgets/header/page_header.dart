@@ -9,43 +9,48 @@ class PageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
       children: [
-        SizedBox(
-          width: width * (140 / 1920),
-          height: width * (129 / 1920),
-          child: Image.asset('assets/images/Estate_hub.png'),
-        ),
-        AppBarWidget(
-          appBarComponents: [
-            AppBarComponentInfo(
-              appBarComponentImage: 'assets/images/profilePhoto-icon.png',
-              appBarCopmonentName: 'Profile',
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+              width: width * (140 / 1920),
+              height: width * (129 / 1920),
+              child: Image.asset('assets/images/Estate_hub.png'),
             ),
-            AppBarComponentInfo(
-              appBarComponentImage: 'assets/images/Home.png',
-              appBarCopmonentName: 'Home',
+            AppBarWidget(
+              appBarComponents: [
+                AppBarComponentInfo(
+                  appBarComponentImage: 'assets/images/profilePhoto-icon.png',
+                  appBarCopmonentName: 'Profile',
+                ),
+                AppBarComponentInfo(
+                  appBarComponentImage: 'assets/images/Home.png',
+                  appBarCopmonentName: 'Home',
+                ),
+                AppBarComponentInfo(
+                  appBarComponentImage: 'assets/images/notes-icon.png',
+                  appBarCopmonentName: 'Schedule',
+                ),
+                AppBarComponentInfo(
+                  appBarComponentImage: 'assets/images/report-icon.png',
+                  appBarCopmonentName: 'Reports',
+                ),
+                AppBarComponentInfo(
+                  appBarComponentImage: 'assets/images/history-icon.png',
+                  appBarCopmonentName: 'History',
+                ),
+                AppBarComponentInfo(
+                  appBarComponentImage: 'assets/images/Apartment.png',
+                  appBarCopmonentName: 'Properties',
+                ),
+              ],
             ),
-            AppBarComponentInfo(
-              appBarComponentImage: 'assets/images/notes-icon.png',
-              appBarCopmonentName: 'Schedule',
-            ),
-            AppBarComponentInfo(
-              appBarComponentImage: 'assets/images/report-icon.png',
-              appBarCopmonentName: 'Reports',
-            ),
-            AppBarComponentInfo(
-              appBarComponentImage: 'assets/images/history-icon.png',
-              appBarCopmonentName: 'History',
-            ),
-            AppBarComponentInfo(
-              appBarComponentImage: 'assets/images/Apartment.png',
-              appBarCopmonentName: 'Properties',
-            ),
+            InternalChatButton(),
           ],
         ),
-        InternalChatButton(),
+        SizedBox(height: width * (35 / 1920)),
       ],
     );
   }
