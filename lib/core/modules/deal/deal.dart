@@ -1,27 +1,27 @@
-import 'package:untitled1/core/modules/property-modules/propetry.dart';
+enum DealStage { fresh, negotiation }
 
 class Deal {
   final int id;
-  final Property property;
+  final int propertyId;
   final int clientId;
   final int employeeId;
   final String title;
-  final String dealStage;
+  final DealStage dealStage;
   final int successProbability;
   final String startingDate;
-  final List<String> notes;
-  final String? meetingDate;
+  final List<int> notesIds;
+  // final String? meetingDate;
 
   Deal({
     required this.id,
-    required this.property,
+    required this.propertyId,
     required this.clientId,
     required this.employeeId,
     required this.title,
     required this.dealStage,
     required this.successProbability,
     required this.startingDate,
-    required this.notes,
-    this.meetingDate,
+    required this.notesIds,
+    // this.meetingDate,
   });
 }

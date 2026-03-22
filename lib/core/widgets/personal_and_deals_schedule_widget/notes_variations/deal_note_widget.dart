@@ -39,6 +39,78 @@ class _NoteWidgetState extends State<DealNoteWidget> {
         ),
       ),
       isHoverd: isHoverd,
+      handIconHoverWidget: isHoverd
+          ? Positioned(
+              left: width * (135 / 1920),
+              child: Row(
+                children: [
+                  Container(
+                    width: width * (117 / 1920),
+                    height: width * (100 / 1920),
+                    decoration: BoxDecoration(
+                      color: Color(0xff545454),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(width * (10 / 1920)),
+                        bottomLeft: Radius.circular(width * (10 / 1920)),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: width * (2 / 1920),
+                            vertical: width * (5 / 1920),
+                          ),
+                          child: Text(
+                            widget.scheduleDealNote.dealName,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'NunitoSans-Light',
+                              fontSize: width * (12 / 1920),
+                            ),
+                          ),
+                        ),
+                        Spacer(flex: 1),
+                        Text(
+                          'ID: ${widget.scheduleDealNote.dealId.toString()}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'NunitoSans-SemiBold',
+                            fontSize: width * (14 / 1920),
+                          ),
+                        ),
+                        Text(
+                          widget.scheduleDealNote.propertyNameCode,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'NunitoSans-SemiBold',
+                            fontSize: width * (14 / 1920),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: width * (23 / 1920),
+                    height: width * (100 / 1920),
+                    decoration: BoxDecoration(
+                      color: Color(0xff545454),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.elliptical(
+                          width * (23 / 1920),
+                          width * (100 / 1920),
+                        ),
+                        bottomRight: Radius.elliptical(
+                          width * (23 / 1920),
+                          width * (100 / 1920),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : SizedBox(),
     );
   }
 }

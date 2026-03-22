@@ -9,11 +9,14 @@ class NoteWidget extends StatefulWidget {
     required this.handsIcon,
     required this.clockColor,
     required this.isHoverd,
+
+    required this.handIconHoverWidget,
   });
   final ScheduleNote scheduleNote;
   final Widget handsIcon;
   final Color clockColor;
   final bool isHoverd;
+  final Widget handIconHoverWidget;
 
   @override
   State<NoteWidget> createState() => _NoteWidgetState();
@@ -134,12 +137,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             ),
           ),
         ),
-        widget.isHoverd
-            ? Positioned(
-                left: width * (30 / 1920),
-                child: Container(width: 20, height: 20, color: Colors.red),
-              )
-            : SizedBox(),
+        widget.handIconHoverWidget,
       ],
     );
   }

@@ -14,6 +14,7 @@ class PersonalNoteWidget extends StatelessWidget {
       clockColor: thirdColorSecondary,
       handsIcon: SizedBox(),
       isHoverd: false,
+      handIconHoverWidget: SizedBox(),
     );
   }
 }
