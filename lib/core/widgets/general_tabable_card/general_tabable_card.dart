@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/milti_tab_tabable_card_header.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/order_of_tabs.dart';
+import 'package:untitled1/core/widgets/general_tabable_card/single_tab_tabable_card.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/tab_of_tabable_card.dart';
 
-class GenaralTabableCard extends StatefulWidget {
-  const GenaralTabableCard({
+class GeneralTabableCard extends StatefulWidget {
+  const GeneralTabableCard({
     super.key,
     required this.tabs,
     required this.fullCardWidth,
@@ -16,10 +17,10 @@ class GenaralTabableCard extends StatefulWidget {
   final double fullCardHeight;
 
   @override
-  State<GenaralTabableCard> createState() => _GenaralTabableCardState();
+  State<GeneralTabableCard> createState() => _GenaralTabableCardState();
 }
 
-class _GenaralTabableCardState extends State<GenaralTabableCard> {
+class _GenaralTabableCardState extends State<GeneralTabableCard> {
   List<Widget> orderOfTabs = [];
   List<bool> isTabed = [];
   int bodyTabed = 0;
@@ -59,7 +60,7 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
             child: MultiTabTabableCardHeader(
               tabName: widget.tabs[i].tabName,
               isTabed: isTabed[i],
-              color: widget.tabs[i].tabColors,
+              color: widget.tabs[i].tabColor,
               index: i == (widget.tabs.length - 1) ? -1 : i,
               trueTabed: isTabed,
             ),
@@ -79,6 +80,7 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+
     return Container(
       width: widget.fullCardWidth,
       decoration: BoxDecoration(
@@ -91,7 +93,18 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
             height: width * (52 / 1920),
             child: Stack(
               children: List.generate(widget.tabs.length, (int i) {
-                return orderOfTabs[i];
+                return widget.tabs.length == 1
+                    ? OrderOfTabs(
+                        index: i,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: SingleTabTabableCard(
+                            tabName: widget.tabs[i].tabName,
+                            color: widget.tabs[i].tabColor,
+                          ),
+                        ),
+                      )
+                    : orderOfTabs[i];
               }),
             ),
           ),
@@ -104,13 +117,20 @@ class _GenaralTabableCardState extends State<GenaralTabableCard> {
                   bottomRight: Radius.circular(width * (30 / 1920)),
                 ),
                 border: Border.all(
-                  color: widget.tabs[bodyTabed].tabColors.primaryColor,
+                  color: widget.tabs[bodyTabed].tabColor,
                   width: width * (4 / 1920),
                 ),
               ),
-              child: SizedBox(
+              child: Container(
                 height: widget.fullCardHeight,
                 width: widget.fullCardWidth - (width * (4 / 1920)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(width * (30 / 1902)),
+                    bottomRight: Radius.circular(width * (30 / 1920)),
+                    topRight: Radius.circular(width * (30 / 1920)),
+                  ),
+                ),
                 child: widget.tabs[bodyTabed].bodyOfTheTab,
               ),
             ),

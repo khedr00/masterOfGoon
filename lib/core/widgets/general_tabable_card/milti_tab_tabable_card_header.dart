@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/widgets/constants.dart';
 
 class MultiTabTabableCardHeader extends StatefulWidget {
   const MultiTabTabableCardHeader({
@@ -11,7 +10,7 @@ class MultiTabTabableCardHeader extends StatefulWidget {
     required this.trueTabed,
   });
   final String tabName;
-  final ThemeColor color;
+  final Color color;
   final bool isTabed;
   final int index;
   final List<bool> trueTabed;
@@ -36,7 +35,7 @@ class _MultiTabTabableCardHeaderState extends State<MultiTabTabableCardHeader> {
         height: width * (52 / 1920),
         width: width * (179 / 1920),
         decoration: BoxDecoration(
-          color: widget.color.primaryColor,
+          color: widget.color,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(width * (10 / 1920)),
             bottomRight: Radius.circular(width * (30 / 1920)),
@@ -78,7 +77,7 @@ class _MultiTabTabableCardHeaderState extends State<MultiTabTabableCardHeader> {
         height: width * (52 / 1920),
         width: width * (179 / 1920),
         decoration: BoxDecoration(
-          color: widget.color.primaryColor,
+          color: widget.color,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(width * (10 / 1920)),
             bottomLeft: Radius.circular(width * (30 / 1920)),
@@ -119,7 +118,7 @@ class _MultiTabTabableCardHeaderState extends State<MultiTabTabableCardHeader> {
       height: width * (52 / 1920),
       width: width * (207 / 1920),
       decoration: BoxDecoration(
-        color: widget.color.primaryColor,
+        color: widget.color,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(width * (30 / 1920)),
           bottomRight: Radius.circular(width * (30 / 1920)),

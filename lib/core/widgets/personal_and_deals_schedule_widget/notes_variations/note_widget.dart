@@ -29,7 +29,6 @@ class _NoteWidgetState extends State<NoteWidget> {
     return Stack(
       children: [
         SizedBox(
-          // height: width * (163 / 1920),
           width: width * (322 / 1920),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -40,7 +39,6 @@ class _NoteWidgetState extends State<NoteWidget> {
                 color: Colors.white,
               ),
               Container(
-                // height: width * (139 / 1920),
                 width: width * (322 / 1920),
                 decoration: BoxDecoration(
                   color: thirdColorSecondary,
@@ -85,12 +83,15 @@ class _NoteWidgetState extends State<NoteWidget> {
                       ],
                     ),
                     SizedBox(height: width * (10 / 1920)),
-                    Text(
-                      widget.scheduleNote.description,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'NunitoSans-Light',
-                        fontSize: width * (24 / 1920),
+                    Padding(
+                      padding: EdgeInsets.all(width * (10 / 1920)),
+                      child: Text(
+                        widget.scheduleNote.description,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'NunitoSans-Light',
+                          fontSize: width * (24 / 1920),
+                        ),
                       ),
                     ),
                   ],
