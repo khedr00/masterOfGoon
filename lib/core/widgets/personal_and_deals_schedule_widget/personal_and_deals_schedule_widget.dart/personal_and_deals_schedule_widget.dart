@@ -79,11 +79,6 @@ class _PersonalScheduleWidgetState
           right: width * (140 / 1920),
           child: GestureDetector(
             onTap: _pickDate,
-            //  () async {
-            //   await _pickDate();
-            //   getDayName();
-            //   getDate();
-            // },
             child: Container(
               width: width * (45 / 1920),
               height: width * (45 / 1920),

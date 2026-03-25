@@ -9,7 +9,7 @@ class Deal {
   final DealStage dealStage;
   final int successProbability;
   final String startingDate;
-  final List<int> notesIds;
+  final List<String> notes;
   // final String? meetingDate;
 
   Deal({
@@ -21,7 +21,7 @@ class Deal {
     required this.dealStage,
     required this.successProbability,
     required this.startingDate,
-    required this.notesIds,
+    required this.notes,
     // this.meetingDate,
   });
 }

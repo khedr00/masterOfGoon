@@ -66,16 +66,6 @@ class _InsideTabPersonalAndDealScheduleWidgetState
           ),
         ),
       ),
-      //  GridView.builder(
-      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //     crossAxisCount: 2,
-      //   ),
-
-      //   itemCount: widget.personalAndDealsNotes.length,
-      //   itemBuilder: (BuildContext context, int i) {
-      //     return widget.personalAndDealsNotes[i];
-      //   },
-      // ),
     );
   }
 }
