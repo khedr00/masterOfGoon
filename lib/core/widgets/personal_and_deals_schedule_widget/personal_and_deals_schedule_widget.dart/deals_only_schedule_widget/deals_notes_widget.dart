@@ -41,8 +41,8 @@ class _PersonalScheduleWidgetState extends State<DealsNotesWidget> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: width * (881 / 1920),
-      height: width * (463 / 1920),
+      width: width * (821 / 1920),
+      height: width * (403 / 1920),
       child: GeneralTabableCard(
         tabs: [
           TabOfTabableCard(
@@ -53,8 +53,8 @@ class _PersonalScheduleWidgetState extends State<DealsNotesWidget> {
             ),
           ),
         ],
-        fullCardWidth: width * (881 / 1920),
-        fullCardHeight: width * (411 / 1920),
+        fullCardWidth: width * (821 / 1920),
+        fullCardHeight: width * (301 / 1920),
       ),
     );
   }

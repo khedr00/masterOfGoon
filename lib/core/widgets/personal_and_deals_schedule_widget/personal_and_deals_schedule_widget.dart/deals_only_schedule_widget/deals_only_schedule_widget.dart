@@ -17,58 +17,61 @@ class DealsOnlyScheduleWidget extends StatefulWidget {
 }
 
 class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
-  final List<Widget> _dealsNotes = [];
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    List<Widget> dealsNotes = [];
+    List<Widget> apoitmentsNotesWithPaddings = [];
     for (int i = 0; i < widget.dealNotes.length; i++) {
-      _dealsNotes.add(
-        Text(
-          widget.dealNotes[i],
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'NunitoSans-Bold',
-            fontSize: width * (24 / 1920),
+      dealsNotes.add(
+        Padding(
+          padding: EdgeInsets.all(width * (10 / 1920)),
+          child: Text(
+            '${(i + 1).toString()}_${widget.dealNotes[i]}',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'NunitoSans-Bold',
+              fontSize: width * (24 / 1920),
+            ),
           ),
         ),
       );
     }
+    for (int i = 0; i < widget.apoitmentsNotes.length; i++) {
+      apoitmentsNotesWithPaddings.add(
+        Padding(
+          padding: EdgeInsetsGeometry.only(top: width * (60 / 1920)),
+          child: widget.apoitmentsNotes[i],
+        ),
+      );
+    }
+
     return Container(
       width: width * (881 / 1920),
       height: width * (827 / 1920),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backGroundColor,
         borderRadius: BorderRadius.circular(width * (10 / 1920)),
+        border: Border.all(color: thirdColorPrimary, width: width * (4 / 1920)),
       ),
-      child: Column(
-        children: [
-          Container(
-            height: width * (177 / 1920),
-            decoration: BoxDecoration(
-              color: thirdColorPrimary,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(width * (10 / 1920)),
-                topRight: Radius.circular(width * (10 / 1920)),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: width * (881 / 1920),
+              // height: width * (177 / 1920),
+              decoration: BoxDecoration(
+                color: thirdColorPrimary,
+                // borderRadius: BorderRadius.only(
+                //   topLeft: Radius.circular(width * (10 / 1920)),
+                //   topRight: Radius.circular(width * (10 / 1920)),
+                // ),
               ),
+              child: Column(children: dealsNotes),
             ),
-            child: Column(children: _dealsNotes),
-          ),
-          SizedBox(
-            width: width * (881 / 1920),
-            height: width * (650 / 1920),
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int i) {
-                return Column(
-                  children: [
-                    SizedBox(height: width * (50 / 1920)),
-                    widget.apoitmentsNotes[i],
-                  ],
-                );
-              },
-            ),
-          ),
-        ],
+            Column(children: apoitmentsNotesWithPaddings),
+          ],
+        ),
       ),
     );
   }

@@ -31,6 +31,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     DealCard(),
     DealCard(),
   ];
+
   @override
   Widget build(BuildContext context) {
     final allAndDealsOnlyProvider = Provider.of<AllAndDealsOnlyProvider>(
