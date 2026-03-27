@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/core/modules/deal/deal.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_section1.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_section2.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_section3.dart';
 
 class DealCard extends StatelessWidget {
-  const DealCard({super.key});
+  const DealCard({super.key, required this.deal});
+  final Deal deal;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +19,37 @@ class DealCard extends StatelessWidget {
           height: width * (246 / 1920),
           decoration: BoxDecoration(
             color: secondaryColor,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(width * (10 / 1920)),
           ),
           child: Row(
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [DealCardSection1(), DealCardSection2()],
+                children: [
+                  DealCardSection1(
+                    dealStage: deal.dealStage.toString().substring(10),
+                  ),
+                  DealCardSection2(
+                    clientImage: Image.asset(
+                      'assets/images/profilePhoto-icon.png',
+                    ),
+                    clientName: 'Khedr Issa',
+                    clientScoreLeading: 43,
+                    lastMessage: 'I will call you back later',
+                    timePassed: '39',
+                  ),
+                ],
               ),
-              DealCardSection3(),
+              DealCardSection3(
+                propertyType: 'Villa',
+                price: '130000',
+                propertyImage: Image.asset('assets/images/skyscrapers.png'),
+                simplePropertyDescription:
+                    'Furnished Apartment with pool and 2 balconies ',
+                address: 'Mazzeh District, Damascus, Syria',
+                dealDate: '7/12/2025',
+                dealId: '223',
+              ),
             ],
           ),
         ),
@@ -38,8 +62,8 @@ class DealCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
+                bottomLeft: Radius.circular(width * (10 / 1920)),
+                bottomRight: Radius.circular(width * (10 / 1920)),
               ),
               color: backGroundColor,
             ),
@@ -55,8 +79,18 @@ class DealCard extends StatelessWidget {
                     width: width * (452 / 1920),
                     height: width * (62 / 1920),
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: secondaryColor,
                       borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        deal.title,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'NunitoSans-ExtraBold',
+                          fontSize: width * (22 / 1920),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -72,7 +106,17 @@ class DealCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: primaryColor,
                       borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(10),
+                        bottom: Radius.circular(width * (10 / 1920)),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        ' Success Rate :\n         ${deal.successProbability.toString()}%  ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'NunitoSans-ExtraBold',
+                          fontSize: width * (16 / 1920),
+                        ),
                       ),
                     ),
                   ),

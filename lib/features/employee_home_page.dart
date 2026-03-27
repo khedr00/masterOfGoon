@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/core/modules/deal/deal.dart';
 import 'package:untitled1/core/modules/schedule-models/schedule_deal_note.dart';
 import 'package:untitled1/core/modules/schedule-models/schedule_note.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
@@ -13,6 +14,7 @@ import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_notes_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
+import 'package:untitled1/features/deal_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 
 class EmployeeHomePage extends StatefulWidget {
@@ -24,12 +26,102 @@ class EmployeeHomePage extends StatefulWidget {
 
 class _EmployeeHomePageState extends State<EmployeeHomePage> {
   List<Widget> dealList = [
-    DealCard(),
-    DealCard(),
-    DealCard(),
-    DealCard(),
-    DealCard(),
-    DealCard(),
+    DealCard(
+      deal: Deal(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        employeeId: 4,
+        title: 'the mountain vella deal',
+        dealStage: DealStage.negotiation,
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        notes: [
+          'hqjwegfkuqefglidga;sdjg;auig',
+          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+        ],
+      ),
+    ),
+    DealCard(
+      deal: Deal(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        employeeId: 4,
+        title: 'the mountain vella deal',
+        dealStage: DealStage.negotiation,
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        notes: [
+          'hqjwegfkuqefglidga;sdjg;auig',
+          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+        ],
+      ),
+    ),
+    DealCard(
+      deal: Deal(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        employeeId: 4,
+        title: 'the mountain vella deal',
+        dealStage: DealStage.negotiation,
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        notes: [
+          'hqjwegfkuqefglidga;sdjg;auig',
+          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+        ],
+      ),
+    ),
+    DealCard(
+      deal: Deal(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        employeeId: 4,
+        title: 'the mountain vella deal',
+        dealStage: DealStage.negotiation,
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        notes: [
+          'hqjwegfkuqefglidga;sdjg;auig',
+          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+        ],
+      ),
+    ),
+    DealCard(
+      deal: Deal(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        employeeId: 4,
+        title: 'the mountain vella deal',
+        dealStage: DealStage.negotiation,
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        notes: [
+          'hqjwegfkuqefglidga;sdjg;auig',
+          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+        ],
+      ),
+    ),
+    DealCard(
+      deal: Deal(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        employeeId: 4,
+        title: 'the mountain vella deal',
+        dealStage: DealStage.negotiation,
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        notes: [
+          'hqjwegfkuqefglidga;sdjg;auig',
+          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+        ],
+      ),
+    ),
   ];
 
   @override
@@ -83,7 +175,17 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                       itemBuilder: (BuildContext context, int i) {
                         return Padding(
                           padding: EdgeInsets.only(bottom: width * (28 / 1920)),
-                          child: dealList[i],
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DealPage(),
+                                ),
+                              );
+                            },
+                            child: dealList[i],
+                          ),
                         );
                       },
                     ),

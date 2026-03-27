@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
 class DealCardSection1 extends StatelessWidget {
-  const DealCardSection1({super.key});
+  const DealCardSection1({super.key, required this.dealStage});
+  final String dealStage;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,9 @@ class DealCardSection1 extends StatelessWidget {
       height: width * (52 / 1920),
       decoration: BoxDecoration(
         color: backGroundColor,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(width * (10 / 1920)),
+        ),
       ),
       child: Padding(
         padding: EdgeInsets.only(bottom: width * (9 / 1920)),
@@ -21,7 +24,19 @@ class DealCardSection1 extends StatelessWidget {
           height: width * (43 / 1920),
           decoration: BoxDecoration(
             color: primaryColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(width * (10 / 1920)),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              dealStage,
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'NunitoSans-ExtraBold',
+                fontSize: width * (16 / 1920),
+              ),
+            ),
           ),
         ),
       ),
