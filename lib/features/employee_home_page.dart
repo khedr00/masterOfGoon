@@ -11,8 +11,9 @@ import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 import 'package:untitled1/core/widgets/header/page_header.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/deal_note_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/personal_note_widget.dart';
+import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_notes_widget.dart';
-import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_only_schedule_widget.dart';
+// import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
 import 'package:untitled1/features/deal_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
@@ -378,6 +379,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                           ],
                         )
                       : DealsOnlyScheduleWidget(
+                          forDealPage: false,
                           dealNotes: [
                             'hqjwegfkuqefglidga;sdjg;auig',
                             'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',

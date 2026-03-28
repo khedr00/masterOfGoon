@@ -7,9 +7,11 @@ class DealsOnlyScheduleWidget extends StatefulWidget {
     super.key,
     required this.dealNotes,
     required this.apoitmentsNotes,
+    required this.forDealPage,
   });
   final List<String> dealNotes;
   final List<DealsNotesWidget> apoitmentsNotes;
+  final bool forDealPage;
 
   @override
   State<DealsOnlyScheduleWidget> createState() =>
@@ -49,24 +51,30 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
     return Container(
       width: width * (881 / 1920),
       height: width * (827 / 1920),
-      decoration: BoxDecoration(
-        color: backGroundColor,
-        borderRadius: BorderRadius.circular(width * (10 / 1920)),
-        border: Border.all(color: thirdColorPrimary, width: width * (4 / 1920)),
-      ),
+      decoration: widget.forDealPage
+          ? BoxDecoration(
+              color: backGroundColor,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(width * (30 / 1920)),
+                bottomLeft: Radius.circular(width * (30 / 1920)),
+                bottomRight: Radius.circular(width * (30 / 1920)),
+              ),
+            )
+          : BoxDecoration(
+              color: backGroundColor,
+              borderRadius: BorderRadius.circular(width * (10 / 1920)),
+              border: Border.all(
+                color: thirdColorPrimary,
+                width: width * (4 / 1920),
+              ),
+            ),
       child: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               width: width * (881 / 1920),
               // height: width * (177 / 1920),
-              decoration: BoxDecoration(
-                color: thirdColorPrimary,
-                // borderRadius: BorderRadius.only(
-                //   topLeft: Radius.circular(width * (10 / 1920)),
-                //   topRight: Radius.circular(width * (10 / 1920)),
-                // ),
-              ),
+              decoration: BoxDecoration(color: thirdColorPrimary),
               child: Column(children: dealsNotes),
             ),
             Column(children: apoitmentsNotesWithPaddings),
