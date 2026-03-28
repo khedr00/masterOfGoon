@@ -6,16 +6,14 @@ import 'package:untitled1/core/modules/schedule-models/schedule_note.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/all_and_deals_only_button.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/new_and_ongoing_deals_button.dart';
-import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
-import 'package:untitled1/core/widgets/header/page_header.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/deal_note_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/personal_note_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_notes_widget.dart';
-// import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
 import 'package:untitled1/features/deal_page.dart';
+import 'package:untitled1/features/header_primary_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 
 class EmployeeHomePage extends StatefulWidget {
@@ -131,17 +129,14 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       context,
     );
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: backGroundColor,
-      body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+    return HeaderPrimaryPage(
+      pageWidget: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            PageHeader(),
             Row(
               children: [
-                SizedBox(width: width * (28 / 1920)),
+                SizedBox(width: width * (42 / 1920)),
                 NewAndOngoingDealsButton(),
                 SizedBox(width: width * (28 / 1920)),
                 ButtonWithImage(

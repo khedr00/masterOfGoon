@@ -3,55 +3,57 @@ import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
 
-class PageHeader extends StatelessWidget {
-  const PageHeader({super.key});
+class PageHeader extends StatelessWidget implements PreferredSizeWidget {
+  const PageHeader({super.key, required this.width});
+  final double width;
+
+  @override
+  Size get preferredSize => Size.fromHeight(width * (150 / 1920));
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: width * (140 / 1920),
-              height: width * (129 / 1920),
-              child: Image.asset('assets/images/Estate_hub.png'),
-            ),
-            AppBarWidget(
-              appBarComponents: [
-                AppBarComponentInfo(
-                  appBarComponentImage: 'assets/images/profilePhoto-icon.png',
-                  appBarCopmonentName: 'Profile',
-                ),
-                AppBarComponentInfo(
-                  appBarComponentImage: 'assets/images/Home.png',
-                  appBarCopmonentName: 'Home',
-                ),
-                AppBarComponentInfo(
-                  appBarComponentImage: 'assets/images/notes-icon.png',
-                  appBarCopmonentName: 'Schedule',
-                ),
-                AppBarComponentInfo(
-                  appBarComponentImage: 'assets/images/report-icon.png',
-                  appBarCopmonentName: 'Reports',
-                ),
-                AppBarComponentInfo(
-                  appBarComponentImage: 'assets/images/history-icon.png',
-                  appBarCopmonentName: 'History',
-                ),
-                AppBarComponentInfo(
-                  appBarComponentImage: 'assets/images/Apartment.png',
-                  appBarCopmonentName: 'Properties',
-                ),
-              ],
-            ),
-            InternalChatButton(),
-          ],
-        ),
-        SizedBox(height: width * (35 / 1920)),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(bottom: width * (21 / 1920)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(
+            width: width * (140 / 1920),
+            height: width * (129 / 1920),
+            child: Image.asset('assets/images/Estate_hub.png'),
+          ),
+          AppBarWidget(
+            appBarComponents: [
+              AppBarComponentInfo(
+                appBarComponentImage: 'assets/images/profilePhoto-icon.png',
+                appBarCopmonentName: 'Profile',
+              ),
+              AppBarComponentInfo(
+                appBarComponentImage: 'assets/images/Home.png',
+                appBarCopmonentName: 'Home',
+              ),
+              AppBarComponentInfo(
+                appBarComponentImage: 'assets/images/notes-icon.png',
+                appBarCopmonentName: 'Schedule',
+              ),
+              AppBarComponentInfo(
+                appBarComponentImage: 'assets/images/report-icon.png',
+                appBarCopmonentName: 'Reports',
+              ),
+              AppBarComponentInfo(
+                appBarComponentImage: 'assets/images/history-icon.png',
+                appBarCopmonentName: 'History',
+              ),
+              AppBarComponentInfo(
+                appBarComponentImage: 'assets/images/Apartment.png',
+                appBarCopmonentName: 'Properties',
+              ),
+            ],
+          ),
+          InternalChatButton(),
+        ],
+      ),
     );
   }
 }

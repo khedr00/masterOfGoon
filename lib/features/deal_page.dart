@@ -35,47 +35,50 @@ class _DealPageState extends State<DealPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: width * (30 / 1920)),
-                    ButtonWithImage(
-                      image: 'assets/images/Return.png',
-                      widthOfButton: width * (60 / 1920),
-                      heightOfButton: width * (60 / 1920),
-                      widthOfImage: width * (50 / 1920),
-                      heightOfImage: width * (50 / 1920),
-                      buttonAction: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    SizedBox(height: width * (30 / 1920)),
-                    SimpleDealInfoCard(
-                      dealStage: 'Negotiation',
-                      dealTitle: 'Mountain Villa Deal',
-                      dealId: '53462',
-                      dealDate: '2/2/2026',
-                      priceRange: '2000,000 - 2500,000',
-                      successRate: '55%',
-                    ),
-                    SizedBox(height: width * (30 / 1920)),
-                    GeneralTabableCard(
-                      tabs: [
-                        TabOfTabableCard(
-                          tabName: 'liked stuff',
-                          tabColor: fifthColorPrimaryGreen,
-                          bodyOfTheTab: LikedOnlyBody(),
-                        ),
-                        TabOfTabableCard(
-                          tabName: 'Avoidances',
-                          tabColor: sixthColorPrimaryRed,
-                          bodyOfTheTab: AvoidancesOnlyBody(),
-                        ),
-                      ],
-                      fullCardWidth: width * (403 / 1920),
-                      fullCardHeight: width * (500 / 1920),
-                    ),
-                  ],
+                SizedBox(
+                  height: width * (1000 / 1920),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: width * (30 / 1920)),
+                      ButtonWithImage(
+                        image: 'assets/images/Return.png',
+                        widthOfButton: width * (60 / 1920),
+                        heightOfButton: width * (60 / 1920),
+                        widthOfImage: width * (50 / 1920),
+                        heightOfImage: width * (50 / 1920),
+                        buttonAction: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      SizedBox(height: width * (30 / 1920)),
+                      SimpleDealInfoCard(
+                        dealStage: 'Negotiation',
+                        dealTitle: 'Mountain Villa Deal',
+                        dealId: '53462',
+                        dealDate: '2/2/2026',
+                        priceRange: '2000,000 - 2500,000',
+                        successRate: '55%',
+                      ),
+                      SizedBox(height: width * (30 / 1920)),
+                      GeneralTabableCard(
+                        tabs: [
+                          TabOfTabableCard(
+                            tabName: 'liked stuff',
+                            tabColor: fifthColorPrimaryGreen,
+                            bodyOfTheTab: LikedOnlyBody(),
+                          ),
+                          TabOfTabableCard(
+                            tabName: 'Avoidances',
+                            tabColor: sixthColorPrimaryRed,
+                            bodyOfTheTab: AvoidancesOnlyBody(),
+                          ),
+                        ],
+                        fullCardWidth: width * (403 / 1920),
+                        fullCardHeight: width * (500 / 1920),
+                      ),
+                    ],
+                  ),
                 ),
                 ClientChatWidget(),
                 GeneralTabableCard(
