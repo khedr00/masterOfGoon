@@ -8,9 +8,11 @@ class PersonalAndDealsScheduleWidget extends StatefulWidget {
   const PersonalAndDealsScheduleWidget({
     super.key,
     required this.personalAndDealsNotes,
+    this.fullHeight,
   });
 
   final List<dynamic> personalAndDealsNotes;
+  final double? fullHeight;
 
   @override
   State<PersonalAndDealsScheduleWidget> createState() =>
@@ -60,7 +62,7 @@ class _PersonalScheduleWidgetState
       children: [
         SizedBox(
           width: width * (881 / 1920),
-          height: width * (827 / 1920),
+          // height: width * (827 / 1920),
           child: GeneralTabableCard(
             tabs: [
               TabOfTabableCard(
@@ -68,11 +70,12 @@ class _PersonalScheduleWidgetState
                 tabColor: thirdColorPrimary,
                 bodyOfTheTab: InsideTabPersonalAndDealScheduleWidget(
                   personalAndDealsNotes: widget.personalAndDealsNotes,
+                  fullHeight: widget.fullHeight ?? width * (760 / 1920),
                 ),
               ),
             ],
             fullCardWidth: width * (881 / 1920),
-            fullCardHeight: width * (760 / 1920),
+            fullCardHeight: widget.fullHeight ?? width * (760 / 1920),
           ),
         ),
         Positioned(

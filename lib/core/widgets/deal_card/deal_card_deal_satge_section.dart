@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
-class DealCardSection1 extends StatelessWidget {
-  const DealCardSection1({super.key, required this.dealStage});
+class DealCardDealSatgeSection extends StatelessWidget {
+  const DealCardDealSatgeSection({super.key, required this.dealStage});
   final String dealStage;
 
   @override

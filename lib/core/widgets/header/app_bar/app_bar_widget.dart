@@ -43,14 +43,17 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         children: List.generate(
           widget.appBarComponents.length,
           (int i) => GestureDetector(
-            onTap: () {
-              setState(() {
-                for (int i = 0; i < clickedAppBarComponent.length; i++) {
-                  clickedAppBarComponent[i] = false;
-                }
-                clickedAppBarComponent[i] = true;
-              });
-            },
+            onTap: clickedAppBarComponent[i]
+                ? () {}
+                : () {
+                    setState(() {
+                      for (int i = 0; i < clickedAppBarComponent.length; i++) {
+                        clickedAppBarComponent[i] = false;
+                      }
+                      clickedAppBarComponent[i] = true;
+                      widget.appBarComponents[i].onTap();
+                    });
+                  },
             child: AppBarComponent(
               component: widget.appBarComponents[i],
               isClicked: clickedAppBarComponent[i],

@@ -106,7 +106,9 @@ class AppBarComponentInfo {
   const AppBarComponentInfo({
     required this.appBarComponentImage,
     required this.appBarCopmonentName,
+    required this.onTap,
   });
   final String appBarCopmonentName;
   final String appBarComponentImage;
+  final void Function() onTap;
 }

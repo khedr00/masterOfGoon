@@ -5,8 +5,10 @@ class InsideTabPersonalAndDealScheduleWidget extends StatefulWidget {
   const InsideTabPersonalAndDealScheduleWidget({
     super.key,
     required this.personalAndDealsNotes,
+    this.fullHeight,
   });
   final List<dynamic> personalAndDealsNotes;
+  final double? fullHeight;
 
   @override
   State<InsideTabPersonalAndDealScheduleWidget> createState() =>
@@ -48,7 +50,7 @@ class _InsideTabPersonalAndDealScheduleWidgetState
 
     return Container(
       width: width * (881 / 1920),
-      height: width * (760 / 1920),
+      height: widget.fullHeight ?? width * (760 / 1920),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(

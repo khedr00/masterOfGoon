@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/modules/deal/deal.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/core/widgets/deal_card/deal_card_section1.dart';
-import 'package:untitled1/core/widgets/deal_card/deal_card_section2.dart';
-import 'package:untitled1/core/widgets/deal_card/deal_card_section3.dart';
+import 'package:untitled1/core/widgets/deal_card/deal_card_deal_satge_section.dart';
+import 'package:untitled1/core/widgets/deal_card/deal_card_client_section.dart';
+import 'package:untitled1/core/widgets/deal_card/deal_card_property_section.dart';
 
 class DealCard extends StatelessWidget {
   const DealCard({super.key, required this.deal});
@@ -26,10 +26,10 @@ class DealCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DealCardSection1(
+                  DealCardDealSatgeSection(
                     dealStage: deal.dealStage.toString().substring(10),
                   ),
-                  DealCardSection2(
+                  DealCardClientSection(
                     clientImage: Image.asset(
                       'assets/images/profilePhoto-icon.png',
                     ),
@@ -40,7 +40,7 @@ class DealCard extends StatelessWidget {
                   ),
                 ],
               ),
-              DealCardSection3(
+              DealCardPropertySection(
                 propertyType: 'Villa',
                 price: '130000',
                 propertyImage: Image.asset('assets/images/skyscrapers.png'),

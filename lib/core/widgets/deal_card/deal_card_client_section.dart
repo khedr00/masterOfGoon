@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
-class DealCardSection2 extends StatelessWidget {
-  const DealCardSection2({
+class DealCardClientSection extends StatelessWidget {
+  const DealCardClientSection({
     super.key,
     required this.clientImage,
     required this.clientName,

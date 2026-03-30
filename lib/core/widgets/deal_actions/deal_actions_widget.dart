@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
 
 class DealActionsWidget extends StatefulWidget {
   const DealActionsWidget({super.key});
@@ -87,24 +88,10 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: width * ((_debugWidth / 1.2) / 1920),
-                        child: TextField(
-                          controller: TextEditingController(),
-                          onChanged: _onTextChanged,
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Enter Description',
-                            hintStyle: TextStyle(
-                              color: const Color.fromARGB(151, 255, 255, 255),
-                              fontFamily: 'NunitoSans-Light',
-                            ),
-                            filled: true,
-                            fillColor: thirdColorSecondary,
-                          ),
-                          maxLines: 3,
-                        ),
+                      CustomTextField(
+                        onChanged: _onTextChanged,
+                        hintText: 'Enter Description',
+                        widthOfTextField: _debugWidth / 1.2,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -170,24 +157,10 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: width * ((_debugWidth / 1.2) / 1920),
-                        child: TextField(
-                          controller: TextEditingController(),
-                          onChanged: _onTextChanged,
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Enter Description',
-                            hintStyle: TextStyle(
-                              color: const Color.fromARGB(151, 255, 255, 255),
-                              fontFamily: 'NunitoSans-Light',
-                            ),
-                            filled: true,
-                            fillColor: thirdColorSecondary,
-                          ),
-                          maxLines: 3,
-                        ),
+                      CustomTextField(
+                        onChanged: _onTextChanged,
+                        hintText: 'Enter Description',
+                        widthOfTextField: _debugWidth / 1.2,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -266,24 +239,10 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: width * ((_debugWidth / 1.2) / 1920),
-                        child: TextField(
-                          controller: TextEditingController(),
-                          onChanged: _onTextChanged,
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Enter Description',
-                            hintStyle: TextStyle(
-                              color: const Color.fromARGB(151, 255, 255, 255),
-                              fontFamily: 'NunitoSans-Light',
-                            ),
-                            filled: true,
-                            fillColor: thirdColorSecondary,
-                          ),
-                          maxLines: 3,
-                        ),
+                      CustomTextField(
+                        onChanged: _onTextChanged,
+                        hintText: 'Enter Description',
+                        widthOfTextField: _debugWidth / 1.2,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

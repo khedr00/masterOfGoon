@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
-class DealCardSection3 extends StatelessWidget {
-  const DealCardSection3({
+class DealCardPropertySection extends StatelessWidget {
+  const DealCardPropertySection({
     super.key,
     required this.propertyType,
     required this.price,
