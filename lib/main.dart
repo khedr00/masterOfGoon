@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/features/header_primary_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
+import 'package:untitled1/providers/icon_selector_provider.dart';
 import 'package:untitled1/providers/page_selector_provider.dart';
 
 void main() {
@@ -16,6 +17,11 @@ void main() {
         ChangeNotifierProvider(
           create: (context) {
             return PageSelectorProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return IconSelectorProvider();
           },
         ),
       ],
