@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/profile_feature/widgets/notification/notification_card.dart';
+import 'package:untitled1/features/profile_feature/widgets/notification/notification_widget.dart';
+import 'package:untitled1/features/profile_feature/widgets/profile_card.dart';
+import 'package:untitled1/features/profile_feature/widgets/stats_widget.dart/stats_widget.dart';
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ProfileCard(),
+          StatsWidget(),
+          NotificationWidget(
+            managerNotes: [
+              NotificationCard(
+                notecolor: secondaryColor,
+                dangerIndicatorColor: sixthColorPrimaryRed,
+                title: 'manager MEETING',
+                subTitle: 'on expenses',
+                date: '7/9/2025',
+                description:
+                    ' You have a meeting with the sub manager at   10/9/2025',
+              ),
+              NotificationCard(
+                notecolor: secondaryColor,
+                dangerIndicatorColor: sixthColorPrimaryRed,
+                title: 'manager MEETING',
+                subTitle: 'on expenses',
+                date: '7/9/2025',
+                description:
+                    ' You have a meeting with the sub manager at   10/9/2025',
+              ),
+            ],
+            personalNotes: [
+              NotificationCard(
+                notecolor: thirdColorSecondary,
+                dangerIndicatorColor: sixthColorPrimaryRed,
+                title: 'client MEETING',
+                subTitle: 'ID : 3547859',
+                date: '7/9/2025',
+                description:
+                    ' You have a metting with Ali Mostafa to check the  V -122  in Homs , Shien at   10/9/2025',
+              ),
+              NotificationCard(
+                notecolor: thirdColorSecondary,
+                dangerIndicatorColor: Color(0xffBBA30A),
+                title: 'Unreported Deal',
+                subTitle: 'ID : 3547859',
+                date: '7/9/2025',
+                description:
+                    ' You closed the Kitlleman Villa Deal with Ali Mostafa on  V -122  in Homs , Shien at   10/9/2025 and you left it unreported .',
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

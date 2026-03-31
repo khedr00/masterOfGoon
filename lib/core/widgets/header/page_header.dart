@@ -5,6 +5,8 @@ import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
 import 'package:untitled1/features/employee_home_page.dart';
 import 'package:untitled1/features/history_feature/screens/history_page.dart';
+import 'package:untitled1/features/profile_feature/profile_page.dart';
+import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/schedule_feature/screen/schedule_page.dart';
 import 'package:untitled1/providers/page_selector_provider.dart';
 
@@ -38,7 +40,9 @@ class _PageHeaderState extends State<PageHeader> {
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/profilePhoto-icon.png',
                 appBarCopmonentName: 'Profile',
-                onTap: () {},
+                onTap: () {
+                  pageSelectorProvider.selectPage(ProfilePage());
+                },
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Home.png',
@@ -69,7 +73,9 @@ class _PageHeaderState extends State<PageHeader> {
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Apartment.png',
                 appBarCopmonentName: 'Properties',
-                onTap: () {},
+                onTap: () {
+                  pageSelectorProvider.selectPage(PropertyPage());
+                },
               ),
             ],
           ),

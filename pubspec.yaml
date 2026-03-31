@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  fl_chart: ^0.68.0
   intl: ^0.18.1
   provider: ^6.1.5+1
   flutter:
@@ -84,6 +85,9 @@ flutter:
     - family: NunitoSans-Black
       fonts: 
         - asset: assets/fonts/NunitoSans-Black.ttf
+    - family: NunitoSans-Bold
+      fonts: 
+        - asset: assets/fonts/NunitoSans-Bold.ttf
     - family: NunitoSans-BlackItalic
       fonts:
         - asset: assets/fonts/NunitoSans-BlackItalic.ttf

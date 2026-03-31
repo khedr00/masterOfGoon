@@ -26,7 +26,7 @@ class _ButtonWithTextState extends State<ButtonWithText> {
       buttonAction: widget.buttonAction,
       widthOfButton: widget.widthOfButton,
       heightOfButton: widget.heightOfButton,
-      borderRadiusOfButton: 1000,
+      borderRadiusOfButton: width * (10 / 1920),
       child: Center(
         child: Text(
           widget.text,
