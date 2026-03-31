@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/property_card/property_card_lower_section.dart';
 import 'package:untitled1/core/widgets/property_card/property_card_upper_section.dart';
+import 'package:untitled1/core/widgets/property_card/tabable_property_icon.dart';
 
 class PropertyCard extends StatelessWidget {
   const PropertyCard({super.key});
@@ -103,6 +104,68 @@ class PropertyCard extends StatelessWidget {
                 bottomRight: Radius.circular(width * (10 / 1920)),
               ),
             ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: width * (30 / 1920),
+                      height: width * (30 / 1920),
+                      child: Image.asset('assets/images/Price Tag USD.png'),
+                    ),
+                    Text(
+                      '120000-130000 \$',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NunitoSans-ExtraBold',
+                        fontSize: width * (20 / 1920),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: width * (30 / 1920),
+                      height: width * (30 / 1920),
+                      child: Image.asset('assets/images/Split Money.png'),
+                    ),
+                    Text(
+                      '14000 \$',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NunitoSans-LightItalic',
+                        fontSize: width * (20 / 1920),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: width * (30 / 1920),
+                      height: width * (30 / 1920),
+                      child: Image.asset('assets/images/Closet.png'),
+                    ),
+                    Text(
+                      'Furnished',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NunitoSans-Medium',
+                        fontSize: width * (20 / 1920),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         Positioned(
@@ -117,6 +180,75 @@ class PropertyCard extends StatelessWidget {
                 topLeft: Radius.circular(width * (10 / 1920)),
                 bottomLeft: Radius.circular(width * (10 / 1920)),
               ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Near By :',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'NunitoSans-Regular',
+                    fontSize: width * (32 / 1920),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: width * (30 / 1920),
+                      height: width * (30 / 1920),
+                      child: Image.asset('assets/images/School.png'),
+                    ),
+                    Text(
+                      'School',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NunitoSans-Regular',
+                        fontSize: width * (24 / 1920),
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * (30 / 1920),
+                      height: width * (30 / 1920),
+                      child: Image.asset('assets/images/ph.png'),
+                    ),
+                    Text(
+                      'Pharmacy',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NunitoSans-Regular',
+                        fontSize: width * (24 / 1920),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: width * (30 / 1920),
+                      height: width * (30 / 1920),
+                      child: Image.asset('assets/images/Stall.png'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: width * (10 / 1920)),
+                      child: Text(
+                        'Market',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'NunitoSans-Regular',
+                          fontSize: width * (24 / 1920),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -144,6 +276,17 @@ class PropertyCard extends StatelessWidget {
               color: fourthColorSecondaryLightBrown,
               borderRadius: BorderRadius.circular(width * (10 / 1920)),
             ),
+            child: Center(
+              child: Text(
+                'Mountain View Villa',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'NunitoSans-Black',
+                  fontSize: width * (36 / 1920),
+                ),
+              ),
+            ),
           ),
         ),
         Positioned(
@@ -157,6 +300,17 @@ class PropertyCard extends StatelessWidget {
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(width * (10 / 1920)),
                 bottomLeft: Radius.circular(width * (10 / 1920)),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'V-265',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'NunitoSans-BlackItalic',
+                  fontSize: width * (28 / 1920),
+                ),
               ),
             ),
           ),
