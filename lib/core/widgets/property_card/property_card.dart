@@ -36,6 +36,25 @@ class PropertyCard extends StatelessWidget {
                 topLeft: Radius.circular(width * (10 / 1920)),
               ),
             ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: width * (50 / 1920),
+                  height: width * (50 / 1920),
+                  child: Image.asset('assets/images/Mansion.png'),
+                ),
+                Text(
+                  'villa',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'NunitoSans-Bold',
+                    fontSize: width * (24 / 1920),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Positioned(
@@ -47,6 +66,27 @@ class PropertyCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: fourthColorSecondaryLightBrown,
               borderRadius: BorderRadius.circular(width * (10 / 1920)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: width * (90 / 1920),
+                  height: width * (90 / 1920),
+                  child: Image.asset(
+                    'assets/images/Map with marked location.png',
+                  ),
+                ),
+                Text(
+                  'Tartous,Syria,Al-Qadmous',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'NunitoSans-Regular',
+                    fontSize: width * (18 / 1920),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/core/widgets/property_card/tabable_property_icon.dart';
 
 class PropertyCardUpperSection extends StatelessWidget {
   const PropertyCardUpperSection({super.key});
@@ -53,7 +54,20 @@ class PropertyCardUpperSection extends StatelessWidget {
                   children: [
                     Container(width: width * (137 / 1920), color: Colors.white),
                     // شرح العقار الزيادة
-                    SizedBox(width: width * (709 / 1920)),
+                    SizedBox(
+                      width: width * (709 / 1920),
+                      child: Center(
+                        child: Text(
+                          'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'NunitoSans-Medium',
+                            fontSize: width * (28 / 1920),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -71,7 +85,44 @@ class PropertyCardUpperSection extends StatelessWidget {
                       ),
                     ),
                     // هون المعلومات الأساسية اللي جاي بالنص
-                    SizedBox(width: width * (631 / 1920)),
+                    SizedBox(
+                      width: width * (631 / 1920),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TabablePropertyIcon(
+                                image: 'assets/images/House.png',
+                                text: '380 M',
+                              ),
+                              TabablePropertyIcon(
+                                image: 'assets/images/Sofa.png',
+                                text: '6 Rooms',
+                              ),
+                              TabablePropertyIcon(
+                                image: 'assets/images/Star.png',
+                                text: '9.2',
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TabablePropertyIcon(
+                                image: 'assets/images/Basement.png',
+                                text: '100 M',
+                              ),
+                              TabablePropertyIcon(
+                                image: 'assets/images/Stairs Up.png',
+                                text: '3 floors',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -107,7 +158,40 @@ class PropertyCardUpperSection extends StatelessWidget {
                 child: Row(
                   children: [
                     // هون الأوتدور وهيك
-                    SizedBox(width: width * (542 / 1920)),
+                    SizedBox(
+                      width: width * (542 / 1920),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TabablePropertyIcon(
+                                image: 'assets/images/Parking.png',
+                                text: '2 Cars',
+                              ),
+                              TabablePropertyIcon(
+                                image: 'assets/images/Balcony.png',
+                                text: '3 Balconys',
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TabablePropertyIcon(
+                                image: 'assets/images/Garden.png',
+                                text: 'Garden',
+                              ),
+                              TabablePropertyIcon(
+                                image: 'assets/images/Pool.png',
+                                text: '3M Pool',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                     Container(width: width * (304 / 1920), color: Colors.white),
                   ],
                 ),
