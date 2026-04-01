@@ -14,7 +14,7 @@ class PageHeader extends StatefulWidget implements PreferredSizeWidget {
   const PageHeader({super.key, required this.width});
   final double width;
   @override
-  Size get preferredSize => Size.fromHeight(width * (150 / 1920));
+  Size get preferredSize => Size.fromHeight(width * (119 / 1920));
 
   @override
   State<PageHeader> createState() => _PageHeaderState();

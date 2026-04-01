@@ -76,7 +76,7 @@ class PropertyCardLowerSection extends StatelessWidget {
                       'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: 'NunitoSans-Medium',
                         fontSize: width * (28 / 1920),
                       ),

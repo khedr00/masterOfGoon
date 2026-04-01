@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/widgets/property_card/property_card.dart';
+import 'package:untitled1/features/property_feature/widgets/expanded_property_card_with_photos.dart';
+import 'package:untitled1/features/property_feature/widgets/property_mini_cards_viewer/property_mini_cards_viewer.dart';
 
 class PropertyPage extends StatefulWidget {
   const PropertyPage({super.key});
@@ -11,6 +12,12 @@ class PropertyPage extends StatefulWidget {
 class _PropertyPageState extends State<PropertyPage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(child: Center(child: PropertyCard()));
+    // double width = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [PropertyMiniCardsViewer(), ExpandedPropertyCardWithPhotos()],
+      ),
+    );
   }
 }

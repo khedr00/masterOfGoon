@@ -10,6 +10,7 @@ import 'package:untitled1/core/widgets/liked_and_avoidances_body/avoidances_only
 import 'package:untitled1/core/widgets/liked_and_avoidances_body/liked_only_body.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/deal_note_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
+import 'package:untitled1/core/widgets/property_card/property_card.dart';
 import 'package:untitled1/core/widgets/simple_deal_info_card/simple_deal_info_card.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_notes_widget.dart';
 
@@ -445,9 +446,26 @@ class _DealPageState extends State<DealPage> {
                       tabColor: primaryColor,
                       bodyOfTheTab: DealActionsWidget(),
                     ),
+                    TabOfTabableCard(
+                      tabName: 'Property',
+                      tabColor: fourthColorPrimaryBrown,
+                      bodyOfTheTab: Container(
+                        width: width * (881 / 1920),
+                        height: width * (910 / 1920),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(width * (30 / 1920)),
+                            bottomLeft: Radius.circular(width * (30 / 1920)),
+                            bottomRight: Radius.circular(width * (30 / 1920)),
+                          ),
+                        ),
+                        child: Center(child: PropertyCard()),
+                      ),
+                    ),
                   ],
-                  fullCardWidth: width * (881 / 1920),
-                  fullCardHeight: width * (827 / 1920),
+                  fullCardWidth: width * (895 / 1920),
+                  fullCardHeight: width * (910 / 1920),
                 ),
               ],
             ),

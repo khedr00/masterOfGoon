@@ -49,7 +49,7 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
     }
 
     return Container(
-      width: width * (881 / 1920),
+      width: width * (895 / 1920),
       height: width * (827 / 1920),
       decoration: widget.forDealPage
           ? BoxDecoration(
@@ -72,9 +72,16 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
         child: Column(
           children: [
             Container(
-              width: width * (881 / 1920),
+              width: width * (895 / 1920),
               // height: width * (177 / 1920),
-              decoration: BoxDecoration(color: thirdColorPrimary),
+              decoration: BoxDecoration(
+                color: thirdColorPrimary,
+                borderRadius: widget.forDealPage
+                    ? BorderRadius.only(
+                        topRight: Radius.circular(width * (30 / 1920)),
+                      )
+                    : BorderRadius.circular(1),
+              ),
               child: Column(children: dealsNotes),
             ),
             Column(children: apoitmentsNotesWithPaddings),
