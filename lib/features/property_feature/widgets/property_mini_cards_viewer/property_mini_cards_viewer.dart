@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
-import 'package:untitled1/features/property_feature/widgets/property_mini_cards_viewer/property_mini_card.dart';
+import 'package:untitled1/features/property_feature/widgets/property_cards/property_mini_card.dart';
 
 class PropertyMiniCardsViewer extends StatelessWidget {
   const PropertyMiniCardsViewer({super.key});
@@ -42,7 +42,6 @@ class PropertyMiniCardsViewer extends StatelessWidget {
           ),
           SizedBox(
             height: width * (850 / 1920),
-
             child: ListView.builder(
               itemCount: 10,
               itemBuilder: (BuildContext context, int i) {
