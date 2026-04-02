@@ -12,6 +12,7 @@ class HallCardModuleInfo extends PropertyCardModuleInfo {
     required super.address,
     required this.furnished,
     required super.avaliableInternet,
+    required super.isAvalable,
   });
   final String furnished;
 }

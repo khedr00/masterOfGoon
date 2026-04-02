@@ -23,6 +23,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             simplePropertyDescription: temp[i]['simplePropertyDescription'],
             address: temp[i]['address'],
             avaliableInternet: temp[i]['avaliableInternet'],
+            isAvalable: temp[i]['isAvalable'],
             numberOfFloors: temp[i]['numberOfFloors'],
           ),
         );
@@ -39,13 +40,14 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             simplePropertyDescription: temp[i]['simplePropertyDescription'],
             address: temp[i]['address'],
             avaliableInternet: temp[i]['avaliableInternet'],
+            isAvalable: temp[i]['isAvalable'],
             garden: temp[i]['garden'],
           ),
         );
         break;
-      case 'appartment':
+      case 'apartment':
         temp2.add(
-          AppartmentCardModuleInfo(
+          ApartmentCardModuleInfo(
             photoUrl: temp[i]['imageUrl'],
             propertyType: temp[i]['propertyType'],
             nameCode: temp[i]['nameCode'],
@@ -55,6 +57,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             simplePropertyDescription: temp[i]['simplePropertyDescription'],
             address: temp[i]['address'],
             avaliableInternet: temp[i]['avaliableInternet'],
+            isAvalable: temp[i]['isAvalable'],
             elevator: temp[i]['elevator'],
           ),
         );
@@ -72,6 +75,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             address: temp[i]['address'],
             avaliableInternet: temp[i]['avaliableInternet'],
             interface: temp[i]['interface'],
+            isAvalable: temp[i]['isAvalable'],
           ),
         );
         break;
@@ -87,6 +91,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             simplePropertyDescription: temp[i]['simplePropertyDescription'],
             address: temp[i]['address'],
             avaliableInternet: temp[i]['avaliableInternet'],
+            isAvalable: temp[i]['isAvalable'],
             furnished: temp[i]['furnished'],
           ),
         );
@@ -98,6 +103,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
 
 Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
   required String role,
+  required int numberOfPastCalles,
 }) async {
   await Future.delayed(const Duration(seconds: 3));
   List<Map<String, dynamic>> temp = [];
@@ -110,9 +116,10 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'numberOfRooms': 4,
       'sqft': 180,
       'leastSellPrice': 100000,
-      'simplePropertyDescription': 'suberb house with view on the street',
+      'simplePropertyDescription': 'suberb house with view ',
       'address': 'Syria-Homs-shien',
       'avaliableInternet': true,
+      'isAvalable': true,
       'numberOfFloors': 2,
     });
   }
@@ -126,14 +133,15 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'leastSellPrice': 900000,
       'simplePropertyDescription': 'mountaim view villa',
       'address': 'Syria-Homs-shien',
-      'avaliableInternet': true,
+      'avaliableInternet': false,
+      'isAvalable': false,
       'garden': true,
     });
   }
   for (int i = 0; i < 2; i++) {
     temp.add({
       'imageUrl': 'assets/images/test_photos/3.jpg',
-      'propertyType': 'appartment',
+      'propertyType': 'apartment',
       'nameCode': 'A-2234',
       'numberOfRooms': 5,
       'sqft': 120,
@@ -141,6 +149,7 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'simplePropertyDescription': 'appartment with a view',
       'address': 'Syria-Homs-shien',
       'avaliableInternet': true,
+      'isAvalable': true,
       'elevator': true,
     });
   }
@@ -155,6 +164,7 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'simplePropertyDescription': 'playstation hall',
       'address': 'Syria-Homs-shien',
       'avaliableInternet': true,
+      'isAvalable': true,
       'furnished': 'full',
     });
   }
@@ -169,6 +179,7 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'simplePropertyDescription': 'store in souk',
       'address': 'Syria-Homs-shien',
       'avaliableInternet': true,
+      'isAvalable': true,
       'interface': 'glass',
     });
   }

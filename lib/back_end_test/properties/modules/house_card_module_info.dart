@@ -12,6 +12,7 @@ class HouseCardModuleInfo extends PropertyCardModuleInfo {
     required super.address,
     required this.numberOfFloors,
     required super.avaliableInternet,
+    required super.isAvalable,
   });
   final int numberOfFloors;
 }

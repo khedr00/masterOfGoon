@@ -12,6 +12,7 @@ class StoreCardModuleInfo extends PropertyCardModuleInfo {
     required super.address,
     required this.interface,
     required super.avaliableInternet,
+    required super.isAvalable,
   });
   final String interface;
 }

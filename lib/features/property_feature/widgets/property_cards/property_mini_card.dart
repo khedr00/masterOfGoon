@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_card_module_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
 class PropertyMiniCard extends StatelessWidget {
-  const PropertyMiniCard({super.key});
+  const PropertyMiniCard({
+    super.key,
+    required this.propertyType,
+    required this.propertyTypeIcon,
+    required this.changingDataText,
+    required this.changingDataTextIcon,
+    required this.propertyCardModuleInfo,
+  });
+  final String propertyType;
+  final String propertyTypeIcon;
+  final String changingDataText;
+  final String changingDataTextIcon;
+  final PropertyCardModuleInfo propertyCardModuleInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +77,14 @@ class PropertyMiniCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Image.asset(
-                            'assets/images/Mansion.png',
+                            propertyTypeIcon,
+                            // 'assets/images/Mansion.png'
                             width: width * (39 / 1920),
                             height: width * (39 / 1920),
                           ),
                           Text(
-                            'Villa',
+                            propertyType,
+                            // 'Villa'
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'NunitoSans-Bold',
@@ -88,7 +103,7 @@ class PropertyMiniCard extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          'V-123',
+                          propertyCardModuleInfo.nameCode,
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'NunitoSans-BlackItalic',
@@ -98,12 +113,9 @@ class PropertyMiniCard extends StatelessWidget {
                       ),
                     ),
                     Image.asset(
-                      'assets/images/Closet.png',
-                      width: width * (41 / 1920),
-                      height: width * (41 / 1920),
-                    ),
-                    Image.asset(
-                      'assets/images/Parking.png',
+                      propertyCardModuleInfo.avaliableInternet
+                          ? 'assets/images/Wi-Fi.png'
+                          : 'assets/images/Wi-Fi off.png',
                       width: width * (41 / 1920),
                       height: width * (41 / 1920),
                     ),
@@ -120,7 +132,7 @@ class PropertyMiniCard extends StatelessWidget {
                   ),
                   Spacer(flex: 1),
                   Text(
-                    '12000-13000\$',
+                    '${propertyCardModuleInfo.leastSellPrice}\$',
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'NunitoSans-Regular',
@@ -129,13 +141,14 @@ class PropertyMiniCard extends StatelessWidget {
                   ),
                   Spacer(flex: 5),
                   Image.asset(
-                    'assets/images/Star.png',
+                    changingDataTextIcon,
+                    // 'assets/images/Star.png'
                     width: width * (30 / 1920),
                     height: width * (30 / 1920),
                   ),
                   Spacer(flex: 1),
                   Text(
-                    '5.3',
+                    changingDataText,
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'NunitoSans-Regular',
@@ -157,7 +170,7 @@ class PropertyMiniCard extends StatelessWidget {
                     ),
                     Spacer(flex: 1),
                     Text(
-                      ' 6 Rooms',
+                      '${propertyCardModuleInfo.numberOfRooms.toString()} Rooms',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'NunitoSans-Regular',
@@ -172,7 +185,7 @@ class PropertyMiniCard extends StatelessWidget {
                     ),
                     Spacer(flex: 1),
                     Text(
-                      '380 M',
+                      '${propertyCardModuleInfo.sqft.toString()} M',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'NunitoSans-Regular',
@@ -195,14 +208,14 @@ class PropertyMiniCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Mountain View Villa',
+                        propertyCardModuleInfo.simplePropertyDescription,
                         style: TextStyle(
                           fontFamily: 'NunitoSans-ExtraBold',
                           fontSize: width * (24 / 1920),
                         ),
                       ),
                       Text(
-                        'Al-QadmousTartous,Syria',
+                        propertyCardModuleInfo.address,
                         style: TextStyle(
                           fontFamily: 'NunitoSans-Regular',
                           fontSize: width * (19 / 1920),
@@ -211,7 +224,9 @@ class PropertyMiniCard extends StatelessWidget {
                     ],
                   ),
                   Image.asset(
-                    'assets/images/Check Mark.png',
+                    propertyCardModuleInfo.isAvalable
+                        ? 'assets/images/Check Mark.png'
+                        : 'assets/images/Cancel.png',
                     width: width * (60 / 1920),
                     height: width * (60 / 1920),
                   ),

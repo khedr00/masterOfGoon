@@ -12,6 +12,7 @@ class VillaCardModuleInfo extends PropertyCardModuleInfo {
     required super.address,
     required this.garden,
     required super.avaliableInternet,
+    required super.isAvalable,
   });
   final bool garden;
 }
