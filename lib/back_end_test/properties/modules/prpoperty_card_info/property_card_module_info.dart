@@ -10,6 +10,7 @@ class PropertyCardModuleInfo {
     required this.address,
     required this.avaliableInternet,
     required this.isAvalable,
+    required this.id,
   });
   final String photoUrl;
   final String propertyType;
@@ -21,4 +22,5 @@ class PropertyCardModuleInfo {
   final String address;
   final bool avaliableInternet;
   final bool isAvalable;
+  final int id;
 }

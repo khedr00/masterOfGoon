@@ -1,9 +1,9 @@
-import 'package:untitled1/back_end_test/properties/modules/appartment_card_module_info.dart';
-import 'package:untitled1/back_end_test/properties/modules/hall_card_module_info.dart';
-import 'package:untitled1/back_end_test/properties/modules/house_card_module_info.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_card_module_info.dart';
-import 'package:untitled1/back_end_test/properties/modules/store_card_module_info.dart';
-import 'package:untitled1/back_end_test/properties/modules/villa_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/appartment_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/hall_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/house_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/store_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/villa_card_module_info.dart';
 
 Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
   List<Map<String, dynamic>> temp,
@@ -25,6 +25,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             avaliableInternet: temp[i]['avaliableInternet'],
             isAvalable: temp[i]['isAvalable'],
             numberOfFloors: temp[i]['numberOfFloors'],
+            id: temp[i]['id'],
           ),
         );
         break;
@@ -42,6 +43,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             avaliableInternet: temp[i]['avaliableInternet'],
             isAvalable: temp[i]['isAvalable'],
             garden: temp[i]['garden'],
+            id: temp[i]['id'],
           ),
         );
         break;
@@ -59,6 +61,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             avaliableInternet: temp[i]['avaliableInternet'],
             isAvalable: temp[i]['isAvalable'],
             elevator: temp[i]['elevator'],
+            id: temp[i]['id'],
           ),
         );
         break;
@@ -76,6 +79,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             avaliableInternet: temp[i]['avaliableInternet'],
             interface: temp[i]['interface'],
             isAvalable: temp[i]['isAvalable'],
+            id: temp[i]['id'],
           ),
         );
         break;
@@ -93,6 +97,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
             avaliableInternet: temp[i]['avaliableInternet'],
             isAvalable: temp[i]['isAvalable'],
             furnished: temp[i]['furnished'],
+            id: temp[i]['id'],
           ),
         );
         break;
@@ -116,11 +121,12 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'numberOfRooms': 4,
       'sqft': 180,
       'leastSellPrice': 100000,
-      'simplePropertyDescription': 'suberb house with view ',
+      'simplePropertyDescription': 'suberb house view ',
       'address': 'Syria-Homs-shien',
       'avaliableInternet': true,
       'isAvalable': true,
       'numberOfFloors': 2,
+      'id': 5,
     });
   }
   for (int i = 0; i < 2; i++) {
@@ -136,6 +142,7 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'avaliableInternet': false,
       'isAvalable': false,
       'garden': true,
+      'id': 5,
     });
   }
   for (int i = 0; i < 2; i++) {
@@ -146,11 +153,12 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'numberOfRooms': 5,
       'sqft': 120,
       'leastSellPrice': 80000,
-      'simplePropertyDescription': 'appartment with a view',
+      'simplePropertyDescription': 'apparnt with view',
       'address': 'Syria-Homs-shien',
       'avaliableInternet': true,
       'isAvalable': true,
       'elevator': true,
+      'id': 5,
     });
   }
   for (int i = 0; i < 2; i++) {
@@ -166,6 +174,7 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'avaliableInternet': true,
       'isAvalable': true,
       'furnished': 'full',
+      'id': 5,
     });
   }
   for (int i = 0; i < 2; i++) {
@@ -181,6 +190,7 @@ Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
       'avaliableInternet': true,
       'isAvalable': true,
       'interface': 'glass',
+      'id': 5,
     });
   }
 

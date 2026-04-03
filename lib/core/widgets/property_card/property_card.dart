@@ -1,14 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/back_end_test/properties/get_prop_info_with_prim_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/hall_info_with_primary_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/house_info_with_primary_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/core/widgets/property_card/apartment_card_upper_section.dart';
+import 'package:untitled1/core/widgets/property_card/hall_card_upper_section.dart';
+import 'package:untitled1/core/widgets/property_card/house_card_upper_section.dart';
 import 'package:untitled1/core/widgets/property_card/property_card_lower_section.dart';
-import 'package:untitled1/core/widgets/property_card/property_card_upper_section.dart';
+import 'package:untitled1/core/widgets/property_card/store_card_upper_section.dart';
+import 'package:untitled1/core/widgets/property_card/villa_card_upper_section.dart';
 
-class PropertyCard extends StatelessWidget {
+class PropertyCard extends StatefulWidget {
   const PropertyCard({super.key});
+
+  @override
+  State<PropertyCard> createState() => _PropertyCardState();
+}
+
+class _PropertyCardState extends State<PropertyCard> {
+  dynamic _propertyInfo;
+  void _getPropertyInfo() async {
+    dynamic propertyInfo = await getPropertyInfoWithPrimaryImages(id: 5);
+    setState(() {
+      _propertyInfo = propertyInfo;
+    });
+  }
+
+  @override
+  void initState() {
+    _getPropertyInfo();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    if (_propertyInfo == null) {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
     return Stack(
       children: [
         Container(
@@ -18,239 +52,31 @@ class PropertyCard extends StatelessWidget {
           child: Column(
             children: [
               // اول قسم اساسي من فوق
-              PropertyCardUpperSection(),
+              _propertyInfo is HouseInfoWithPrimaryImages
+                  ? HouseCardUpperSection(
+                      houseInfoWithPrimaryImages: _propertyInfo!,
+                    )
+                  : _propertyInfo is HallInfoWithPrimaryImages
+                  ? HallCardUpperSection(
+                      hallInfoWithPrimaryImages: _propertyInfo!,
+                    )
+                  : _propertyInfo is VillaInfoWithPrimaryImages
+                  ? VillaCardUpperSection(
+                      villaInfoWithPrimaryImages: _propertyInfo!,
+                    )
+                  : _propertyInfo is ApartmentInfoWithPrimaryImages
+                  ? ApartmentCardUpperSection(
+                      apartmentInfoWithPrimaryImages: _propertyInfo!,
+                    )
+                  : StoreCardUpperSection(
+                      storeInfoWithPrimaryImages: _propertyInfo,
+                    ),
               // تاني قسم رئيسي من تحت
               PropertyCardLowerSection(),
             ],
           ),
         ),
-        Positioned(
-          top: 0,
-          left: 0,
-          child: Container(
-            width: width * (137 / 1920),
-            height: width * (58 / 1920),
-            decoration: BoxDecoration(
-              color: fourthColorPrimaryBrown,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(width * (10 / 1920)),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: width * (50 / 1920),
-                  height: width * (50 / 1920),
-                  child: Image.asset('assets/images/Mansion.png'),
-                ),
-                Text(
-                  'villa',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'NunitoSans-Bold',
-                    fontSize: width * (24 / 1920),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: width * (67 / 1920),
-          left: width * (10 / 1920),
-          child: Container(
-            width: width * (127 / 1920),
-            height: width * (178 / 1920),
-            decoration: BoxDecoration(
-              color: fourthColorSecondaryLightBrown,
-              borderRadius: BorderRadius.circular(width * (10 / 1920)),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: width * (90 / 1920),
-                  height: width * (90 / 1920),
-                  child: Image.asset(
-                    'assets/images/Map with marked location.png',
-                  ),
-                ),
-                Text(
-                  'Tartous,Syria,Al-Qadmous',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'NunitoSans-Regular',
-                    fontSize: width * (18 / 1920),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: width * (255 / 1920),
-          left: 0,
-          child: Container(
-            width: width * (215 / 1920),
-            height: width * (169 / 1920),
-            decoration: BoxDecoration(
-              color: fourthColorPrimaryBrown,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(width * (10 / 1920)),
-                bottomRight: Radius.circular(width * (10 / 1920)),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset('assets/images/Price Tag USD.png'),
-                    ),
-                    Text(
-                      '120000-130000 \$',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'NunitoSans-ExtraBold',
-                        fontSize: width * (20 / 1920),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset('assets/images/Split Money.png'),
-                    ),
-                    Text(
-                      '14000 \$',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'NunitoSans-LightItalic',
-                        fontSize: width * (20 / 1920),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset('assets/images/Closet.png'),
-                    ),
-                    Text(
-                      'Furnished',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'NunitoSans-Medium',
-                        fontSize: width * (20 / 1920),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: width * (410 / 1920),
-          right: 0,
-          child: Container(
-            width: width * (304 / 1920),
-            height: width * (218 / 1920),
-            decoration: BoxDecoration(
-              color: fourthColorPrimaryBrown,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(width * (10 / 1920)),
-                bottomLeft: Radius.circular(width * (10 / 1920)),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  'Near By :',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'NunitoSans-Regular',
-                    fontSize: width * (32 / 1920),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset('assets/images/School.png'),
-                    ),
-                    Text(
-                      'School',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'NunitoSans-Regular',
-                        fontSize: width * (24 / 1920),
-                      ),
-                    ),
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset('assets/images/ph.png'),
-                    ),
-                    Text(
-                      'Pharmacy',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'NunitoSans-Regular',
-                        fontSize: width * (24 / 1920),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset('assets/images/Stall.png'),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: width * (10 / 1920)),
-                      child: Text(
-                        'Market',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'NunitoSans-Regular',
-                          fontSize: width * (24 / 1920),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+
         Positioned(
           bottom: 0,
           left: width * (10 / 1920),
@@ -261,55 +87,6 @@ class PropertyCard extends StatelessWidget {
               color: fourthColorPrimaryBrown,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(width * (10 / 1920)),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: width * (10 / 1920),
-          left: width * (147 / 1920),
-          child: Container(
-            width: width * (390 / 1920),
-            height: width * (75 / 1920),
-            decoration: BoxDecoration(
-              color: fourthColorSecondaryLightBrown,
-              borderRadius: BorderRadius.circular(width * (10 / 1920)),
-            ),
-            child: Center(
-              child: Text(
-                'Mountain View Villa',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'NunitoSans-Black',
-                  fontSize: width * (36 / 1920),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          left: width * (547 / 1920),
-          child: Container(
-            width: width * (105 / 1920),
-            height: width * (85 / 1920),
-            decoration: BoxDecoration(
-              color: fourthColorPrimaryBrown,
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(width * (10 / 1920)),
-                bottomLeft: Radius.circular(width * (10 / 1920)),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                'V-265',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'NunitoSans-BlackItalic',
-                  fontSize: width * (28 / 1920),
-                ),
               ),
             ),
           ),

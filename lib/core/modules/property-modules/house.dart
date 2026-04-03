@@ -21,7 +21,6 @@ class House extends Property {
 
     required this.outDoorPlaces,
     required super.furnitureState,
-
     required super.avaliableInternet,
     required super.rooms,
     required super.nearbyPlaces,

@@ -1,4 +1,4 @@
-import 'package:untitled1/back_end_test/properties/modules/property_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
 
 class StoreCardModuleInfo extends PropertyCardModuleInfo {
   StoreCardModuleInfo({
@@ -13,6 +13,7 @@ class StoreCardModuleInfo extends PropertyCardModuleInfo {
     required this.interface,
     required super.avaliableInternet,
     required super.isAvalable,
+    required super.id,
   });
   final String interface;
 }

@@ -8,7 +8,6 @@ class PropertyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // double width = MediaQuery.of(context).size.width;
-
     return SingleChildScrollView(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

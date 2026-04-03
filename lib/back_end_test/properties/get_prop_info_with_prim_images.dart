@@ -1,0 +1,269 @@
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/hall_info_with_primary_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/house_info_with_primary_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/store_info_with_primary_images.dart';
+import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
+import 'package:untitled1/core/modules/property-modules/nearby_place.dart';
+
+Future<dynamic> getPropertyInfoWithPrimaryImages({required int id}) async {
+  await Future.delayed(const Duration(seconds: 3));
+
+  Map<String, dynamic> temp = {};
+
+  if (id == 1) {
+    temp = {
+      'PrimaryimageUrl': 'assets/images/test_photos/1.jpg',
+      'otherImagesUlrs': [
+        'assets/images/test_photos/1.jpg',
+        'assets/images/test_photos/2.png',
+        'assets/images/test_photos/3.jpg',
+        'assets/images/test_photos/4.jpg',
+      ],
+      'propertyType': 'house',
+      'nameCode': 'H-224',
+      'numberOfRooms': 4,
+      'sqft': 180,
+      'leastSellPrice': 100000,
+      'fakePrice': 250000,
+      'simplePropertyDescription': 'suberb house view ',
+      'fullPropertyDescription':
+          'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
+      'address': 'Syria-Homs-shien',
+      'outsidePainting': 'white painting',
+      'avaliableInternet': true,
+      'isAvaliable': true,
+      'furnitureState': 'full',
+      'nearByPlaces': [
+        NearbyPlace(nearbyPlace: 'school', destance: 200),
+        NearbyPlace(nearbyPlace: 'market', destance: 300),
+        NearbyPlace(nearbyPlace: 'pharmacy', destance: 250),
+      ],
+      'numberOfFloors': 2,
+      'outDoorPlace': ['garden', 'pool', 'parking', 'balcony'],
+    };
+    return HouseInfoWithPrimaryImages(
+      nameCode: temp['nameCode'],
+      simplePropertyDescription: temp['simplePropertyDescription'],
+      fullPropertyDescription: temp['fullPropertyDescription'],
+      isAvaliable: temp['isAvaliable'],
+      address: temp['address'],
+      leastSellPrice: temp['leastSellPrice'],
+      fakePrice: temp['fakePrice'],
+      sqft: temp['sqft'],
+      primaryPhoto: temp['PrimaryimageUrl'],
+      otherPhotos: temp['otherImagesUlrs'],
+      numberOfRooms: temp['numberOfRooms'],
+      outsidePainting: temp['outsidePainting'],
+      furnitureState: temp['furnitureState'],
+      nearByPlaces: temp['nearByPlaces'],
+      numberOfFloors: temp['numberOfFloors'],
+      outDoorPlace: temp['outDoorPlace'],
+      avaliableInternet: temp['avaliableInternet'],
+    );
+  }
+  if (id == 2) {
+    temp = {
+      'PrimaryimageUrl': 'assets/images/test_photos/1.jpg',
+      'otherImagesUlrs': [
+        'assets/images/test_photos/1.jpg',
+        'assets/images/test_photos/2.png',
+        'assets/images/test_photos/3.jpg',
+        'assets/images/test_photos/4.jpg',
+      ],
+      'propertyType': 'house',
+      'nameCode': 'H-224',
+      'numberOfRooms': 4,
+      'sqft': 180,
+      'leastSellPrice': 100000,
+      'fakePrice': 250000,
+      'simplePropertyDescription': 'suberb house view ',
+      'fullPropertyDescription':
+          'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
+      'address': 'Syria-Homs-shien',
+      'outsidePainting': 'white painting',
+      'avaliableInternet': true,
+      'isAvaliable': true,
+      'furnitureState': 'full',
+      'nearByPlaces': [
+        NearbyPlace(nearbyPlace: 'school', destance: 200),
+        NearbyPlace(nearbyPlace: 'market', destance: 300),
+        NearbyPlace(nearbyPlace: 'pharmacy', destance: 250),
+      ],
+      'numberOfFloors': 2,
+      'outDoorPlace': ['garden', 'pool', 'parking', 'balcony'],
+    };
+    return VillaInfoWithPrimaryImages(
+      nameCode: temp['nameCode'],
+      simplePropertyDescription: temp['simplePropertyDescription'],
+      fullPropertyDescription: temp['fullPropertyDescription'],
+      isAvaliable: temp['isAvaliable'],
+      address: temp['address'],
+      leastSellPrice: temp['leastSellPrice'],
+      fakePrice: temp['fakePrice'],
+      sqft: temp['sqft'],
+      primaryPhoto: temp['PrimaryimageUrl'],
+      otherPhotos: temp['otherImagesUlrs'],
+      numberOfRooms: temp['numberOfRooms'],
+      outsidePainting: temp['outsidePainting'],
+      furnitureState: temp['furnitureState'],
+      nearByPlaces: temp['nearByPlaces'],
+      numberOfFloors: temp['numberOfFloors'],
+      outDoorPlace: temp['outDoorPlace'],
+      avaliableInternet: temp['avaliableInternet'],
+    );
+  }
+  if (id == 3) {
+    temp = {
+      'PrimaryimageUrl': 'assets/images/test_photos/1.jpg',
+      'otherImagesUlrs': [
+        'assets/images/test_photos/1.jpg',
+        'assets/images/test_photos/2.png',
+        'assets/images/test_photos/3.jpg',
+        'assets/images/test_photos/4.jpg',
+      ],
+      'propertyType': 'house',
+      'nameCode': 'H-224',
+      'numberOfRooms': 4,
+      'sqft': 180,
+      'leastSellPrice': 100000,
+      'fakePrice': 250000,
+      'simplePropertyDescription': 'suberb house view ',
+      'fullPropertyDescription':
+          'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
+      'address': 'Syria-Homs-shien',
+      'outsidePainting': 'white painting',
+      'avaliableInternet': true,
+      'isAvaliable': true,
+      'furnitureState': 'full',
+      'nearByPlaces': [
+        NearbyPlace(nearbyPlace: 'school', destance: 200),
+        NearbyPlace(nearbyPlace: 'market', destance: 300),
+        NearbyPlace(nearbyPlace: 'pharmacy', destance: 250),
+      ],
+      'floorNumber': 4,
+      'elevator': true,
+      'buildingParking': true,
+    };
+    return ApartmentInfoWithPrimaryImages(
+      nameCode: temp['nameCode'],
+      simplePropertyDescription: temp['simplePropertyDescription'],
+      fullPropertyDescription: temp['fullPropertyDescription'],
+      isAvaliable: temp['isAvaliable'],
+      address: temp['address'],
+      leastSellPrice: temp['leastSellPrice'],
+      fakePrice: temp['fakePrice'],
+      sqft: temp['sqft'],
+      primaryPhoto: temp['PrimaryimageUrl'],
+      otherPhotos: temp['otherImagesUlrs'],
+      numberOfRooms: temp['numberOfRooms'],
+      outsidePainting: temp['outsidePainting'],
+      furnitureState: temp['furnitureState'],
+      nearByPlaces: temp['nearByPlaces'],
+      floorNumber: temp['floorNumber'],
+      elevator: temp['elevator'],
+      buildingParking: temp['buildingParking'],
+      avaliableInternet: temp['avaliableInternet'],
+    );
+  }
+  if (id == 4) {
+    temp = {
+      'PrimaryimageUrl': 'assets/images/test_photos/1.jpg',
+      'otherImagesUlrs': [
+        'assets/images/test_photos/1.jpg',
+        'assets/images/test_photos/2.png',
+        'assets/images/test_photos/3.jpg',
+        'assets/images/test_photos/4.jpg',
+      ],
+      'propertyType': 'house',
+      'nameCode': 'H-224',
+      'numberOfRooms': 4,
+      'sqft': 180,
+      'leastSellPrice': 100000,
+      'fakePrice': 250000,
+      'simplePropertyDescription': 'suberb house view ',
+      'fullPropertyDescription':
+          'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
+      'address': 'Syria-Homs-shien',
+      'outsidePainting': 'white painting',
+      'avaliableInternet': true,
+      'isAvaliable': true,
+      'furnitureState': 'full',
+      'nearByPlaces': [
+        NearbyPlace(nearbyPlace: 'school', destance: 200),
+        NearbyPlace(nearbyPlace: 'market', destance: 300),
+        NearbyPlace(nearbyPlace: 'pharmacy', destance: 250),
+      ],
+      'floorNumber': 2,
+      'storeFront':
+          'LKHVCDHVCADHVCLAHDVCLAHVCLAVHCLADHVCLADHCVLAHDCVLAVHCLADCVLADHCVDCLACL',
+    };
+    return StoreInfoWithPrimaryImages(
+      nameCode: temp['nameCode'],
+      simplePropertyDescription: temp['simplePropertyDescription'],
+      fullPropertyDescription: temp['fullPropertyDescription'],
+      isAvaliable: temp['isAvaliable'],
+      address: temp['address'],
+      leastSellPrice: temp['leastSellPrice'],
+      fakePrice: temp['fakePrice'],
+      sqft: temp['sqft'],
+      primaryPhoto: temp['PrimaryimageUrl'],
+      otherPhotos: temp['otherImagesUlrs'],
+      numberOfRooms: temp['numberOfRooms'],
+      outsidePainting: temp['outsidePainting'],
+      furnitureState: temp['furnitureState'],
+      nearByPlaces: temp['nearByPlaces'],
+      floorNumber: temp['floorNumber'],
+      storeFront: temp['storeFront'],
+      avaliableInternet: temp['avaliableInternet'],
+    );
+  }
+  if (id == 5) {
+    temp = {
+      'PrimaryimageUrl': 'assets/images/test_photos/1.jpg',
+      'otherImagesUlrs': [
+        'assets/images/test_photos/1.jpg',
+        'assets/images/test_photos/2.png',
+        'assets/images/test_photos/3.jpg',
+        'assets/images/test_photos/4.jpg',
+      ],
+      'propertyType': 'house',
+      'nameCode': 'H-224',
+      'numberOfRooms': 4,
+      'sqft': 180,
+      'leastSellPrice': 100000,
+      'fakePrice': 250000,
+      'simplePropertyDescription': 'suberb house view ',
+      'fullPropertyDescription':
+          'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
+      'address': 'Syria-Homs-shien',
+      'outsidePainting': 'white painting',
+      'avaliableInternet': true,
+      'isAvaliable': true,
+      'furnitureState': 'full',
+      'nearByPlaces': [
+        NearbyPlace(nearbyPlace: 'school', destance: 200),
+        NearbyPlace(nearbyPlace: 'market', destance: 300),
+        NearbyPlace(nearbyPlace: 'pharmacy', destance: 250),
+      ],
+      'floorNumber': 2,
+    };
+    return HallInfoWithPrimaryImages(
+      nameCode: temp['nameCode'],
+      simplePropertyDescription: temp['simplePropertyDescription'],
+      fullPropertyDescription: temp['fullPropertyDescription'],
+      isAvaliable: temp['isAvaliable'],
+      address: temp['address'],
+      leastSellPrice: temp['leastSellPrice'],
+      fakePrice: temp['fakePrice'],
+      sqft: temp['sqft'],
+      primaryPhoto: temp['PrimaryimageUrl'],
+      otherPhotos: temp['otherImagesUlrs'],
+      numberOfRooms: temp['numberOfRooms'],
+      outsidePainting: temp['outsidePainting'],
+      furnitureState: temp['furnitureState'],
+      nearByPlaces: temp['nearByPlaces'],
+      floorNumber: temp['floorNumber'],
+      avaliableInternet: temp['avaliableInternet'],
+    );
+  }
+}

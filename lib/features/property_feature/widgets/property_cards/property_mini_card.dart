@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
 class PropertyMiniCard extends StatelessWidget {
@@ -211,14 +211,14 @@ class PropertyMiniCard extends StatelessWidget {
                         propertyCardModuleInfo.simplePropertyDescription,
                         style: TextStyle(
                           fontFamily: 'NunitoSans-ExtraBold',
-                          fontSize: width * (24 / 1920),
+                          fontSize: width * (22 / 1920),
                         ),
                       ),
                       Text(
                         propertyCardModuleInfo.address,
                         style: TextStyle(
                           fontFamily: 'NunitoSans-Regular',
-                          fontSize: width * (19 / 1920),
+                          fontSize: width * (18 / 1920),
                         ),
                       ),
                     ],
@@ -227,8 +227,8 @@ class PropertyMiniCard extends StatelessWidget {
                     propertyCardModuleInfo.isAvalable
                         ? 'assets/images/Check Mark.png'
                         : 'assets/images/Cancel.png',
-                    width: width * (60 / 1920),
-                    height: width * (60 / 1920),
+                    width: width * (55 / 1920),
+                    height: width * (55 / 1920),
                   ),
                 ],
               ),
