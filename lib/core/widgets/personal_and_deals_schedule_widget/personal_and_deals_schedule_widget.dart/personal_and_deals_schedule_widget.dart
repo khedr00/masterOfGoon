@@ -10,11 +10,11 @@ class PersonalAndDealsScheduleWidget extends StatefulWidget {
   const PersonalAndDealsScheduleWidget({
     super.key,
     this.fullHeight,
-    required this.dealId,
+    required this.employeeId,
   });
 
   final double? fullHeight;
-  final int dealId;
+  final int employeeId;
 
   @override
   State<PersonalAndDealsScheduleWidget> createState() =>
@@ -55,10 +55,13 @@ class _PersonalScheduleWidgetState
   final CancelToken _cancelToken = CancelToken();
   void _getPersonalAndDealsScheduleInfo() async {
     List<dynamic> scheduleNote = await getPersonalAndDealsScheduleInfo(
-      employeeId: widget.dealId,
+      employeeId: widget.employeeId,
       dateTime: _dateTime,
       cancelToken: _cancelToken,
     );
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _scheduleNotes = [];
       _scheduleNotes.addAll(scheduleNote);

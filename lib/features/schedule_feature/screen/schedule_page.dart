@@ -145,7 +145,7 @@ class _SchedulePageState extends State<SchedulePage> {
             ),
             PersonalAndDealsScheduleWidget(
               fullHeight: width * (820 / 1920),
-              dealId: 1,
+              employeeId: 1,
             ),
           ],
         ),

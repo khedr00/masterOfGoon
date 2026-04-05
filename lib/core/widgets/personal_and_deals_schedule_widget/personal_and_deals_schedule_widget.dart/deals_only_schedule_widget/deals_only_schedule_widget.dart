@@ -1,16 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_deal_t_notes_info.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_single_deal_schedule_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_notes_widget.dart';
+import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_notes_widget.dart';
 
 class DealsOnlyScheduleWidget extends StatefulWidget {
   const DealsOnlyScheduleWidget({
     super.key,
-    required this.dealNotes,
-    required this.apoitmentsNotes,
     required this.forDealPage,
+    required this.dealId,
   });
-  final List<String> dealNotes;
-  final List<DealsNotesWidget> apoitmentsNotes;
+  final int dealId;
   final bool forDealPage;
 
   @override
@@ -19,17 +20,53 @@ class DealsOnlyScheduleWidget extends StatefulWidget {
 }
 
 class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
+  final List<DealsNotesWidget> _apoitmentsNotes = [];
+  final List<String> _dealTNotes = [];
+  final CancelToken _cancelToken = CancelToken();
+  void _getSingleDealSheduleInfo() async {
+    List<DealsNotesWidget> apoitmentsNotes = await getSingleDealScheduleInfo(
+      dealId: widget.dealId,
+      cancelToken: _cancelToken,
+    );
+    List<String> dealTNotes = await getDealTNotesInfo(
+      dealId: widget.dealId,
+      cancelToken: _cancelToken,
+    );
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _apoitmentsNotes.addAll(apoitmentsNotes);
+      _dealTNotes.addAll(dealTNotes);
+    });
+  }
+
+  @override
+  void initState() {
+    _getSingleDealSheduleInfo();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    if (_apoitmentsNotes.isEmpty) {
+      return Center(child: CircularProgressIndicator());
+    }
     List<Widget> dealsNotes = [];
     List<Widget> apoitmentsNotesWithPaddings = [];
-    for (int i = 0; i < widget.dealNotes.length; i++) {
+    for (int i = 0; i < _dealTNotes.length; i++) {
       dealsNotes.add(
         Padding(
           padding: EdgeInsets.all(width * (10 / 1920)),
           child: Text(
-            '${(i + 1).toString()}_${widget.dealNotes[i]}',
+            '${(i + 1).toString()}_${_dealTNotes[i]}',
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'NunitoSans-Bold',
@@ -39,11 +76,11 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
         ),
       );
     }
-    for (int i = 0; i < widget.apoitmentsNotes.length; i++) {
+    for (int i = 0; i < _apoitmentsNotes.length; i++) {
       apoitmentsNotesWithPaddings.add(
         Padding(
           padding: EdgeInsetsGeometry.only(top: width * (60 / 1920)),
-          child: widget.apoitmentsNotes[i],
+          child: _apoitmentsNotes[i],
         ),
       );
     }
