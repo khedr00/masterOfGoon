@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/back_end_test/properties/get_prop_info_with_prim_images.dart';
 import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
@@ -21,8 +22,15 @@ class PropertyCard extends StatefulWidget {
 
 class _PropertyCardState extends State<PropertyCard> {
   dynamic _propertyInfo;
+  final CancelToken _cancelToken = CancelToken();
   void _getPropertyInfo() async {
-    dynamic propertyInfo = await getPropertyInfoWithPrimaryImages(id: 5);
+    dynamic propertyInfo = await getPropertyInfoWithPrimaryImages(
+      id: 5,
+      cancelToken: _cancelToken,
+    );
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _propertyInfo = propertyInfo;
     });
@@ -32,6 +40,12 @@ class _PropertyCardState extends State<PropertyCard> {
   void initState() {
     _getPropertyInfo();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
   }
 
   @override

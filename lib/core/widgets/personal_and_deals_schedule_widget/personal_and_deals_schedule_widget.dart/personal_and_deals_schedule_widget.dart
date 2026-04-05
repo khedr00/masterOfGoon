@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_personal_and_deals_schedule_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/general_tabable_card.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/tab_of_tabable_card.dart';
@@ -7,12 +9,12 @@ import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/person
 class PersonalAndDealsScheduleWidget extends StatefulWidget {
   const PersonalAndDealsScheduleWidget({
     super.key,
-    required this.personalAndDealsNotes,
     this.fullHeight,
+    required this.dealId,
   });
 
-  final List<dynamic> personalAndDealsNotes;
   final double? fullHeight;
+  final int dealId;
 
   @override
   State<PersonalAndDealsScheduleWidget> createState() =>
@@ -42,22 +44,47 @@ class _PersonalScheduleWidgetState
     setState(() {
       if (date != null) {
         _dateTime = date;
+        _getPersonalAndDealsScheduleInfo();
       }
     });
     getDayName();
     getDate();
   }
 
+  List<dynamic> _scheduleNotes = [];
+  final CancelToken _cancelToken = CancelToken();
+  void _getPersonalAndDealsScheduleInfo() async {
+    List<dynamic> scheduleNote = await getPersonalAndDealsScheduleInfo(
+      employeeId: widget.dealId,
+      dateTime: _dateTime,
+      cancelToken: _cancelToken,
+    );
+    setState(() {
+      _scheduleNotes = [];
+      _scheduleNotes.addAll(scheduleNote);
+    });
+  }
+
   @override
   void initState() {
     getDayName();
     getDate();
+    _getPersonalAndDealsScheduleInfo();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    if (_scheduleNotes.isEmpty) {
+      return Center(child: CircularProgressIndicator());
+    }
     return Stack(
       children: [
         SizedBox(
@@ -69,7 +96,7 @@ class _PersonalScheduleWidgetState
                 tabName: '$_dayName $_date',
                 tabColor: thirdColorPrimary,
                 bodyOfTheTab: InsideTabPersonalAndDealScheduleWidget(
-                  personalAndDealsNotes: widget.personalAndDealsNotes,
+                  personalAndDealsNotes: _scheduleNotes,
                   fullHeight: widget.fullHeight ?? width * (760 / 1920),
                 ),
               ),

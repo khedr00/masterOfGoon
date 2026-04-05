@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/back_end_test/properties/get_10_property_cards.dart';
 import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
@@ -22,6 +23,7 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
   final List<dynamic> _listOfPropertyCardsInfo = [];
   bool _isLoading = false;
   int numberOfPastCalles = -1;
+  final CancelToken _cancelToken = CancelToken();
 
   void _getTenPropertyCardsInfo() async {
     if (_isLoading) return;
@@ -33,7 +35,11 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
         await getTenPropertyCards(
           role: 'sales',
           numberOfPastCalles: numberOfPastCalles,
+          cancelToken: _cancelToken,
         );
+    if (!mounted) {
+      return;
+    }
 
     setState(() {
       _isLoading = false;
@@ -60,6 +66,7 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
   @override
   void dispose() {
     _controller.dispose();
+    _cancelToken.cancel();
     super.dispose();
   }
 

@@ -11,6 +11,7 @@ class NewAndOngoingDealsButton extends StatefulWidget {
 }
 
 class _NewAndOngoingDealsButtonState extends State<NewAndOngoingDealsButton> {
+  bool _secondClick = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -19,6 +20,17 @@ class _NewAndOngoingDealsButtonState extends State<NewAndOngoingDealsButton> {
       secondButtonName: 'New',
       fillColor: primaryColor,
       widthOfButton: width * (150 / 1920),
+      firstButtonAction: () {
+        setState(() {
+          _secondClick = false;
+        });
+      },
+      secondButtonAction: () {
+        setState(() {
+          _secondClick = true;
+        });
+      },
+      secondClick: _secondClick,
     );
   }
 }

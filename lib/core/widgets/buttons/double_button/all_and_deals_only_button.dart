@@ -4,14 +4,9 @@ import 'package:untitled1/core/widgets/buttons/double_button/double_button.dart'
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 
-class AllAndDealsOnlyButton extends StatefulWidget {
+class AllAndDealsOnlyButton extends StatelessWidget {
   const AllAndDealsOnlyButton({super.key});
 
-  @override
-  State<AllAndDealsOnlyButton> createState() => _AllAndDealsOnlyButtonState();
-}
-
-class _AllAndDealsOnlyButtonState extends State<AllAndDealsOnlyButton> {
   @override
   Widget build(BuildContext context) {
     final allAndDealsOnlyProvider = Provider.of<AllAndDealsOnlyProvider>(
@@ -27,8 +22,9 @@ class _AllAndDealsOnlyButtonState extends State<AllAndDealsOnlyButton> {
         allAndDealsOnlyProvider.truingAllAreClicked();
       },
       secondButtonAction: () {
-        allAndDealsOnlyProvider.falsingAllAreClicked();
+        // allAndDealsOnlyProvider.falsingAllAreClicked();
       },
+      secondClick: !allAndDealsOnlyProvider.allAreClicked,
     );
   }
 }

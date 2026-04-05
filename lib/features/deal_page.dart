@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/modules/schedule-models/schedule_deal_note.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_deal_note.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/client_chat/client_chat_widget.dart';
 import 'package:untitled1/core/widgets/constants.dart';

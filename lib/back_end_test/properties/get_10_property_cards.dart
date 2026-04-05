@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/appartment_card_module_info.dart';
 import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/hall_card_module_info.dart';
 import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/house_card_module_info.dart';
@@ -109,6 +110,7 @@ Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
 Future<List<PropertyCardModuleInfo>> getTenPropertyCards({
   required String role,
   required int numberOfPastCalles,
+  CancelToken? cancelToken,
 }) async {
   await Future.delayed(const Duration(seconds: 3));
   List<Map<String, dynamic>> temp = [];

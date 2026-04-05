@@ -1,14 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/core/modules/deal/deal.dart';
-import 'package:untitled1/core/modules/schedule-models/schedule_deal_note.dart';
-import 'package:untitled1/core/modules/schedule-models/schedule_note.dart';
+import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
+import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_deal_note.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/all_and_deals_only_button.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/new_and_ongoing_deals_button.dart';
+import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/deal_note_widget.dart';
-import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/personal_note_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/Deals_only_schedule_widget/deals_notes_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
@@ -23,117 +24,161 @@ class EmployeeHomePage extends StatefulWidget {
 }
 
 class _EmployeeHomePageState extends State<EmployeeHomePage> {
-  List<Widget> dealList = [
-    DealCard(
-      deal: Deal(
-        id: 1,
-        propertyId: 2,
-        clientId: 3,
-        employeeId: 4,
-        title: 'the mountain vella deal',
-        dealStage: DealStage.negotiation,
-        successProbability: 23,
-        startingDate: '2/2/2026',
-        notes: [
-          'hqjwegfkuqefglidga;sdjg;auig',
-          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
-        ],
-      ),
-    ),
-    DealCard(
-      deal: Deal(
-        id: 1,
-        propertyId: 2,
-        clientId: 3,
-        employeeId: 4,
-        title: 'the mountain vella deal',
-        dealStage: DealStage.negotiation,
-        successProbability: 23,
-        startingDate: '2/2/2026',
-        notes: [
-          'hqjwegfkuqefglidga;sdjg;auig',
-          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
-        ],
-      ),
-    ),
-    DealCard(
-      deal: Deal(
-        id: 1,
-        propertyId: 2,
-        clientId: 3,
-        employeeId: 4,
-        title: 'the mountain vella deal',
-        dealStage: DealStage.negotiation,
-        successProbability: 23,
-        startingDate: '2/2/2026',
-        notes: [
-          'hqjwegfkuqefglidga;sdjg;auig',
-          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
-        ],
-      ),
-    ),
-    DealCard(
-      deal: Deal(
-        id: 1,
-        propertyId: 2,
-        clientId: 3,
-        employeeId: 4,
-        title: 'the mountain vella deal',
-        dealStage: DealStage.negotiation,
-        successProbability: 23,
-        startingDate: '2/2/2026',
-        notes: [
-          'hqjwegfkuqefglidga;sdjg;auig',
-          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
-        ],
-      ),
-    ),
-    DealCard(
-      deal: Deal(
-        id: 1,
-        propertyId: 2,
-        clientId: 3,
-        employeeId: 4,
-        title: 'the mountain vella deal',
-        dealStage: DealStage.negotiation,
-        successProbability: 23,
-        startingDate: '2/2/2026',
-        notes: [
-          'hqjwegfkuqefglidga;sdjg;auig',
-          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
-        ],
-      ),
-    ),
-    DealCard(
-      deal: Deal(
-        id: 1,
-        propertyId: 2,
-        clientId: 3,
-        employeeId: 4,
-        title: 'the mountain vella deal',
-        dealStage: DealStage.negotiation,
-        successProbability: 23,
-        startingDate: '2/2/2026',
-        notes: [
-          'hqjwegfkuqefglidga;sdjg;auig',
-          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
-        ],
-      ),
-    ),
+  final List<DealCard> _dealList = [
+    // DealCard(
+    //   deal: DealCardInfo(
+    //     id: 1,
+    //     propertyId: 2,
+    //     clientId: 3,
+    //     employeeId: 4,
+    //     title: 'the mountain vella deal',
+    //     dealStage: DealStage.negotiation,
+    //     successProbability: 23,
+    //     startingDate: '2/2/2026',
+    //     notes: [
+    //       'hqjwegfkuqefglidga;sdjg;auig',
+    //       'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+    //     ],
+    //   ),
+    // ),
+    // DealCard(
+    //   deal: DealCardInfo(
+    //     id: 1,
+    //     propertyId: 2,
+    //     clientId: 3,
+    //     employeeId: 4,
+    //     title: 'the mountain vella deal',
+    //     dealStage: DealStage.negotiation,
+    //     successProbability: 23,
+    //     startingDate: '2/2/2026',
+    //     notes: [
+    //       'hqjwegfkuqefglidga;sdjg;auig',
+    //       'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+    //     ],
+    //   ),
+    // ),
+    // DealCard(
+    //   deal: DealCardInfo(
+    //     id: 1,
+    //     propertyId: 2,
+    //     clientId: 3,
+    //     employeeId: 4,
+    //     title: 'the mountain vella deal',
+    //     dealStage: DealStage.negotiation,
+    //     successProbability: 23,
+    //     startingDate: '2/2/2026',
+    //     notes: [
+    //       'hqjwegfkuqefglidga;sdjg;auig',
+    //       'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+    //     ],
+    //   ),
+    // ),
+    // DealCard(
+    //   deal: DealCardInfo(
+    //     id: 1,
+    //     propertyId: 2,
+    //     clientId: 3,
+    //     employeeId: 4,
+    //     title: 'the mountain vella deal',
+    //     dealStage: DealStage.negotiation,
+    //     successProbability: 23,
+    //     startingDate: '2/2/2026',
+    //     notes: [
+    //       'hqjwegfkuqefglidga;sdjg;auig',
+    //       'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+    //     ],
+    //   ),
+    // ),
+    // DealCard(
+    //   deal: DealCardInfo(
+    //     id: 1,
+    //     propertyId: 2,
+    //     clientId: 3,
+    //     employeeId: 4,
+    //     title: 'the mountain vella deal',
+    //     dealStage: DealStage.negotiation,
+    //     successProbability: 23,
+    //     startingDate: '2/2/2026',
+    //     notes: [
+    //       'hqjwegfkuqefglidga;sdjg;auig',
+    //       'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+    //     ],
+    //   ),
+    // ),
+    // DealCard(
+    //   deal: DealCardInfo(
+    //     id: 1,
+    //     propertyId: 2,
+    //     clientId: 3,
+    //     employeeId: 4,
+    //     title: 'the mountain vella deal',
+    //     dealStage: DealStage.negotiation,
+    //     successProbability: 23,
+    //     startingDate: '2/2/2026',
+    //     notes: [
+    //       'hqjwegfkuqefglidga;sdjg;auig',
+    //       'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+    //     ],
+    //   ),
+    // ),
   ];
+  final CancelToken _cancelToken = CancelToken();
+  void getDealList() async {
+    List<DealCardInfo> dealList = await getDealCardsInfo(
+      role: 'Sales',
+      id: 1,
+      cancelToken: _cancelToken,
+    );
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      for (int i = 0; i < dealList.length; i++) {
+        _dealList.add(DealCard(dealCardInfo: dealList[i]));
+      }
+    });
+  }
+
+  List<bool> _cardIsClicked = [];
+  late int _dealId;
+
+  void _falsingcardIsClicked() {
+    _cardIsClicked = List.filled(_dealList.length, false);
+  }
+
+  @override
+  void initState() {
+    _falsingcardIsClicked();
+    getDealList();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final allAndDealsOnlyProvider = Provider.of<AllAndDealsOnlyProvider>(
       context,
     );
+    setState(() {
+      allAndDealsOnlyProvider.allAreClicked
+          ? _falsingcardIsClicked()
+          : DoNothingAction();
+    });
     double width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: width * (30 / 1920)),
+            padding: EdgeInsets.only(
+              top: width * (30 / 1920),
+              bottom: width * (36 / 1920),
+            ),
             child: Row(
               children: [
                 SizedBox(width: width * (42 / 1920)),
@@ -159,575 +204,437 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               ],
             ),
           ),
-          SizedBox(height: width * (36 / 1920)),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.only(left: width * (28 / 1920)),
                 child: SizedBox(
                   height: width * (794 / 1920),
-                  width: width * (939 / 1920),
-                  child: ListView.builder(
-                    itemCount: dealList.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: width * (28 / 1920)),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DealPage(),
+                  width: width * ((939 + 38) / 1920),
+                  child: _dealList.isEmpty
+                      ? Container(
+                          color: backGroundColor,
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      : ListView.builder(
+                          itemCount: _dealList.length,
+                          itemBuilder: (BuildContext context, int i) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                bottom: width * (28 / 1920),
+                              ),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        allAndDealsOnlyProvider
+                                            .falsingAllAreClicked();
+                                        _falsingcardIsClicked();
+                                        _cardIsClicked[i] = true;
+                                        _dealId = _dealList[i].dealCardInfo.id;
+                                      });
+                                    },
+                                    onDoubleTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DealPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: _dealList[i],
+                                  ),
+                                  SizedBox(
+                                    width: width * (38 / 1920),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        left: width * (7 / 1920),
+                                        right: width * (16 / 1920),
+                                      ),
+                                      child: Container(
+                                        width: width * (15 / 1920),
+                                        height: width * (200 / 1920),
+                                        decoration: BoxDecoration(
+                                          color: _cardIsClicked[i]
+                                              ? thirdColorPrimary
+                                              : backGroundColor,
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(
+                                              width * (50 / 1920),
+                                            ),
+                                            bottomRight: Radius.circular(
+                                              width * (50 / 1920),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             );
                           },
-                          child: dealList[i],
                         ),
-                      );
-                    },
-                  ),
                 ),
               ),
-              Spacer(flex: 1),
-              Padding(
-                padding: EdgeInsets.only(right: width * (28 / 1920)),
-                child: allAndDealsOnlyProvider.allAreClicked
-                    ? PersonalAndDealsScheduleWidget(
-                        personalAndDealsNotes: [
-                          PersonalNoteWidget(
-                            scheduleNote: ScheduleNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '2/2/2026',
-                              time: '6:00',
-                              title: '1',
-                              description:
-                                  "don't forget about theasdfaefaewfewfawefasfasdf pool and the garden jhjdh jpap8eq[fqvm [opepifqew [AP[qw--jdOAISSIDUSDF]]]]",
+
+              allAndDealsOnlyProvider.allAreClicked
+                  ? PersonalAndDealsScheduleWidget(dealId: _dealId)
+                  : DealsOnlyScheduleWidget(
+                      forDealPage: false,
+                      dealNotes: [
+                        'hqjwegfkuqefglidga;sdjg;auig',
+                        'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
+                      ],
+                      apoitmentsNotes: [
+                        DealsNotesWidget(
+                          dateTime: DateTime.now(),
+                          dealApoitmentNotes: [
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '2',
+                                description: 'akucasdfasdfasdfasdfasdfdgl',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '2',
-                              description: 'akucasdfasdfasdfasdfasdfdgl',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '3',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '3',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '4',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '4',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '5',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '5',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '6',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '6',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '7',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '7',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '8',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '8',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '9',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '9',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '10',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '10',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '11',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '11',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '12',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '12',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '13',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                          DealNoteWidget(
-                            scheduleDealNote: ScheduleDealNote(
-                              id: 1,
-                              employeeId: 1,
-                              date: '8798',
-                              time: '2:00',
-                              title: '13',
-                              description:
-                                  'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                              dealId: 1,
-                              dealName: 'Request to Buy Property Homs City',
-                              propertyNameCode: 'V_234',
+                          ],
+                        ),
+                        DealsNotesWidget(
+                          dateTime: DateTime.now(),
+                          dealApoitmentNotes: [
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '2',
+                                description: 'akucasdfasdfasdfasdfasdfdgl',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    : DealsOnlyScheduleWidget(
-                        forDealPage: false,
-                        dealNotes: [
-                          'hqjwegfkuqefglidga;sdjg;auig',
-                          'jhdvgwiueydjhdguytustdvckdshdcutsdtcsdvcshcd',
-                        ],
-                        apoitmentsNotes: [
-                          DealsNotesWidget(
-                            dateTime: DateTime.now(),
-                            dealApoitmentNotes: [
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '2',
-                                  description: 'akucasdfasdfasdfasdfasdfdgl',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '3',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '3',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '4',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '4',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '5',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '5',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '6',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '6',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '7',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '7',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '8',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '8',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '9',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '9',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '10',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '10',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '11',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '11',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '12',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '12',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
+                            ),
+                            DealNoteWidget(
+                              scheduleDealNote: ScheduleDealNote(
+                                id: 1,
+                                employeeId: 1,
+                                date: '8798',
+                                time: '2:00',
+                                title: '13',
+                                description:
+                                    'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
+                                dealId: 1,
+                                dealName: 'Request to Buy Property Homs City',
+                                propertyNameCode: 'V_234',
                               ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '13',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                            ],
-                          ),
-                          DealsNotesWidget(
-                            dateTime: DateTime.now(),
-                            dealApoitmentNotes: [
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '2',
-                                  description: 'akucasdfasdfasdfasdfasdfdgl',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '3',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '4',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '5',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '6',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '7',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '8',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '9',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '10',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '11',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '12',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                              DealNoteWidget(
-                                scheduleDealNote: ScheduleDealNote(
-                                  id: 1,
-                                  employeeId: 1,
-                                  date: '8798',
-                                  time: '2:00',
-                                  title: '13',
-                                  description:
-                                      'akudglajhdgca,vhscjhsgcljaytxc,jve,dc,vjgv,,uzVlgscvJHC',
-                                  dealId: 1,
-                                  dealName: 'Request to Buy Property Homs City',
-                                  propertyNameCode: 'V_234',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
             ],
           ),
         ],

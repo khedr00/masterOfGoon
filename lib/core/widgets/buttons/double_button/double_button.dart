@@ -9,6 +9,7 @@ class DoubleButton extends StatefulWidget {
     required this.widthOfButton,
     this.firstButtonAction,
     this.secondButtonAction,
+    required this.secondClick,
   });
   final String firstButtonName;
   final String secondButtonName;
@@ -16,14 +17,13 @@ class DoubleButton extends StatefulWidget {
   final double widthOfButton;
   final GestureTapCallback? firstButtonAction;
   final GestureTapCallback? secondButtonAction;
+  final bool secondClick;
 
   @override
   State<DoubleButton> createState() => _DoubleButton();
 }
 
 class _DoubleButton extends State<DoubleButton> {
-  bool _secondButton = false;
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,8 +40,6 @@ class _DoubleButton extends State<DoubleButton> {
           GestureDetector(
             onTap: () {
               setState(() {
-                _secondButton = false;
-
                 widget.firstButtonAction != null
                     ? widget.firstButtonAction!()
                     : DoNothingAction;
@@ -51,7 +49,7 @@ class _DoubleButton extends State<DoubleButton> {
               width: (widget.widthOfButton / 2) - width * (4 / 1920),
               height: width * (36 / 1920),
               decoration: BoxDecoration(
-                color: !_secondButton ? Colors.white : widget.fillColor,
+                color: !widget.secondClick ? Colors.white : widget.fillColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(1000),
                   bottomLeft: Radius.circular(1000),
@@ -72,7 +70,6 @@ class _DoubleButton extends State<DoubleButton> {
           GestureDetector(
             onTap: () {
               setState(() {
-                _secondButton = true;
                 widget.secondButtonAction != null
                     ? widget.secondButtonAction!()
                     : DoNothingAction;
@@ -82,7 +79,7 @@ class _DoubleButton extends State<DoubleButton> {
               width: (widget.widthOfButton / 2) - width * (4 / 1920),
               height: width * (36 / 1920),
               decoration: BoxDecoration(
-                color: _secondButton ? Colors.white : widget.fillColor,
+                color: widget.secondClick ? Colors.white : widget.fillColor,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(1000),
                   bottomRight: Radius.circular(1000),

@@ -1,10 +1,10 @@
-import 'package:untitled1/core/modules/schedule-models/schedule_note.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_note.dart';
 
 class ScheduleDealNote extends ScheduleNote {
   ScheduleDealNote({
-    required super.id,
-    required super.employeeId,
-    required super.date,
+    super.id,
+    super.employeeId,
+    super.date,
     required super.time,
     required super.title,
     required super.description,

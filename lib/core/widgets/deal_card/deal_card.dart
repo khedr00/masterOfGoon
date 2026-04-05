@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/modules/deal/deal.dart';
+import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_deal_satge_section.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_client_section.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_property_section.dart';
 
 class DealCard extends StatelessWidget {
-  const DealCard({super.key, required this.deal});
-  final Deal deal;
+  const DealCard({super.key, required this.dealCardInfo});
+  final DealCardInfo dealCardInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -27,28 +27,19 @@ class DealCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DealCardDealSatgeSection(
-                    dealStage: deal.dealStage.toString().substring(10),
+                    dealStage: dealCardInfo.dealStage.toString(),
                   ),
                   DealCardClientSection(
-                    clientImage: Image.asset(
-                      'assets/images/profilePhoto-icon.png',
-                    ),
-                    clientName: 'Khedr Issa',
-                    clientScoreLeading: 43,
+                    dealId: dealCardInfo.clientId,
                     lastMessage: 'I will call you back later',
                     timePassed: '39',
                   ),
                 ],
               ),
               DealCardPropertySection(
-                propertyType: 'Villa',
-                price: '130000',
-                propertyImage: Image.asset('assets/images/skyscrapers.png'),
-                simplePropertyDescription:
-                    'Furnished Apartment with pool and 2 balconies ',
-                address: 'Mazzeh District, Damascus, Syria',
-                dealDate: '7/12/2025',
-                dealId: '223',
+                dealDate: dealCardInfo.startingDate,
+                dealId: dealCardInfo.id.toString(),
+                propertyId: dealCardInfo.propertyId,
               ),
             ],
           ),
@@ -84,7 +75,7 @@ class DealCard extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        deal.title,
+                        dealCardInfo.title,
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'NunitoSans-ExtraBold',
@@ -111,7 +102,8 @@ class DealCard extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        ' Success Rate :\n         ${deal.successProbability.toString()}%  ',
+                        ' Success Rate :\n${dealCardInfo.successProbability.toString()} %',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'NunitoSans-ExtraBold',

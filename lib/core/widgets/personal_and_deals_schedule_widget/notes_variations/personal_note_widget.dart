@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/modules/schedule-models/schedule_note.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_note.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/note_widget.dart';
 
