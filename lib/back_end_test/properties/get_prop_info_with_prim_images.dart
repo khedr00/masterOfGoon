@@ -47,6 +47,7 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
     };
     return HouseInfoWithPrimaryImages(
       nameCode: temp['nameCode'],
+      propertyType: temp['propertyType'],
       simplePropertyDescription: temp['simplePropertyDescription'],
       fullPropertyDescription: temp['fullPropertyDescription'],
       isAvaliable: temp['isAvaliable'],
@@ -74,8 +75,8 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
         'assets/images/test_photos/3.jpg',
         'assets/images/test_photos/4.jpg',
       ],
-      'propertyType': 'house',
-      'nameCode': 'H-224',
+      'propertyType': 'villa',
+      'nameCode': 'V-224',
       'numberOfRooms': 4,
       'sqft': 180,
       'leastSellPrice': 100000,
@@ -98,6 +99,7 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
     };
     return VillaInfoWithPrimaryImages(
       nameCode: temp['nameCode'],
+      propertyType: temp['propertyType'],
       simplePropertyDescription: temp['simplePropertyDescription'],
       fullPropertyDescription: temp['fullPropertyDescription'],
       isAvaliable: temp['isAvaliable'],
@@ -125,8 +127,8 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
         'assets/images/test_photos/3.jpg',
         'assets/images/test_photos/4.jpg',
       ],
-      'propertyType': 'house',
-      'nameCode': 'H-224',
+      'propertyType': 'apartment',
+      'nameCode': 'A-224',
       'numberOfRooms': 4,
       'sqft': 180,
       'leastSellPrice': 100000,
@@ -150,6 +152,7 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
     };
     return ApartmentInfoWithPrimaryImages(
       nameCode: temp['nameCode'],
+      propertyType: 'aprmnt',
       simplePropertyDescription: temp['simplePropertyDescription'],
       fullPropertyDescription: temp['fullPropertyDescription'],
       isAvaliable: temp['isAvaliable'],
@@ -178,8 +181,8 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
         'assets/images/test_photos/3.jpg',
         'assets/images/test_photos/4.jpg',
       ],
-      'propertyType': 'house',
-      'nameCode': 'H-224',
+      'propertyType': 'store',
+      'nameCode': 'S-224',
       'numberOfRooms': 4,
       'sqft': 180,
       'leastSellPrice': 100000,
@@ -203,6 +206,7 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
     };
     return StoreInfoWithPrimaryImages(
       nameCode: temp['nameCode'],
+      propertyType: temp['propertyType'],
       simplePropertyDescription: temp['simplePropertyDescription'],
       fullPropertyDescription: temp['fullPropertyDescription'],
       isAvaliable: temp['isAvaliable'],
@@ -230,8 +234,8 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
         'assets/images/test_photos/3.jpg',
         'assets/images/test_photos/4.jpg',
       ],
-      'propertyType': 'house',
-      'nameCode': 'H-224',
+      'propertyType': 'hall',
+      'nameCode': 'HA-224',
       'numberOfRooms': 4,
       'sqft': 180,
       'leastSellPrice': 100000,
@@ -253,6 +257,7 @@ Future<dynamic> getPropertyInfoWithPrimaryImages({
     };
     return HallInfoWithPrimaryImages(
       nameCode: temp['nameCode'],
+      propertyType: temp['propertyType'],
       simplePropertyDescription: temp['simplePropertyDescription'],
       fullPropertyDescription: temp['fullPropertyDescription'],
       isAvaliable: temp['isAvaliable'],

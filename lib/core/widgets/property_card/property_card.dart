@@ -25,7 +25,7 @@ class _PropertyCardState extends State<PropertyCard> {
   final CancelToken _cancelToken = CancelToken();
   void _getPropertyInfo() async {
     dynamic propertyInfo = await getPropertyInfoWithPrimaryImages(
-      id: 5,
+      id: 1,
       cancelToken: _cancelToken,
     );
     if (!mounted) {
@@ -92,7 +92,7 @@ class _PropertyCardState extends State<PropertyCard> {
         ),
 
         Positioned(
-          bottom: 0,
+          top: width * (764 / 1920),
           left: width * (10 / 1920),
           child: Container(
             width: width * (168 / 1920),

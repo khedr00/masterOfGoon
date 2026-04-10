@@ -19,6 +19,7 @@ class StoreInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
     required super.avaliableInternet,
     required this.floorNumber,
     required this.storeFront,
+    required super.propertyType,
   });
   final int floorNumber;
   final String storeFront;

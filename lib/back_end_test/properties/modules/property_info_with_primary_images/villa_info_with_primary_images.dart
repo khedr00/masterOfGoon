@@ -19,6 +19,7 @@ class VillaInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
     required this.numberOfFloors,
     required this.outDoorPlace,
     required super.avaliableInternet,
+    required super.propertyType,
   });
   final int numberOfFloors;
   final List<String> outDoorPlace;

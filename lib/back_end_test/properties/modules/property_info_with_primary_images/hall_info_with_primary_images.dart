@@ -18,6 +18,7 @@ class HallInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
     required super.nearByPlaces,
     required super.avaliableInternet,
     required this.floorNumber,
+    required super.propertyType,
   });
   final int floorNumber;
 }

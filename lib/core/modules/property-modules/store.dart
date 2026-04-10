@@ -1,4 +1,3 @@
-import 'package:untitled1/core/modules/outdoor_modules/out_door_place.dart';
 import 'package:untitled1/core/modules/property-modules/propetry.dart';
 
 class Store extends Property {
@@ -20,11 +19,11 @@ class Store extends Property {
     required super.outsidePainting,
     required super.furnitureState,
     required super.avaliableInternet,
-    required this.interface,
+    required this.storeFront,
     required super.rooms,
     required super.nearbyPlaces,
     required super.catagory,
   });
   final int floorNumber;
-  final OutDoorPlace interface;
+  final String storeFront;
 }

@@ -20,6 +20,7 @@ class ApartmentInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
     required super.avaliableInternet,
     required this.elevator,
     required this.buildingParking,
+    required super.propertyType,
   });
   final int floorNumber;
   final bool elevator;

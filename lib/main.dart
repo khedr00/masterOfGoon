@@ -40,9 +40,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: HeaderPrimaryPage(
-          pageWidget: pageSelectorProvider.getPageSelected,
-        ),
+        body:
+            //  LoginPage(),
+            HeaderPrimaryPage(pageWidget: pageSelectorProvider.getPageSelected),
       ),
     );
   }

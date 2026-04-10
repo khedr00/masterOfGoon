@@ -17,8 +17,10 @@ class PropertyInfoWithPrimaryImages {
     required this.furnitureState,
     required this.nearByPlaces,
     required this.avaliableInternet,
+    required this.propertyType,
   });
   final String nameCode;
+  final String propertyType;
   final String simplePropertyDescription;
   final String fullPropertyDescription;
   final bool isAvaliable;
@@ -33,4 +35,20 @@ class PropertyInfoWithPrimaryImages {
   final String furnitureState;
   final List<NearbyPlace> nearByPlaces;
   final bool avaliableInternet;
+  String getpropertyIcon(String propertyType) {
+    switch (propertyType) {
+      case ('house'):
+        return 'assets/images/house_kind.png';
+      case ('villa'):
+        return 'assets/images/Mansion.png';
+      case ('store'):
+        return 'assets/images/Shop-kind.png';
+      case ('hall'):
+        return 'assets/images/City Hall.png';
+      case ('aprmnt'):
+        return 'assets/images/apartment-kind.png';
+      default:
+        return 'assets/images/house_kind.png';
+    }
+  }
 }

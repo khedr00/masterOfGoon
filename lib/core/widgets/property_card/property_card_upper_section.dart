@@ -272,10 +272,12 @@ class PropertyCardUpperSection extends StatelessWidget {
                 SizedBox(
                   width: width * (50 / 1920),
                   height: width * (50 / 1920),
-                  child: Image.asset('assets/images/Mansion.png'),
+                  child: Image.asset(
+                    propertyInfo.getpropertyIcon(propertyInfo.propertyType),
+                  ),
                 ),
                 Text(
-                  'villa',
+                  propertyInfo.propertyType,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
