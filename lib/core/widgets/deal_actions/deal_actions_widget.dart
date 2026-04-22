@@ -89,8 +89,11 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                         ),
                       ),
                       CustomTextField(
+                        fillColor: thirdColorSecondary,
                         onChanged: _onTextChanged,
                         hintText: 'Enter Description',
+                        fontSize: 20,
+                        fontFamily: FontFamily.light,
                         widthOfTextField: _debugWidth / 1.2,
                       ),
                       Row(
@@ -158,8 +161,11 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                         ),
                       ),
                       CustomTextField(
+                        fillColor: thirdColorSecondary,
                         onChanged: _onTextChanged,
                         hintText: 'Enter Description',
+                        fontSize: 20,
+                        fontFamily: FontFamily.light,
                         widthOfTextField: _debugWidth / 1.2,
                       ),
                       Row(
@@ -240,8 +246,11 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                         ),
                       ),
                       CustomTextField(
+                        fillColor: thirdColorSecondary,
                         onChanged: _onTextChanged,
                         hintText: 'Enter Description',
+                        fontSize: 20,
+                        fontFamily: FontFamily.light,
                         widthOfTextField: _debugWidth / 1.2,
                       ),
                       Row(

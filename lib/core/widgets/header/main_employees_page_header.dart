@@ -8,22 +8,29 @@ import 'package:untitled1/features/history_feature/screens/history_page.dart';
 import 'package:untitled1/features/profile_feature/profile_page.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/schedule_feature/screen/schedule_page.dart';
-import 'package:untitled1/providers/page_selector_provider.dart';
+import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
 
-class PageHeader extends StatefulWidget implements PreferredSizeWidget {
-  const PageHeader({super.key, required this.width});
+class MainEmployeesPageHeader extends StatefulWidget
+    implements PreferredSizeWidget {
+  const MainEmployeesPageHeader({
+    super.key,
+    required this.width,
+    required this.role,
+  });
   final double width;
+  final String role;
   @override
   Size get preferredSize => Size.fromHeight(width * (119 / 1920));
 
   @override
-  State<PageHeader> createState() => _PageHeaderState();
+  State<MainEmployeesPageHeader> createState() => _MainEmployeesPageHeader();
 }
 
-class _PageHeaderState extends State<PageHeader> {
+class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
   @override
   Widget build(BuildContext context) {
-    final pageSelectorProvider = Provider.of<PageSelectorProvider>(context);
+    final mainEmployesspageSelectorProvider =
+        Provider.of<MainEmployessPageSelectorProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.only(bottom: width * (5 / 1920)),
@@ -41,21 +48,23 @@ class _PageHeaderState extends State<PageHeader> {
                 appBarComponentImage: 'assets/images/profilePhoto-icon.png',
                 appBarCopmonentName: 'Profile',
                 onTap: () {
-                  pageSelectorProvider.selectPage(ProfilePage());
+                  mainEmployesspageSelectorProvider.selectPage(ProfilePage());
                 },
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Home.png',
                 appBarCopmonentName: 'Home',
                 onTap: () {
-                  pageSelectorProvider.selectPage(EmployeeHomePage());
+                  mainEmployesspageSelectorProvider.selectPage(
+                    EmployeeHomePage(),
+                  );
                 },
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/notes-icon.png',
                 appBarCopmonentName: 'Schedule',
                 onTap: () {
-                  pageSelectorProvider.selectPage(SchedulePage());
+                  mainEmployesspageSelectorProvider.selectPage(SchedulePage());
                 },
               ),
               AppBarComponentInfo(
@@ -67,14 +76,14 @@ class _PageHeaderState extends State<PageHeader> {
                 appBarComponentImage: 'assets/images/history-icon.png',
                 appBarCopmonentName: 'History',
                 onTap: () {
-                  pageSelectorProvider.selectPage(HistoryPage());
+                  mainEmployesspageSelectorProvider.selectPage(HistoryPage());
                 },
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Apartment.png',
                 appBarCopmonentName: 'Properties',
                 onTap: () {
-                  pageSelectorProvider.selectPage(PropertyPage());
+                  mainEmployesspageSelectorProvider.selectPage(PropertyPage());
                 },
               ),
             ],

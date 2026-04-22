@@ -8,11 +8,15 @@ class ButtonWithText extends StatefulWidget {
     required this.widthOfButton,
     required this.heightOfButton,
     required this.text,
+    this.textColor,
+    this.fontSize,
   });
   final double widthOfButton;
   final double heightOfButton;
   final String text;
   final GestureTapCallback? buttonAction;
+  final Color? textColor;
+  final double? fontSize;
 
   @override
   State<ButtonWithText> createState() => _ButtonWithTextState();
@@ -31,9 +35,9 @@ class _ButtonWithTextState extends State<ButtonWithText> {
         child: Text(
           widget.text,
           style: TextStyle(
-            color: Colors.black,
+            color: widget.textColor ?? Colors.black,
             fontFamily: 'NunitoSans-Medium',
-            fontSize: width * (24 / 1920),
+            fontSize: widget.fontSize ?? width * (24 / 1920),
           ),
         ),
       ),

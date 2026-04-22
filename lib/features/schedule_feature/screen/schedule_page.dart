@@ -70,9 +70,12 @@ class _SchedulePageState extends State<SchedulePage> {
                         Padding(
                           padding: EdgeInsets.only(top: width * (20 / 1920)),
                           child: CustomTextField(
+                            fillColor: thirdColorSecondary,
                             onChanged: (value) {},
                             hintText: 'Enter Title',
                             widthOfTextField: debugWidth / 1.2,
+                            fontSize: 20,
+                            fontFamily: FontFamily.light,
                             maxLines: 1,
                           ),
                         ),
@@ -82,8 +85,11 @@ class _SchedulePageState extends State<SchedulePage> {
                             bottom: width * (30 / 1920),
                           ),
                           child: CustomTextField(
+                            fillColor: thirdColorSecondary,
                             onChanged: (value) {},
                             hintText: 'Enter Description',
+                            fontSize: 20,
+                            fontFamily: FontFamily.light,
                             widthOfTextField: debugWidth / 1.2,
                           ),
                         ),
@@ -101,9 +107,12 @@ class _SchedulePageState extends State<SchedulePage> {
                             bottom: width * (30 / 1920),
                           ),
                           child: CustomTextField(
+                            fillColor: thirdColorSecondary,
                             onChanged: (value) {},
                             hintText: 'ID',
                             widthOfTextField: debugWidth / 3,
+                            fontSize: 20,
+                            fontFamily: FontFamily.light,
                             maxLines: 1,
                           ),
                         ),

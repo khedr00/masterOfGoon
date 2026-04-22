@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/features/header_primary_page.dart';
+import 'package:untitled1/features/login_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 import 'package:untitled1/providers/icon_selector_provider.dart';
-import 'package:untitled1/providers/page_selector_provider.dart';
+import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
+import 'package:untitled1/providers/submanager_page_selector_provider.dart';
 
 void main() {
   runApp(
@@ -16,7 +17,12 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) {
-            return PageSelectorProvider();
+            return MainEmployessPageSelectorProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return SubmanagerPageSelectorProvider();
           },
         ),
         ChangeNotifierProvider(
@@ -36,14 +42,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pageSelectorProvider = Provider.of<PageSelectorProvider>(context);
+    // final pageSelectorProvider = Provider.of<PageSelectorProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body:
-            //  LoginPage(),
-            HeaderPrimaryPage(pageWidget: pageSelectorProvider.getPageSelected),
-      ),
+      home: Scaffold(body: LoginPage()),
     );
   }
 }
