@@ -3,7 +3,8 @@ import 'package:untitled1/back_end_test/login/login.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
-import 'package:untitled1/features/crm.dart';
+import 'package:untitled1/features/main_employees_pages.dart';
+import 'package:untitled1/features/submanager_pages.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +16,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String name = '';
   String password = '';
+  Widget checkRoute(UserAuthInfo userAuthInfo) {
+    final Widget header;
+    if (userAuthInfo.role == 'submanager') {
+      header = SubmanagerPages(userAuthInfo: userAuthInfo);
+    } else {
+      header = MainEmployeesPages(userAuthInfo: userAuthInfo);
+    }
+    return header;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,20 +110,12 @@ class _LoginPageState extends State<LoginPage> {
                             name: name,
                             password: password,
                           );
-
                           if (context.mounted) {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
-                                  return Crm(
-                                    userAuthInfo: UserAuthInfo(
-                                      id: userAuthInfo.id,
-                                      role: userAuthInfo.role,
-                                      accessToken: userAuthInfo.accessToken,
-                                      refreshToken: userAuthInfo.refreshToken,
-                                    ),
-                                  );
+                                  return checkRoute(userAuthInfo);
                                 },
                               ),
                             );

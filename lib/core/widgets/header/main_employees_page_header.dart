@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
@@ -15,10 +16,10 @@ class MainEmployeesPageHeader extends StatefulWidget
   const MainEmployeesPageHeader({
     super.key,
     required this.width,
-    required this.role,
+    required this.userAuthInfo,
   });
   final double width;
-  final String role;
+  final UserAuthInfo userAuthInfo;
   @override
   Size get preferredSize => Size.fromHeight(width * (119 / 1920));
 
@@ -56,7 +57,7 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
                 appBarCopmonentName: 'Home',
                 onTap: () {
                   mainEmployesspageSelectorProvider.selectPage(
-                    EmployeeHomePage(),
+                    EmployeeHomePage(userAuthInfo: widget.userAuthInfo),
                   );
                 },
               ),

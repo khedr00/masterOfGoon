@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
 import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/all_and_deals_only_button.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/new_and_ongoing_deals_button.dart';
@@ -14,7 +15,8 @@ import 'package:untitled1/features/deal_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 
 class EmployeeHomePage extends StatefulWidget {
-  const EmployeeHomePage({super.key});
+  const EmployeeHomePage({super.key, required this.userAuthInfo});
+  final UserAuthInfo userAuthInfo;
 
   @override
   State<EmployeeHomePage> createState() => _EmployeeHomePageState();
@@ -25,8 +27,8 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
     List<DealCardInfo> dealList = await getDealCardsInfo(
-      role: 'Sales',
-      id: 1,
+      role: widget.userAuthInfo.role,
+      id: widget.userAuthInfo.id,
       cancelToken: _cancelToken,
     );
     if (!mounted) {
@@ -49,6 +51,10 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
   @override
   void initState() {
     _falsingcardIsClicked();
+    Provider.of<AllAndDealsOnlyProvider>(
+      context,
+      listen: false,
+    ).truingAllAreClicked();
     getDealList();
     super.initState();
   }
