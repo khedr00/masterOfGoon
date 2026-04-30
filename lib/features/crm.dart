@@ -29,13 +29,13 @@
 //         break;
 //       default:
 //         {
-//           // mainEmployesspageSelectorProvider.setPage(
-//           //   EmployeeHomePage(userAuthInfo: userAuthInfo),
-//           // );
-//           // header = MainEmployeesPages(
-//           //   pageWidget: mainEmployesspageSelectorProvider.getPageSelected!,
-//           //   userAuthInfo: userAuthInfo,
-//           // );
+//           mainEmployesspageSelectorProvider.setPage(
+//             EmployeeHomePage(userAuthInfo: userAuthInfo),
+//           );
+//           header = MainEmployeesPages(
+//             pageWidget: mainEmployesspageSelectorProvider.getPageSelected!,
+//             userAuthInfo: userAuthInfo,
+//           );
 //         }
 //     }
 //     return Scaffold(body: header);
