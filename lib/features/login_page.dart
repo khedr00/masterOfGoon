@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/login/login.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
+import 'package:untitled1/features/employee_home_page.dart';
 import 'package:untitled1/features/main_employees_pages.dart';
-import 'package:untitled1/features/submanager_pages.dart';
+import 'package:untitled1/features/submanager/submanager_home_page.dart';
+import 'package:untitled1/features/submanager/submanager_pages.dart';
+import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
+import 'package:untitled1/providers/submanager_page_selector_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,8 +25,16 @@ class _LoginPageState extends State<LoginPage> {
     final Widget header;
     if (userAuthInfo.role == 'submanager') {
       header = SubmanagerPages(userAuthInfo: userAuthInfo);
+      Provider.of<SubmanagerPageSelectorProvider>(
+        context,
+        listen: false,
+      ).selectPage(SubmanagerHomePage(userAuthInfo: userAuthInfo));
     } else {
       header = MainEmployeesPages(userAuthInfo: userAuthInfo);
+      Provider.of<MainEmployessPageSelectorProvider>(
+        context,
+        listen: false,
+      ).selectPage(EmployeeHomePage(userAuthInfo: userAuthInfo));
     }
     return header;
   }

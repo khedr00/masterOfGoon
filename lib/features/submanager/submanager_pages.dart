@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/features/submanager_page_header.dart';
+import 'package:untitled1/features/submanager/submanager_page_header.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
 
 class SubmanagerPages extends StatelessWidget {
@@ -21,7 +21,7 @@ class SubmanagerPages extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: backGroundColor,
-      appBar: SubmanagerPageHeader(width: width, role: userAuthInfo.role),
+      appBar: SubmanagerPageHeader(width: width, userAuthInfo: userAuthInfo),
       body: submanagerPageSelectorProvider.getPageSelected,
     );
   }

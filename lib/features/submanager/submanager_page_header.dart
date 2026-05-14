@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
-import 'package:untitled1/features/profile_feature/profile_page.dart';
+import 'package:untitled1/features/property_feature/screen/property_page.dart';
+import 'package:untitled1/features/submanager/submanager_home_page.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
 
 class SubmanagerPageHeader extends StatefulWidget
@@ -11,10 +13,10 @@ class SubmanagerPageHeader extends StatefulWidget
   const SubmanagerPageHeader({
     super.key,
     required this.width,
-    required this.role,
+    required this.userAuthInfo,
   });
   final double width;
-  final String role;
+  final UserAuthInfo userAuthInfo;
   @override
   Size get preferredSize => Size.fromHeight(width * (119 / 1920));
 
@@ -43,18 +45,25 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/profilePhoto-icon.png',
                 appBarCopmonentName: 'Profile',
-                onTap: () {
-                  submanagerpageSelectorProvider.selectPage(ProfilePage());
-                },
+                onTap: () {},
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Home.png',
                 appBarCopmonentName: 'Home',
+                onTap: () {
+                  submanagerpageSelectorProvider.selectPage(
+                    SubmanagerHomePage(userAuthInfo: widget.userAuthInfo),
+                  );
+                },
+              ),
+              AppBarComponentInfo(
+                appBarComponentImage: 'assets/images/Manager.png',
+                appBarCopmonentName: 'Employees',
                 onTap: () {},
               ),
               AppBarComponentInfo(
-                appBarComponentImage: 'assets/images/notes-icon.png',
-                appBarCopmonentName: 'Schedule',
+                appBarComponentImage: 'assets/images/Pie Chart.png',
+                appBarCopmonentName: 'Dashbourd',
                 onTap: () {},
               ),
               AppBarComponentInfo(
@@ -63,14 +72,11 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
                 onTap: () {},
               ),
               AppBarComponentInfo(
-                appBarComponentImage: 'assets/images/history-icon.png',
-                appBarCopmonentName: 'History',
-                onTap: () {},
-              ),
-              AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Apartment.png',
                 appBarCopmonentName: 'Properties',
-                onTap: () {},
+                onTap: () {
+                  submanagerpageSelectorProvider.selectPage(PropertyPage());
+                },
               ),
             ],
           ),
