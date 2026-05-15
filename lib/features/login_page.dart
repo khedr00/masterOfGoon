@@ -21,128 +21,160 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String name = '';
   String password = '';
-  Widget checkRoute(UserAuthInfo userAuthInfo) {
-    final Widget header;
-    if (userAuthInfo.role == 'submanager') {
-      header = SubmanagerPages(userAuthInfo: userAuthInfo);
-      Provider.of<SubmanagerPageSelectorProvider>(
+
+  bool isLoading = false;
+
+  Future<void> login() async {
+    if (name.isEmpty || password.isEmpty) return;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final submanagerProvider = Provider.of<SubmanagerPageSelectorProvider>(
         context,
         listen: false,
-      ).selectPage(SubmanagerHomePage(userAuthInfo: userAuthInfo));
-    } else {
-      header = MainEmployeesPages(userAuthInfo: userAuthInfo);
-      Provider.of<MainEmployessPageSelectorProvider>(
+      );
+
+      final employeeProvider = Provider.of<MainEmployessPageSelectorProvider>(
         context,
         listen: false,
-      ).selectPage(EmployeeHomePage(userAuthInfo: userAuthInfo));
+      );
+
+      UserAuthInfo userAuthInfo = await getUserAuthInfo(
+        name: name,
+        password: password,
+      );
+
+      if (!mounted) return;
+
+      if (userAuthInfo.role == 'submanager') {
+        submanagerProvider.selectPage(
+          SubmanagerHomePage(userAuthInfo: userAuthInfo),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => SubmanagerPages(userAuthInfo: userAuthInfo),
+          ),
+        );
+      } else {
+        employeeProvider.selectPage(
+          EmployeeHomePage(userAuthInfo: userAuthInfo),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MainEmployeesPages(userAuthInfo: userAuthInfo),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
-    return header;
   }
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    return Stack(
-      children: [
-        SizedBox(
-          width: width,
-          height: width * (1080 / 1920),
-          child: Image.asset(
-            'assets/images/backGround.png',
-            fit: BoxFit.fitWidth,
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          SizedBox(
+            width: width,
+            height: width * (1080 / 1920),
+            child: Image.asset(
+              'assets/images/backGround.png',
+              fit: BoxFit.fitWidth,
+            ),
           ),
-        ),
-        SizedBox(
-          width: width,
-          height: width * (1080 / 1920),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/newl.png',
-                width: width * (777 / 1920),
-                height: width * (777 / 1920),
-              ),
-              Container(
-                width: width * (911 / 1920),
-                height: width * (883 / 1920),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(width * (10 / 1920)),
-                  color: Color(0xffF0F0F0),
+          SizedBox(
+            width: width,
+            height: width * (1080 / 1920),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/newl.png',
+                  width: width * (777 / 1920),
+                  height: width * (777 / 1920),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      'Sign in  to EstateHub',
-                      style: TextStyle(
-                        fontFamily: 'NunitoSans-Bold',
-                        fontSize: width * (64 / 1920),
+                Container(
+                  width: width * (911 / 1920),
+                  height: width * (883 / 1920),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width * (10 / 1920)),
+                    color: const Color(0xffF0F0F0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Sign in to EstateHub',
+                        style: TextStyle(
+                          fontFamily: 'NunitoSans-Bold',
+                          fontSize: width * (64 / 1920),
+                        ),
                       ),
-                    ),
-                    Text(
-                      'You must become a member to login and access the entire site',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'NunitoSans-Regular',
-                        fontSize: width * (36 / 1920),
+                      Text(
+                        'You must become a member to login and access the entire site',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'NunitoSans-Regular',
+                          fontSize: width * (36 / 1920),
+                        ),
                       ),
-                    ),
-                    CustomTextField(
-                      fillColor: Colors.white,
-                      onChanged: (v) {
-                        name = v.trim();
-                      },
-                      hintText: 'Name',
-                      widthOfTextField: 636,
-                      fontSize: 32,
-                      fontFamily: FontFamily.bold,
-                      maxLines: 1,
-                    ),
-                    CustomTextField(
-                      fillColor: Colors.white,
-                      onChanged: (v) {
-                        password = v.trim();
-                      },
-                      hintText: 'Password',
-                      widthOfTextField: 636,
-                      fontSize: 32,
-                      fontFamily: FontFamily.bold,
-                      maxLines: 1,
-                    ),
-                    ButtonWithText(
-                      widthOfButton: width * (350 / 1920),
-                      heightOfButton: width * (90 / 1920),
-                      text: 'Sign in',
-                      fontSize: width * (40 / 1920),
-                      textColor: Colors.white,
-                      buttonAction: () async {
-                        if (name.isNotEmpty && password.isNotEmpty) {
-                          UserAuthInfo userAuthInfo = await getUserAuthInfo(
-                            name: name,
-                            password: password,
-                          );
-                          if (context.mounted) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return checkRoute(userAuthInfo);
-                                },
-                              ),
-                            );
-                          }
-                        } else {}
-                      },
-                    ),
-                  ],
+                      CustomTextField(
+                        fillColor: Colors.white,
+                        onChanged: (v) {
+                          name = v.trim();
+                        },
+                        hintText: 'Name',
+                        widthOfTextField: 636,
+                        fontSize: 32,
+                        fontFamily: FontFamily.bold,
+                        maxLines: 1,
+                      ),
+                      CustomTextField(
+                        fillColor: Colors.white,
+                        onChanged: (v) {
+                          password = v.trim();
+                        },
+                        hintText: 'Password',
+                        widthOfTextField: 636,
+                        fontSize: 32,
+                        fontFamily: FontFamily.bold,
+                        maxLines: 1,
+                      ),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : ButtonWithText(
+                              widthOfButton: width * (350 / 1920),
+                              heightOfButton: width * (90 / 1920),
+                              text: 'Sign in',
+                              fontSize: width * (40 / 1920),
+                              textColor: Colors.white,
+                              buttonAction: login,
+                            ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

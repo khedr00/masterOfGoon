@@ -53,6 +53,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     _falsingcardIsClicked();
     Provider.of<AllAndDealsOnlyProvider>(
       context,
+
       listen: false,
     ).truingAllAreClicked();
     getDealList();
@@ -185,7 +186,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                         ),
                 ),
               ),
-
               allAndDealsOnlyProvider.allAreClicked
                   ? PersonalAndDealsScheduleWidget(employeeId: 1)
                   : DealsOnlyScheduleWidget(

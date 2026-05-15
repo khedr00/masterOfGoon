@@ -8,38 +8,42 @@ class DealCardDealSatgeSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Container(
-      width: width * (136 / 1920),
-      height: width * (52 / 1920),
-      decoration: BoxDecoration(
-        color: backGroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(width * (10 / 1920)),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(bottom: width * (9 / 1920)),
-        child: Container(
+    return Row(
+      children: [
+        Container(
           width: width * (136 / 1920),
-          height: width * (43 / 1920),
+          height: width * (52 / 1920),
           decoration: BoxDecoration(
-            color: primaryColor,
+            color: backGroundColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(width * (10 / 1920)),
             ),
           ),
-          child: Center(
-            child: Text(
-              dealStage,
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'NunitoSans-ExtraBold',
-                fontSize: width * (16 / 1920),
+          child: Padding(
+            padding: EdgeInsets.only(bottom: width * (9 / 1920)),
+            child: Container(
+              width: width * (136 / 1920),
+              height: width * (43 / 1920),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(width * (10 / 1920)),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  dealStage,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'NunitoSans-ExtraBold',
+                    fontSize: width * (16 / 1920),
+                  ),
+                ),
               ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
