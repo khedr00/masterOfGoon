@@ -92,7 +92,7 @@ class _PropertyCardState extends State<PropertyCard> {
         ),
 
         Positioned(
-          top: width * (764 / 1920),
+          top: width * (742 / 1920),
           left: width * (10 / 1920),
           child: Container(
             width: width * (168 / 1920),

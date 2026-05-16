@@ -58,12 +58,12 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Manager.png',
-                appBarCopmonentName: 'Employees',
+                appBarCopmonentName: 'Employs',
                 onTap: () {},
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Pie Chart.png',
-                appBarCopmonentName: 'Dashbourd',
+                appBarCopmonentName: 'Dashbrd',
                 onTap: () {},
               ),
               AppBarComponentInfo(
