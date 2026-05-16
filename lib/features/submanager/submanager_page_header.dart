@@ -6,6 +6,7 @@ import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/submanager/employees_feature/employees_page.dart';
+import 'package:untitled1/features/submanager/submanager_dashbourd/submanager_dashbourd.dart';
 import 'package:untitled1/features/submanager/submanager_home_page.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
 
@@ -36,18 +37,41 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(
-            width: width * (140 / 1920),
-            height: width * (129 / 1920),
-            child: Image.asset('assets/images/Estate_hub.png'),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: width * (80 / 1920),
+                height: width * (80 / 1920),
+                child: Image.asset('assets/images/profilePhoto-icon.png'),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: width * (20 / 1920)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Yousef yaser',
+                      style: TextStyle(
+                        fontFamily: 'NunitoSans-Bold',
+                        fontSize: width * (18 / 1920),
+                      ),
+                    ),
+                    Text(
+                      'yosef456@gmail.com',
+                      style: TextStyle(
+                        fontFamily: 'NunitoSans-Bold',
+                        fontSize: width * (16 / 1920),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           AppBarWidget(
             appBarComponents: [
-              AppBarComponentInfo(
-                appBarComponentImage: 'assets/images/profilePhoto-icon.png',
-                appBarCopmonentName: 'Profile',
-                onTap: () {},
-              ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Home.png',
                 appBarCopmonentName: 'Home',
@@ -67,7 +91,11 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Pie Chart.png',
                 appBarCopmonentName: 'Dashbrd',
-                onTap: () {},
+                onTap: () {
+                  submanagerpageSelectorProvider.selectPage(
+                    SubmanagerDashbourd(),
+                  );
+                },
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/report-icon.png',

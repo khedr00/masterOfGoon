@@ -64,7 +64,6 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
         children: [
           Padding(
             padding: EdgeInsets.only(top: width * (43 / 1920)),
