@@ -32,6 +32,7 @@ dependencies:
   fl_chart: ^0.68.0
   intl: ^0.18.1
   provider: ^6.1.5+1
+  percent_indicator: ^4.2.3
   flutter:
     sdk: flutter
 

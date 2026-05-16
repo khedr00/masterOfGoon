@@ -5,6 +5,7 @@ import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
+import 'package:untitled1/features/submanager/employees_feature/employees_page.dart';
 import 'package:untitled1/features/submanager/submanager_home_page.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
 
@@ -59,7 +60,9 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Manager.png',
                 appBarCopmonentName: 'Employs',
-                onTap: () {},
+                onTap: () {
+                  submanagerpageSelectorProvider.selectPage(EmployeesPage());
+                },
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Pie Chart.png',
