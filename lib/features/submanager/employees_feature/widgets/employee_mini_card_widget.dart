@@ -49,7 +49,6 @@ class EmployeeMiniCardWidget extends StatelessWidget {
               ),
             ),
           ),
-
           SizedBox(height: width * (12 / 1920)),
 
           /// LOCATION

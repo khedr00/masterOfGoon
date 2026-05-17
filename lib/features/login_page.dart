@@ -5,9 +5,13 @@ import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
 import 'package:untitled1/features/employee_home_page.dart';
+import 'package:untitled1/features/general_manager_pages.dart/general_manager_pages.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page.dart';
 import 'package:untitled1/features/main_employees_pages.dart';
 import 'package:untitled1/features/submanager/submanager_home_page.dart';
 import 'package:untitled1/features/submanager/submanager_pages.dart';
+import 'package:untitled1/features/support_employee/features/home_feature/presentation/widgets/body_home_page.dart';
+import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
 
@@ -42,6 +46,12 @@ class _LoginPageState extends State<LoginPage> {
         listen: false,
       );
 
+      final generalmanagerPageSelectorProvider =
+          Provider.of<GeneralmanagerPageSelectorProvider>(
+            context,
+            listen: false,
+          );
+
       UserAuthInfo userAuthInfo = await getUserAuthInfo(
         name: name,
         password: password,
@@ -53,18 +63,29 @@ class _LoginPageState extends State<LoginPage> {
         submanagerProvider.selectPage(
           SubmanagerHomePage(userAuthInfo: userAuthInfo),
         );
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (_) => SubmanagerPages(userAuthInfo: userAuthInfo),
           ),
         );
+      } else if (userAuthInfo.role == 'general') {
+        generalmanagerPageSelectorProvider.selectPage(GeneralmanagerHomePage());
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => GeneralManagerPages(userAuthInfo: userAuthInfo),
+          ),
+        );
+      } else if (userAuthInfo.role == 'support') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => Scaffold(body: BodyHomePage())),
+        );
       } else {
         employeeProvider.selectPage(
           EmployeeHomePage(userAuthInfo: userAuthInfo),
         );
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -140,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                         onChanged: (v) {
                           name = v.trim();
                         },
-                        hintText: 'Name',
+                        hintText: 'Email',
                         widthOfTextField: 636,
                         fontSize: 32,
                         fontFamily: FontFamily.bold,

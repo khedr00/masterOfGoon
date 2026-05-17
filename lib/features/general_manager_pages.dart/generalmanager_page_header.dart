@@ -4,15 +4,15 @@ import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/submanager/employees_feature/employees_page.dart';
 import 'package:untitled1/features/submanager/submanager_dashbourd/submanager_dashbourd.dart';
-import 'package:untitled1/features/submanager/submanager_home_page.dart';
-import 'package:untitled1/providers/submanager_page_selector_provider.dart';
+import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 
-class SubmanagerPageHeader extends StatefulWidget
+class GeneralmanagerPageHeader extends StatefulWidget
     implements PreferredSizeWidget {
-  const SubmanagerPageHeader({
+  const GeneralmanagerPageHeader({
     super.key,
     required this.width,
     required this.userAuthInfo,
@@ -23,14 +23,14 @@ class SubmanagerPageHeader extends StatefulWidget
   Size get preferredSize => Size.fromHeight(width * (119 / 1920));
 
   @override
-  State<SubmanagerPageHeader> createState() => _SubmanagerPageHeader();
+  State<GeneralmanagerPageHeader> createState() => _GeneralmanagerPageHeader();
 }
 
-class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
+class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
   @override
   Widget build(BuildContext context) {
-    final submanagerpageSelectorProvider =
-        Provider.of<SubmanagerPageSelectorProvider>(context);
+    final generalmanagerPageSelectorProvider =
+        Provider.of<GeneralmanagerPageSelectorProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.only(bottom: width * (5 / 1920)),
@@ -76,37 +76,35 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
                 appBarComponentImage: 'assets/images/Manager.png',
                 appBarCopmonentName: 'Employs',
                 onTap: () {
-                  submanagerpageSelectorProvider.selectPage(EmployeesPage());
+                  generalmanagerPageSelectorProvider.selectPage(
+                    EmployeesPage(),
+                  );
                 },
               ),
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Home.png',
                 appBarCopmonentName: 'Home',
                 onTap: () {
-                  submanagerpageSelectorProvider.selectPage(
-                    SubmanagerHomePage(userAuthInfo: widget.userAuthInfo),
+                  generalmanagerPageSelectorProvider.selectPage(
+                    GeneralmanagerHomePage(),
                   );
                 },
               ),
+
               AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Pie Chart.png',
                 appBarCopmonentName: 'Dashbrd',
                 onTap: () {
-                  submanagerpageSelectorProvider.selectPage(
+                  generalmanagerPageSelectorProvider.selectPage(
                     SubmanagerDashbourd(),
                   );
                 },
               ),
               AppBarComponentInfo(
-                appBarComponentImage: 'assets/images/report-icon.png',
-                appBarCopmonentName: 'Reports',
-                onTap: () {},
-              ),
-              AppBarComponentInfo(
                 appBarComponentImage: 'assets/images/Apartment.png',
                 appBarCopmonentName: 'Properties',
                 onTap: () {
-                  submanagerpageSelectorProvider.selectPage(PropertyPage());
+                  generalmanagerPageSelectorProvider.selectPage(PropertyPage());
                 },
               ),
             ],

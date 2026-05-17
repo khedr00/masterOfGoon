@@ -8,15 +8,16 @@ Future<UserAuthInfo> getUserAuthInfo({
   Map<String, dynamic> temp = {};
   if (name == 'khedr') {
     temp = {'id': 1, 'role': 'sales employee'};
-  }
-  if (name == 'issa') {
+  } else if (name == 'issa') {
     temp = {'id': 2, 'role': 'Rent employee'};
-  }
-  if (name == 'zain') {
+  } else if (name == 'zain') {
     temp = {'id': 3, 'role': 'purchase employee'};
-  }
-  if (name == 'manager') {
+  } else if (name == 'manager') {
     temp = {'id': 4, 'role': 'submanager'};
+  } else if (name == 'support') {
+    temp = {'id': 5, 'role': 'support'};
+  } else if (name == 'general') {
+    temp = {'id': 6, 'role': 'general'};
   } else {
     temp = {'id': 1, 'role': 'sales employee'};
   }
