@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
+import 'package:untitled1/back_end_test/deals/deal_card_info/rent_and_lease_deal_card_info.dart';
 
 Future<List<DealCardInfo>> getDealCardsInfo({
   required String role,
@@ -66,17 +67,48 @@ Future<List<DealCardInfo>> getDealCardsInfo({
 
   List<DealCardInfo> dealList = [];
   for (int i = 0; i < temp.length; i++) {
-    dealList.add(
-      DealCardInfo(
-        id: temp[i]['id'],
-        propertyId: temp[i]['propertyId'],
-        clientId: temp[i]['clientId'],
-        title: temp[i]['title'],
-        dealStage: temp[i]['dealStage'],
-        successProbability: temp[i]['successProbability'],
-        startingDate: temp[i]['startingDate'],
-      ),
-    );
+    if (temp[i].containsKey('rentalPeriod')) {
+      dealList.add(
+        RentAndLeaseDealCardInfo(
+          id: temp[i]['id'],
+          propertyId: temp[i]['propertyId'],
+          clientId: temp[i]['clientId'],
+          title: temp[i]['title'],
+          dealStage: temp[i]['dealStage'],
+          successProbability: temp[i]['successProbability'],
+          startingDate: temp[i]['startingDate'],
+          propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+          propertyType: 'hall',
+          propertyPrice: 30003,
+          propertySimpleDescription:
+              'Furnished Apartment with pool and 2 balconies 3',
+          propertyAddress: 'homs_shien3',
+          clientPhoto: 'assets/images/profilePhoto-icon.png',
+          clientName: 'aliAhmad2',
+          rentalPeriod: 4,
+        ),
+      );
+    } else {
+      dealList.add(
+        DealCardInfo(
+          id: temp[i]['id'],
+          propertyId: temp[i]['propertyId'],
+          clientId: temp[i]['clientId'],
+          title: temp[i]['title'],
+          dealStage: temp[i]['dealStage'],
+          successProbability: temp[i]['successProbability'],
+          startingDate: temp[i]['startingDate'],
+          propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+          propertyType: 'hall',
+          propertyPrice: 30003,
+          propertySimpleDescription:
+              'Furnished Apartment with pool and 2 balconies 3',
+          propertyAddress: 'homs_shien3',
+          clientPhoto: 'assets/images/profilePhoto-icon.png',
+          clientName: 'aliAhmad2',
+        ),
+      );
+    }
   }
   return dealList;
 }

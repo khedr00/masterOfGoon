@@ -30,7 +30,8 @@ class DealCard extends StatelessWidget {
                     dealStage: dealCardInfo.dealStage.toString(),
                   ),
                   DealCardClientSection(
-                    dealId: dealCardInfo.clientId,
+                    clientName: dealCardInfo.clientName,
+                    clientPhoto: dealCardInfo.clientPhoto,
                     lastMessage: 'I will call you back later',
                     timePassed: '39',
                   ),
@@ -39,7 +40,12 @@ class DealCard extends StatelessWidget {
               DealCardPropertySection(
                 dealDate: dealCardInfo.startingDate,
                 dealId: dealCardInfo.id.toString(),
-                propertyId: dealCardInfo.propertyId,
+                propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+                propertyType: 'villa',
+                propertyPrice: 30000,
+                propertySimpleDescription:
+                    'Furnished Apartment with pool and 2 balconies ',
+                propertyAddress: 'homs_shien',
               ),
             ],
           ),

@@ -42,7 +42,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
   }
 
   List<bool> _cardIsClicked = [];
-  late int _dealId;
+  int? _dealId;
 
   void _falsingcardIsClicked() {
     _cardIsClicked = List.filled(_dealList.length, false);
@@ -50,12 +50,15 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
 
   @override
   void initState() {
-    _falsingcardIsClicked();
-    Provider.of<AllAndDealsOnlyProvider>(
-      context,
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
 
-      listen: false,
-    ).truingAllAreClicked();
+      Provider.of<AllAndDealsOnlyProvider>(
+        context,
+        listen: false,
+      ).truingAllAreClicked();
+    });
+    _falsingcardIsClicked();
     getDealList();
     super.initState();
   }
@@ -71,11 +74,10 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     final allAndDealsOnlyProvider = Provider.of<AllAndDealsOnlyProvider>(
       context,
     );
-    setState(() {
-      allAndDealsOnlyProvider.allAreClicked
-          ? _falsingcardIsClicked()
-          : DoNothingAction();
-    });
+
+    if (allAndDealsOnlyProvider.allAreClicked) {
+      _falsingcardIsClicked();
+    }
     double width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
@@ -188,9 +190,11 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               ),
               allAndDealsOnlyProvider.allAreClicked
                   ? PersonalAndDealsScheduleWidget(employeeId: 1)
+                  : _dealId == null
+                  ? SizedBox()
                   : DealsOnlyScheduleWidget(
-                      key: ValueKey(_dealId),
-                      dealId: _dealId,
+                      key: ValueKey(_dealId!),
+                      dealId: _dealId!,
                       forDealPage: false,
                     ),
             ],

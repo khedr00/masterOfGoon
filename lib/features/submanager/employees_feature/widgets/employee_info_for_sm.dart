@@ -4,6 +4,7 @@ import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart
 import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
+import 'package:untitled1/features/deal_page.dart';
 import 'package:untitled1/features/profile_feature/widgets/profile_card.dart';
 import 'package:untitled1/features/profile_feature/widgets/stats_widget.dart/stats_widget.dart';
 
@@ -31,15 +32,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
       for (int i = 0; i < dealList.length; i++) {
         _dealList.add(DealCard(dealCardInfo: dealList[i]));
       }
-      _falsingcardIsClicked();
-      _cardIsClicked[0] = true;
     });
-  }
-
-  List<bool> _cardIsClicked = [];
-
-  void _falsingcardIsClicked() {
-    _cardIsClicked = List.filled(_dealList.length, false);
   }
 
   @override
@@ -140,10 +133,14 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            setState(() {
-                                              _falsingcardIsClicked();
-                                              _cardIsClicked[i] = true;
-                                            });
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) {
+                                                  return DealPage();
+                                                },
+                                              ),
+                                            );
                                           },
 
                                           child: _dealList[i],
@@ -159,9 +156,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                                               width: width * (15 / 1920),
                                               height: width * (200 / 1920),
                                               decoration: BoxDecoration(
-                                                color: _cardIsClicked[i]
-                                                    ? thirdColorPrimary
-                                                    : backGroundColor,
+                                                color: backGroundColor,
                                                 borderRadius: BorderRadius.only(
                                                   topRight: Radius.circular(
                                                     width * (50 / 1920),

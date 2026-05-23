@@ -23,13 +23,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String name = '';
+  String email = '';
   String password = '';
 
   bool isLoading = false;
 
   Future<void> login() async {
-    if (name.isEmpty || password.isEmpty) return;
+    if (email.isEmpty || password.isEmpty) return;
 
     setState(() {
       isLoading = true;
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
           );
 
       UserAuthInfo userAuthInfo = await getUserAuthInfo(
-        name: name,
+        email: email,
         password: password,
       );
 
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('${e.toString()} ffff');
     } finally {
       if (mounted) {
         setState(() {
@@ -107,7 +107,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -126,10 +125,34 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/images/newl.png',
-                  width: width * (777 / 1920),
-                  height: width * (777 / 1920),
+                Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/newl.png',
+                      width: width * (777 / 1920),
+                      height: width * (777 / 1920),
+                    ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/Online Support.png',
+                          width: width * (40 / 1920),
+                          height: width * (40 / 1290),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: width * (15 / 1920)),
+                          child: Text(
+                            'Support Center',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontFamily: 'NunitoSans-Bold',
+                              fontSize: width * (28 / 1920),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 Container(
                   width: width * (911 / 1920),
@@ -159,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                       CustomTextField(
                         fillColor: Colors.white,
                         onChanged: (v) {
-                          name = v.trim();
+                          email = v.trim();
                         },
                         hintText: 'Email',
                         widthOfTextField: 636,

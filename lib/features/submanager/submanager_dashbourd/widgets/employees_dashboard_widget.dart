@@ -317,7 +317,7 @@ class EmployeesDashboardWidget extends StatelessWidget {
 
                       children: [
                         Text(
-                          'Property Inspectors',
+                          'Employees Utilization',
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (26 / 1920),
@@ -350,31 +350,31 @@ class EmployeesDashboardWidget extends StatelessWidget {
                           ),
                         ),
 
-                        Column(
-                          children: [
-                            Text(
-                              'Inspectors Count',
-                              style: TextStyle(
-                                fontFamily: 'NunitoSans-Regular',
+                        // Column(
+                        //   children: [
+                        //     Text(
+                        //       'Inspectors Count',
+                        //       style: TextStyle(
+                        //         fontFamily: 'NunitoSans-Regular',
 
-                                fontSize: width * (22 / 1920),
-                              ),
-                            ),
+                        //         fontSize: width * (22 / 1920),
+                        //       ),
+                        //     ),
 
-                            SizedBox(height: width * (6 / 1920)),
+                        //     SizedBox(height: width * (6 / 1920)),
 
-                            Text(
-                              '122 Employees',
-                              style: TextStyle(
-                                fontFamily: 'NunitoSans-Bold',
+                        //     Text(
+                        //       '122 Employees',
+                        //       style: TextStyle(
+                        //         fontFamily: 'NunitoSans-Bold',
 
-                                fontSize: width * (38 / 1920),
+                        //         fontSize: width * (38 / 1920),
 
-                                color: Colors.redAccent,
-                              ),
-                            ),
-                          ],
-                        ),
+                        //         color: Colors.redAccent,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
 
                         // Container(
                         //   width: double.infinity,

@@ -1,31 +1,87 @@
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 
 Future<UserAuthInfo> getUserAuthInfo({
-  required String name,
+  required String email,
   required String password,
 }) async {
-  await Future.delayed(const Duration(seconds: 2));
+  // try {
+  // Dio dio = Dio();
+
+  // final response = await dio.post(
+  //   'https://dummyjson.com/auth/login',
+  //   data: {'email': email, 'password': password},
+  // );
   Map<String, dynamic> temp = {};
-  if (name == 'khedr') {
-    temp = {'id': 1, 'role': 'sales employee'};
-  } else if (name == 'issa') {
-    temp = {'id': 2, 'role': 'Rent employee'};
-  } else if (name == 'zain') {
-    temp = {'id': 3, 'role': 'purchase employee'};
-  } else if (name == 'manager') {
-    temp = {'id': 4, 'role': 'submanager'};
-  } else if (name == 'support') {
-    temp = {'id': 5, 'role': 'support'};
-  } else if (name == 'general') {
-    temp = {'id': 6, 'role': 'general'};
+  if (email == 'khedr') {
+    temp = {
+      'id': 1,
+      'role': 'sales employee',
+      'accessToken': 'adsc',
+      'refreshToken': 'asdca',
+    };
+  } else if (email == 'issa') {
+    temp = {
+      'id': 2,
+      'role': 'Rent employee',
+      'accessToken': 'adscad',
+      'refreshToken': 'casdc',
+    };
+  } else if (email == 'zain') {
+    temp = {
+      'id': 3,
+      'role': 'purchase employee',
+      'accessToken': 'acsdc',
+      'refreshToken': 'casdc',
+    };
+  } else if (email == 'manager') {
+    temp = {
+      'id': 4,
+      'role': 'submanager',
+      'accessToken': 'acdc',
+      'refreshToken': 'acsdc',
+    };
+  } else if (email == 'support') {
+    temp = {
+      'id': 5,
+      'role': 'support',
+      'accessToken': 'cdsac',
+      'refreshToken': 'dca',
+    };
+  } else if (email == 'general') {
+    temp = {
+      'id': 6,
+      'role': 'general',
+      'accessToken': 'dcd',
+      'refreshToken': 'cdsad',
+    };
   } else {
-    temp = {'id': 1, 'role': 'sales employee'};
+    temp = {
+      'id': 1,
+      'role': 'sales employee',
+      'accessToken': 'gg',
+      'refreshToken': 'gg',
+    };
   }
 
+  // return UserAuthInfo.fromJson(temp);
   return UserAuthInfo(
     id: temp['id'],
     role: temp['role'],
-    accessToken: '',
-    refreshToken: '',
+    accessToken: temp['accessToken'],
+    refreshToken: temp['refreshToken'],
   );
-}
+} 
+  // on DioException catch (e) {
+  //   if (CancelToken.isCancel(e)) {
+  //     throw Exception('Request cancelled');
+  //   }
+
+  //   if (e.response != null) {
+  //     throw Exception(e.response?.data['message'] ?? 'Server Error');
+  //   }
+
+  //   throw Exception('Connection Error');
+  // } catch (e) {
+  //   throw Exception(e);
+  // }
+// }

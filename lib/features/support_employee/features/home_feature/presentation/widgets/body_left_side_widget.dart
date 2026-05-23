@@ -56,7 +56,7 @@ class _BodyLeftSideWidgetState extends State<BodyLeftSideWidget> {
           padding: EdgeInsets.only(left: width * (28 / 1920)),
           child: Container(
             height: width * (820 / 1920),
-            width: width * ((372 + 41) / 1920),
+            width: width * ((900 + 41) / 1920),
             decoration: BoxDecoration(
               border: Border.symmetric(
                 horizontal: BorderSide(color: primaryColor),

@@ -10,7 +10,6 @@ import 'package:untitled1/core/widgets/property_card/property_card.dart';
 import 'package:untitled1/core/widgets/property_photos_shower/property_photos_shower_widget.dart';
 import 'package:untitled1/features/submanager/widgets/choose_employee/choose_employee_widget.dart';
 import 'package:untitled1/features/submanager/widgets/deal_request_card/deal_request_card.dart';
-import 'package:untitled1/features/submanager/widgets/pie_charts/interactive_pie_chart.dart';
 
 class SubmanagerHomePage extends StatefulWidget {
   const SubmanagerHomePage({super.key, required this.userAuthInfo});
@@ -228,7 +227,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                       ),
                       child: Center(
                         child: Text(
-                          'Client Info :',
+                          'Lead Info :',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'NunitoSans-Bold',
@@ -392,14 +391,22 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'Customer Segmentation :',
+                              'Lead Segmentation :',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: width * (22 / 1920),
                               ),
                             ),
-                            InteractivePieChart(),
+                            Text(
+                              'Hot',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: width * (32 / 1920),
+                              ),
+                            ),
                           ],
                         ),
                       ],

@@ -119,7 +119,7 @@ class ComplaintCard extends StatelessWidget {
                       Row(
                         children: [
                           Image.asset(
-                            'assets/images/Notes.png',
+                            'assets/images/Address Book.png',
                             width: width * (38 / 1920),
                             height: width * (38 / 1920),
                           ),

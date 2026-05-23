@@ -1,63 +1,40 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled1/back_end_test/deals/deal_card_info/property_info_inside_deal_card.dart';
-import 'package:untitled1/back_end_test/deals/get_property_info_inside_deal_card.dart';
+
 import 'package:untitled1/core/widgets/constants.dart';
 
-class DealCardPropertySection extends StatefulWidget {
+class DealCardPropertySection extends StatelessWidget {
   const DealCardPropertySection({
     super.key,
     required this.dealDate,
-    required this.propertyId,
     required this.dealId,
+    required this.propertyPrimaryImage,
+    required this.propertyType,
+    required this.propertyPrice,
+    required this.propertySimpleDescription,
+    required this.propertyAddress,
+    this.rentalPeriod,
   });
   final String dealDate;
   final String dealId;
-  final int propertyId;
+  final String propertyPrimaryImage;
+  final String propertyType;
+  final int propertyPrice;
+  final String propertySimpleDescription;
+  final String propertyAddress;
+  final int? rentalPeriod;
 
-  @override
-  State<DealCardPropertySection> createState() =>
-      _DealCardPropertySectionState();
-}
-
-class _DealCardPropertySectionState extends State<DealCardPropertySection> {
-  PropertyInfoInsideDealCard? _propertyInfoInsideDealCard;
-  final CancelToken _cancelToken = CancelToken();
-  void _getPropertyInfoInsideDealCard() async {
-    PropertyInfoInsideDealCard propertyInfoInsideDealCard =
-        await getPropertyInfoInsideDealCard(propertyId: widget.propertyId);
-
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _propertyInfoInsideDealCard = propertyInfoInsideDealCard;
-    });
-  }
-
-  @override
-  void initState() {
-    _getPropertyInfoInsideDealCard();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _cancelToken.cancel();
-    super.dispose();
-  }
-
+  // PropertyInfoInsideDealCard? _propertyInfoInsideDealCard;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    if (_propertyInfoInsideDealCard == null) {
-      return Container(
-        width: width * (550 / 1920),
-        color: secondaryColor,
-        child: Center(child: CircularProgressIndicator()),
-      );
-    }
+    // if (_propertyInfoInsideDealCard == null) {
+    //   return Container(
+    //     width: width * (550 / 1920),
+    //     color: secondaryColor,
+    //     child: Center(child: CircularProgressIndicator()),
+    //   );
+    // }
     return Column(
       children: [
         Row(
@@ -79,7 +56,7 @@ class _DealCardPropertySectionState extends State<DealCardPropertySection> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    widget.dealDate,
+                    dealDate,
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'NunitoSans-MediumItalic',
@@ -87,7 +64,7 @@ class _DealCardPropertySectionState extends State<DealCardPropertySection> {
                     ),
                   ),
                   Text(
-                    'ID : ${widget.dealId}',
+                    'ID : $dealId',
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'NunitoSans-MediumItalic',
@@ -104,9 +81,7 @@ class _DealCardPropertySectionState extends State<DealCardPropertySection> {
             SizedBox(
               width: width * (305 / 1920),
               height: width * (153 / 1920),
-              child: Image.asset(
-                _propertyInfoInsideDealCard!.propertyPrimaryImage,
-              ),
+              child: Image.network(propertyPrimaryImage),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -125,7 +100,7 @@ class _DealCardPropertySectionState extends State<DealCardPropertySection> {
                         ),
                       ),
                       Text(
-                        _propertyInfoInsideDealCard!.propertyType,
+                        propertyType,
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'NunitoSans-SemiBold',
@@ -141,7 +116,7 @@ class _DealCardPropertySectionState extends State<DealCardPropertySection> {
                         ),
                       ),
                       Text(
-                        '${_propertyInfoInsideDealCard!.propertyPrice.toString()} \$',
+                        '${propertyPrice.toString()} \$',
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'NunitoSans-SemiBold',
@@ -162,8 +137,7 @@ class _DealCardPropertySectionState extends State<DealCardPropertySection> {
                         width: width * (256 / 1902),
                         height: width * (60 / 1920),
                         child: Text(
-                          _propertyInfoInsideDealCard!
-                              .propertySimpleDescription,
+                          propertySimpleDescription,
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'NunitoSans-Medium',
@@ -181,7 +155,7 @@ class _DealCardPropertySectionState extends State<DealCardPropertySection> {
                         child: Image.asset('assets/images/Location.png'),
                       ),
                       Text(
-                        _propertyInfoInsideDealCard!.propertyAddress,
+                        propertyAddress,
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'NunitoSans-SemiBold',
