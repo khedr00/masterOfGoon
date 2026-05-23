@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
 import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
@@ -26,7 +25,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
   final List<DealCard> _dealList = [];
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
-    List<DealCardInfo> dealList = await getDealCardsInfo(
+    List<dynamic> dealList = await getDealCardsInfo(
       role: widget.userAuthInfo.role,
       id: widget.userAuthInfo.id,
       cancelToken: _cancelToken,

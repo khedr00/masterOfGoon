@@ -91,39 +91,102 @@ class DealCardPropertySection extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    children: [
-                      SizedBox(
-                        width: width * (40 / 1920),
-                        height: width * (40 / 1920),
-                        child: Image.asset(
-                          'assets/images/House With a Garden.png',
-                        ),
-                      ),
-                      Text(
-                        propertyType,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'NunitoSans-SemiBold',
-                          fontSize: width * (22 / 1920),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: width * (35 / 1920)),
-                        child: SizedBox(
-                          width: width * (40 / 1920),
-                          height: width * (40 / 1920),
-                          child: Image.asset('assets/images/Price Tag USD.png'),
-                        ),
-                      ),
-                      Text(
-                        '${propertyPrice.toString()} \$',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'NunitoSans-SemiBold',
-                          fontSize: width * (22 / 1920),
-                        ),
-                      ),
-                    ],
+                    children: rentalPeriod == null
+                        ? [
+                            SizedBox(
+                              width: width * (40 / 1920),
+                              height: width * (40 / 1920),
+                              child: Image.asset(
+                                'assets/images/House With a Garden.png',
+                              ),
+                            ),
+                            Text(
+                              propertyType,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NunitoSans-SemiBold',
+                                fontSize: width * (22 / 1920),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: width * (35 / 1920),
+                              ),
+                              child: SizedBox(
+                                width: width * (40 / 1920),
+                                height: width * (40 / 1920),
+                                child: Image.asset(
+                                  'assets/images/Price Tag USD.png',
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '${propertyPrice.toString()} \$',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NunitoSans-SemiBold',
+                                fontSize: width * (22 / 1920),
+                              ),
+                            ),
+                          ]
+                        : [
+                            SizedBox(
+                              width: width * (25 / 1920),
+                              height: width * (25 / 1920),
+                              child: Image.asset(
+                                'assets/images/House With a Garden.png',
+                              ),
+                            ),
+                            Text(
+                              propertyType,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NunitoSans-SemiBold',
+                                fontSize: width * (16 / 1920),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: width * (15 / 1920),
+                              ),
+                              child: SizedBox(
+                                width: width * (25 / 1920),
+                                height: width * (25 / 1920),
+                                child: Image.asset(
+                                  'assets/images/Price Tag USD.png',
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '${propertyPrice.toString()} \$',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NunitoSans-SemiBold',
+                                fontSize: width * (16 / 1920),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: width * (15 / 1920),
+                              ),
+                              child: SizedBox(
+                                width: width * (25 / 1920),
+                                height: width * (25 / 1920),
+
+                                child: Image.asset(
+                                  'assets/images/Date Span.png',
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '${rentalPeriod.toString()} Months',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NunitoSans-SemiBold',
+                                fontSize: width * (16 / 1920),
+                              ),
+                            ),
+                          ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(

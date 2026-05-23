@@ -62,7 +62,7 @@ class _DealPageState extends State<DealPage> {
                       GeneralTabableCard(
                         tabs: [
                           TabOfTabableCard(
-                            tabName: 'liked stuff',
+                            tabName: 'Preferences',
                             tabColor: fifthColorPrimaryGreen,
                             bodyOfTheTab: LikedOnlyBody(),
                           ),

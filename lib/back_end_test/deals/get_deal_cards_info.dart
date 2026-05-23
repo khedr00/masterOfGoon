@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
 import 'package:untitled1/back_end_test/deals/deal_card_info/rent_and_lease_deal_card_info.dart';
 
-Future<List<DealCardInfo>> getDealCardsInfo({
+Future<List<dynamic>> getDealCardsInfo({
   required String role,
   required int id,
   CancelToken? cancelToken,
@@ -26,6 +26,7 @@ Future<List<DealCardInfo>> getDealCardsInfo({
       'dealStage': 'negotiation',
       'successProbability': 24,
       'startingDate': '3/7/2025',
+      'rentalPeriod': 2,
     },
     {
       'id': 3,
@@ -44,6 +45,7 @@ Future<List<DealCardInfo>> getDealCardsInfo({
       'dealStage': 'negotiation',
       'successProbability': 26,
       'startingDate': '5/7/2025',
+      'rentalPeriod': 3,
     },
     {
       'id': 5,
@@ -62,10 +64,11 @@ Future<List<DealCardInfo>> getDealCardsInfo({
       'dealStage': 'negotiation',
       'successProbability': 28,
       'startingDate': '7/7/2025',
+      'rentalPeriod': 4,
     },
   ];
 
-  List<DealCardInfo> dealList = [];
+  List<dynamic> dealList = [];
   for (int i = 0; i < temp.length; i++) {
     if (temp[i].containsKey('rentalPeriod')) {
       dealList.add(
@@ -85,7 +88,7 @@ Future<List<DealCardInfo>> getDealCardsInfo({
           propertyAddress: 'homs_shien3',
           clientPhoto: 'assets/images/profilePhoto-icon.png',
           clientName: 'aliAhmad2',
-          rentalPeriod: 4,
+          rentalPeriod: temp[i]['rentalPeriod'],
         ),
       );
     } else {

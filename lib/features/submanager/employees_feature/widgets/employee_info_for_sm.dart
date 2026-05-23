@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
 import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
@@ -20,7 +19,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
   final List<DealCard> _dealList = [];
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
-    List<DealCardInfo> dealList = await getDealCardsInfo(
+    List<dynamic> dealList = await getDealCardsInfo(
       role: '',
       id: 1,
       cancelToken: _cancelToken,

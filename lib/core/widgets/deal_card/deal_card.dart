@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
+import 'package:untitled1/back_end_test/deals/deal_card_info/rent_and_lease_deal_card_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_deal_satge_section.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_client_section.dart';
@@ -7,7 +7,7 @@ import 'package:untitled1/core/widgets/deal_card/deal_card_property_section.dart
 
 class DealCard extends StatelessWidget {
   const DealCard({super.key, required this.dealCardInfo});
-  final DealCardInfo dealCardInfo;
+  final dynamic dealCardInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,9 @@ class DealCard extends StatelessWidget {
                 propertySimpleDescription:
                     'Furnished Apartment with pool and 2 balconies ',
                 propertyAddress: 'homs_shien',
+                rentalPeriod: (dealCardInfo is RentAndLeaseDealCardInfo)
+                    ? dealCardInfo.rentalPeriod
+                    : null,
               ),
             ],
           ),
