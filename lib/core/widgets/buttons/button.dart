@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class Button extends StatelessWidget {
   const Button({
@@ -18,17 +20,18 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: buttonAction,
       child: Container(
         width: widthOfButton,
         height: heightOfButton,
         decoration: BoxDecoration(
-          color: primaryColor,
+          color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
           borderRadius: BorderRadius.circular(borderRadiusOfButton),
           boxShadow: [
             BoxShadow(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               blurRadius: 20,
               spreadRadius: 2,
               offset: Offset(0, 4),

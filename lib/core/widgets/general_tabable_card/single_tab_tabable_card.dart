@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class SingleTabTabableCard extends StatefulWidget {
   const SingleTabTabableCard({
@@ -17,6 +19,7 @@ class SingleTabTabableCard extends StatefulWidget {
 class _SingleTabTabableCardState extends State<SingleTabTabableCard> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -53,7 +56,7 @@ class _SingleTabTabableCardState extends State<SingleTabTabableCard> {
           child: Container(
             width: width * (50 / 1920),
             height: width * (52 / 1920),
-            decoration: BoxDecoration(color: backGroundColor),
+            decoration: BoxDecoration(color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor),
           ),
         ),
         Positioned(
@@ -89,7 +92,7 @@ class _SingleTabTabableCardState extends State<SingleTabTabableCard> {
             width: width * (40 / 1920),
             height: width * (52 / 1920),
             decoration: BoxDecoration(
-              color: backGroundColor,
+              color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(width * (30 / 1920)),
               ),

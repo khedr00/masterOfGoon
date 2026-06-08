@@ -1,19 +1,22 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class BarChartWidget extends StatelessWidget {
   const BarChartWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width * (840 / 1920),
       height: width * (346 / 1920),
       padding: EdgeInsets.all(width * (20 / 1920)),
       decoration: BoxDecoration(
-        color: secondaryColor,
+        color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
         borderRadius: BorderRadius.circular(width * (30 / 1920)),
       ),
       child: BarChart(
@@ -27,7 +30,7 @@ class BarChartWidget extends StatelessWidget {
                   const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
                   return Text(
                     labels[value.toInt()],
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: getPrimaryTextColor(themeProvider.isDarkMode)),
                   );
                 },
               ),
@@ -41,7 +44,7 @@ class BarChartWidget extends StatelessWidget {
                     padding: EdgeInsets.only(top: width * (20 / 1920)),
                     child: Text(
                       value.toInt().toString(),
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: getPrimaryTextColor(themeProvider.isDarkMode)),
                     ),
                   );
                 },

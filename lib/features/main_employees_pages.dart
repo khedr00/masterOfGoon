@@ -4,6 +4,7 @@ import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/header/main_employees_page_header.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class MainEmployeesPages extends StatelessWidget {
   const MainEmployeesPages({super.key, required this.userAuthInfo});
@@ -13,10 +14,13 @@ class MainEmployeesPages extends StatelessWidget {
   Widget build(BuildContext context) {
     final mainEmployesspageSelectorProvider =
         Provider.of<MainEmployessPageSelectorProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: themeProvider.isDarkMode
+          ? darkBackGroundColor
+          : backGroundColor,
       appBar: MainEmployeesPageHeader(width: width, userAuthInfo: userAuthInfo),
       body: mainEmployesspageSelectorProvider.getPageSelected,
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/buttons/button.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class ButtonWithText extends StatefulWidget {
   const ButtonWithText({
@@ -25,6 +28,7 @@ class ButtonWithText extends StatefulWidget {
 class _ButtonWithTextState extends State<ButtonWithText> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Button(
       buttonAction: widget.buttonAction,
@@ -35,7 +39,7 @@ class _ButtonWithTextState extends State<ButtonWithText> {
         child: Text(
           widget.text,
           style: TextStyle(
-            color: widget.textColor ?? Colors.black,
+            color: widget.textColor ?? getPrimaryTextColor(themeProvider.isDarkMode),
             fontFamily: 'NunitoSans-Medium',
             fontSize: widget.fontSize ?? width * (24 / 1920),
           ),

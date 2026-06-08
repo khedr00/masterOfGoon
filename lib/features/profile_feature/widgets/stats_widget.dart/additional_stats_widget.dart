@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class AdditionalStatsWidget extends StatelessWidget {
   const AdditionalStatsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
       width: width * (490 / 1920),
@@ -17,11 +20,11 @@ class AdditionalStatsWidget extends StatelessWidget {
             width: width * (470 / 1920),
             height: width * (85 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.circular(width * (5 / 1920)),
               boxShadow: [
                 BoxShadow(
-                  color: primaryColor,
+                  color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                   blurRadius: 20,
                   spreadRadius: 2,
                   offset: Offset(0, 4),
@@ -34,7 +37,7 @@ class AdditionalStatsWidget extends StatelessWidget {
                 Text(
                   'Total number of deals',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (20 / 1920),
                   ),
@@ -42,7 +45,7 @@ class AdditionalStatsWidget extends StatelessWidget {
                 Text(
                   '55',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (38 / 1920),
                   ),
@@ -134,11 +137,11 @@ class AdditionalStatsWidget extends StatelessWidget {
             width: width * (470 / 1920),
             height: width * (85 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.circular(width * (5 / 1920)),
               boxShadow: [
                 BoxShadow(
-                  color: primaryColor,
+                  color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                   blurRadius: 20,
                   spreadRadius: 2,
                   offset: Offset(0, 4),
@@ -151,7 +154,7 @@ class AdditionalStatsWidget extends StatelessWidget {
                 Text(
                   'Deal Success Rate',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (20 / 1920),
                   ),
@@ -159,7 +162,7 @@ class AdditionalStatsWidget extends StatelessWidget {
                 Text(
                   '78 %',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (38 / 1920),
                   ),
@@ -171,11 +174,11 @@ class AdditionalStatsWidget extends StatelessWidget {
             width: width * (470 / 1920),
             height: width * (85 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.circular(width * (5 / 1920)),
               boxShadow: [
                 BoxShadow(
-                  color: primaryColor,
+                  color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                   blurRadius: 20,
                   spreadRadius: 2,
                   offset: Offset(0, 4),
@@ -188,7 +191,7 @@ class AdditionalStatsWidget extends StatelessWidget {
                 Text(
                   'Average time for closing a Deal',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (20 / 1920),
                   ),
@@ -196,7 +199,7 @@ class AdditionalStatsWidget extends StatelessWidget {
                 Text(
                   '5 Days',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (38 / 1920),
                   ),

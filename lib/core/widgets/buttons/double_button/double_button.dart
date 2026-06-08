@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class DoubleButton extends StatefulWidget {
   const DoubleButton({
@@ -26,13 +29,14 @@ class DoubleButton extends StatefulWidget {
 class _DoubleButton extends State<DoubleButton> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: widget.widthOfButton,
       height: width * (40 / 1902),
       decoration: BoxDecoration(
         border: Border.all(color: widget.fillColor, width: width * (4 / 1920)),
-        color: Colors.white,
+        color: getCardColor(themeProvider.isDarkMode),
         borderRadius: BorderRadius.circular(1000),
       ),
       child: Row(
@@ -49,7 +53,7 @@ class _DoubleButton extends State<DoubleButton> {
               width: (widget.widthOfButton / 2) - width * (4 / 1920),
               height: width * (36 / 1920),
               decoration: BoxDecoration(
-                color: !widget.secondClick ? Colors.white : widget.fillColor,
+                color: !widget.secondClick ? getCardColor(themeProvider.isDarkMode) : widget.fillColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(1000),
                   bottomLeft: Radius.circular(1000),
@@ -59,7 +63,7 @@ class _DoubleButton extends State<DoubleButton> {
                 child: Text(
                   widget.firstButtonName,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (14 / 1920),
                   ),
@@ -79,7 +83,7 @@ class _DoubleButton extends State<DoubleButton> {
               width: (widget.widthOfButton / 2) - width * (4 / 1920),
               height: width * (36 / 1920),
               decoration: BoxDecoration(
-                color: widget.secondClick ? Colors.white : widget.fillColor,
+                color: widget.secondClick ? getCardColor(themeProvider.isDarkMode) : widget.fillColor,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(1000),
                   bottomRight: Radius.circular(1000),
@@ -89,7 +93,7 @@ class _DoubleButton extends State<DoubleButton> {
                 child: Text(
                   widget.secondButtonName,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (14 / 1920),
                   ),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
   const ProfileCardPhotoTillTheSmallContainerSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
       height: width * (735 / 1920),
@@ -15,7 +18,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
           height: width * (695 / 1920),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(width * (5 / 1920)),
-            color: secondaryColor,
+            color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
           ),
           child: Column(
             children: [
@@ -47,7 +50,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                 Container(
                                   width: width * (20 / 1920),
                                   decoration: BoxDecoration(
-                                    color: backGroundColor,
+                                    color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                                   ),
                                 ),
                               ],
@@ -57,7 +60,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                           Container(
                             height: width * (139 / 1920),
                             decoration: BoxDecoration(
-                              color: backGroundColor,
+                              color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                               borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(
                                   width * (10 / 1290),
@@ -75,7 +78,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                           // اول فيلر من فوق عاليمين
                           Container(
                             height: width * (185 / 1920),
-                            color: backGroundColor,
+                            color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                           ),
                           SizedBox(
                             height: width * (154 / 1920),
@@ -85,7 +88,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                 Text(
                                   '55 %',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontFamily: 'NunitoSans-ExtraBold',
                                     fontSize: width * (40 / 1920),
                                   ),
@@ -93,7 +96,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                 Text(
                                   'Productivity',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontFamily: 'NunitoSans-MediumItalic',
                                     fontSize: width * (16 / 1920),
                                   ),
@@ -135,7 +138,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                 child: Text(
                                   'Khedr123@gmail.com',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontFamily: 'NunitoSans-Bold',
                                     fontSize: width * (24 / 1920),
                                   ),
@@ -158,7 +161,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                 child: Text(
                                   '0997672251',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontFamily: 'NunitoSans-Bold',
                                     fontSize: width * (24 / 1920),
                                   ),
@@ -183,7 +186,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                 child: Text(
                                   'Homs-shien',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontFamily: 'NunitoSans-Bold',
                                     fontSize: width * (24 / 1920),
                                   ),
@@ -207,7 +210,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                   'Average response \n time',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontFamily: 'NunitoSans-Italic',
                                     fontSize: width * (16 / 1920),
                                   ),
@@ -225,7 +228,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                     Text(
                                       '19 minutes',
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                                         fontFamily: 'NunitoSans-Bold',
                                         fontSize: width * (16 / 1920),
                                       ),
@@ -239,7 +242,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                           Container(
                             width: width * (225 / 1920),
                             decoration: BoxDecoration(
-                              color: backGroundColor,
+                              color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(width * (10 / 1290)),
                               ),

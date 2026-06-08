@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class InsideTabPersonalAndDealScheduleWidget extends StatefulWidget {
   const InsideTabPersonalAndDealScheduleWidget({
@@ -19,11 +21,12 @@ class _InsideTabPersonalAndDealScheduleWidgetState
     extends State<InsideTabPersonalAndDealScheduleWidget> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     List<Widget> personalAndDealsNotes = [];
     if (widget.personalAndDealsNotes.length % 2 != 0) {
       widget.personalAndDealsNotes.add(
-        Container(width: width * (322 / 1920), color: backGroundColor),
+        Container(width: width * (322 / 1920), color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor),
       );
     }
     for (int i = 0; i < widget.personalAndDealsNotes.length; i = i + 2) {
@@ -44,7 +47,7 @@ class _InsideTabPersonalAndDealScheduleWidgetState
       Container(
         height: width * (50 / 1920),
         width: width * (1 / 1920),
-        color: Colors.white,
+        color: getCardColor(themeProvider.isDarkMode),
       ),
     );
 
@@ -52,7 +55,7 @@ class _InsideTabPersonalAndDealScheduleWidgetState
       width: width * (881 / 1920),
       height: widget.fullHeight ?? width * (760 / 1920),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: getCardColor(themeProvider.isDarkMode),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(width * (30 / 1902)),
           bottomRight: Radius.circular(width * (30 / 1920)),

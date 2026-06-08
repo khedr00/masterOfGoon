@@ -15,28 +15,28 @@ Future<UserAuthInfo> getUserAuthInfo({
   if (email == 'khedr') {
     temp = {
       'id': 1,
-      'role': 'sales employee',
+      'role': 'SALES',
       'accessToken': 'adsc',
       'refreshToken': 'asdca',
     };
   } else if (email == 'issa') {
     temp = {
       'id': 2,
-      'role': 'Rent employee',
+      'role': 'RENTAL',
       'accessToken': 'adscad',
       'refreshToken': 'casdc',
     };
   } else if (email == 'zain') {
     temp = {
       'id': 3,
-      'role': 'purchase employee',
+      'role': 'PURCHASING',
       'accessToken': 'acsdc',
       'refreshToken': 'casdc',
     };
   } else if (email == 'manager') {
     temp = {
       'id': 4,
-      'role': 'submanager',
+      'role': 'SALES_MANAGER',
       'accessToken': 'acdc',
       'refreshToken': 'acsdc',
     };
@@ -50,14 +50,14 @@ Future<UserAuthInfo> getUserAuthInfo({
   } else if (email == 'general') {
     temp = {
       'id': 6,
-      'role': 'general',
+      'role': 'GENERAL_MANAGER',
       'accessToken': 'dcd',
       'refreshToken': 'cdsad',
     };
   } else {
     temp = {
       'id': 1,
-      'role': 'sales employee',
+      'role': 'SALES',
       'accessToken': 'gg',
       'refreshToken': 'gg',
     };

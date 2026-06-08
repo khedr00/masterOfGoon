@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -47,6 +49,7 @@ class _SchedulePageState extends State<SchedulePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     double debugWidth = width * (900 / 1920);
     return SingleChildScrollView(
@@ -62,7 +65,7 @@ class _SchedulePageState extends State<SchedulePage> {
                         Text(
                           'Note date at : $_dayName ${_dateTime.toString().substring(0, 16)}',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (24 / 1920),
                           ),
@@ -70,7 +73,7 @@ class _SchedulePageState extends State<SchedulePage> {
                         Padding(
                           padding: EdgeInsets.only(top: width * (20 / 1920)),
                           child: CustomTextField(
-                            fillColor: thirdColorSecondary,
+                            fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                             onChanged: (value) {},
                             hintText: 'Enter Title',
                             widthOfTextField: debugWidth / 1.2,
@@ -85,7 +88,7 @@ class _SchedulePageState extends State<SchedulePage> {
                             bottom: width * (30 / 1920),
                           ),
                           child: CustomTextField(
-                            fillColor: thirdColorSecondary,
+                            fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                             onChanged: (value) {},
                             hintText: 'Enter Description',
                             fontSize: 20,
@@ -96,7 +99,7 @@ class _SchedulePageState extends State<SchedulePage> {
                         Text(
                           'Attatch to a deal :',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (24 / 1920),
                           ),
@@ -107,7 +110,7 @@ class _SchedulePageState extends State<SchedulePage> {
                             bottom: width * (30 / 1920),
                           ),
                           child: CustomTextField(
-                            fillColor: thirdColorSecondary,
+                            fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                             onChanged: (value) {},
                             hintText: 'ID',
                             widthOfTextField: debugWidth / 3,

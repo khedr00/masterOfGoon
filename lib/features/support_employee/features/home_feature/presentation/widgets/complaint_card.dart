@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class ComplaintCard extends StatelessWidget {
   const ComplaintCard({
@@ -25,13 +27,14 @@ class ComplaintCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
 
     return Container(
       width: width * (778 / 1920),
       constraints: BoxConstraints(minHeight: width * (257 / 1920)),
       decoration: BoxDecoration(
-        color: backGroundColor,
+        color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
         borderRadius: BorderRadius.circular(width * (14 / 1920)),
       ),
 
@@ -92,7 +95,7 @@ class ComplaintCard extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontFamily: 'NunitoSans-Bold',
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontSize: width * (24 / 1920),
                                   ),
                                 ),
@@ -103,7 +106,7 @@ class ComplaintCard extends StatelessWidget {
                                   'Lead Scoring : $clientLeadScore%',
                                   style: TextStyle(
                                     fontFamily: 'NunitoSans-SemiBold',
-                                    color: Colors.black,
+                                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                                     fontSize: width * (16 / 1920),
                                   ),
                                 ),
@@ -134,7 +137,7 @@ class ComplaintCard extends StatelessWidget {
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 fontFamily: 'NunitoSans-Bold',
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontSize: width * (18 / 1920),
                               ),
                             ),
@@ -159,7 +162,7 @@ class ComplaintCard extends StatelessWidget {
                             clientPhone,
                             style: TextStyle(
                               fontFamily: 'NunitoSans-Bold',
-                              color: Colors.black,
+                              color: getPrimaryTextColor(themeProvider.isDarkMode),
                               fontSize: width * (20 / 1920),
                             ),
                           ),
@@ -197,7 +200,7 @@ class ComplaintCard extends StatelessWidget {
                               height: width * (42 / 1920),
 
                               decoration: BoxDecoration(
-                                color: primaryColor,
+                                color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                                 borderRadius: BorderRadius.circular(
                                   width * (10 / 1920),
                                 ),
@@ -236,7 +239,7 @@ class ComplaintCard extends StatelessWidget {
                             complaintTitle,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: getPrimaryTextColor(themeProvider.isDarkMode),
                               fontFamily: 'NunitoSans-ExtraBold',
                               fontSize: width * (28 / 1920),
                             ),
@@ -250,7 +253,7 @@ class ComplaintCard extends StatelessWidget {
                           complaintMessage,
                           style: TextStyle(
                             height: 1.5,
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (18 / 1920),
                           ),

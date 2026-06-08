@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class NotificationCard extends StatefulWidget {
   const NotificationCard({
@@ -28,6 +31,7 @@ class NotificationCard extends StatefulWidget {
 class _NotificationCardState extends State<NotificationCard> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -39,7 +43,7 @@ class _NotificationCardState extends State<NotificationCard> {
               Container(
                 height: width * (24 / 1920),
                 width: width * (443 / 1920),
-                color: Colors.white,
+                color: getCardColor(themeProvider.isDarkMode),
               ),
               Container(
                 width: width * (443 / 1920),
@@ -84,7 +88,7 @@ class _NotificationCardState extends State<NotificationCard> {
                         Text(
                           widget.date,
                           style: TextStyle(
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-MediumItalic',
                             fontSize: width * (20 / 1920),
                           ),
@@ -101,7 +105,7 @@ class _NotificationCardState extends State<NotificationCard> {
                       child: Text(
                         widget.description,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                           fontFamily: 'NunitoSans-Medium',
                           fontSize: width * (24 / 1920),
                         ),
@@ -119,7 +123,7 @@ class _NotificationCardState extends State<NotificationCard> {
             width: width * (224 / 1920),
             height: width * (64 / 1920),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: getCardColor(themeProvider.isDarkMode),
               borderRadius: BorderRadius.circular(width * (5 / 1920)),
             ),
             child: Center(
@@ -143,7 +147,7 @@ class _NotificationCardState extends State<NotificationCard> {
                     Text(
                       widget.title,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-Bold',
                         fontSize: width * (20 / 1920),
                       ),
@@ -152,7 +156,7 @@ class _NotificationCardState extends State<NotificationCard> {
                     Text(
                       widget.subTitle,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-LightItalic',
                         fontSize: width * (16 / 1920),
                       ),

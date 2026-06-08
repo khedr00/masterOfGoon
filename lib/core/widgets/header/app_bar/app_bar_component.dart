@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class AppBarComponent extends StatefulWidget {
   const AppBarComponent({
@@ -16,6 +19,7 @@ class AppBarComponent extends StatefulWidget {
 class _AppBarComponentState extends State<AppBarComponent> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return !widget.isClicked
         ? SizedBox(
@@ -95,7 +99,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
               Container(
                 width: width * (140 / 1920),
                 height: 1,
-                color: Colors.white,
+                color: getDividerColor(themeProvider.isDarkMode),
               ),
             ],
           );

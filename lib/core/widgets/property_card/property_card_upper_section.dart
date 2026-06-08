@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/property_card/tabable_property_icon.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyCardUpperSection extends StatelessWidget {
   const PropertyCardUpperSection({
@@ -24,20 +26,21 @@ class PropertyCardUpperSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Container(
           width: width * (866 / 1920),
           height: width * (638 / 1920),
-          color: Colors.white,
+          color: getCardColor(themeProvider.isDarkMode),
           child: Center(
             child: Container(
               width: width * (846 / 1920),
               height: width * (618 / 1920),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(width * (5 / 1920)),
-                color: fourthColorSecondaryLightBrown,
+                color: themeProvider.isDarkMode ? darkFourthColorSecondaryLightBrown : fourthColorSecondaryLightBrown,
               ),
               child: Column(
                 children: [
@@ -49,7 +52,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                         Container(
                           width: width * (652 / 1920),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: getCardColor(themeProvider.isDarkMode),
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(width * (5 / 1920)),
                             ),
@@ -64,7 +67,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                               'for Sale',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-ExtraBold',
                                 fontSize: width * (32 / 1920),
                               ),
@@ -80,7 +83,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                       children: [
                         Container(
                           width: width * (137 / 1920),
-                          color: Colors.white,
+                          color: getCardColor(themeProvider.isDarkMode),
                         ),
                         // شرح العقار الزيادة
                         SizedBox(
@@ -90,7 +93,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                               propertyInfo.fullPropertyDescription,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-Medium',
                                 fontSize: width * (28 / 1920),
                               ),
@@ -107,7 +110,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                         Container(
                           width: width * (215 / 1920),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: getCardColor(themeProvider.isDarkMode),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(width * (5 / 1920)),
                             ),
@@ -174,7 +177,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                         Container(
                           width: width * (215 / 1920),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: getCardColor(themeProvider.isDarkMode),
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(width * (5 / 1920)),
                             ),
@@ -184,7 +187,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                         Container(
                           width: width * (304 / 1920),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: getCardColor(themeProvider.isDarkMode),
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(width * (5 / 1920)),
                             ),
@@ -244,7 +247,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                         ),
                         Container(
                           width: width * (304 / 1920),
-                          color: Colors.white,
+                          color: getCardColor(themeProvider.isDarkMode),
                         ),
                       ],
                     ),
@@ -280,7 +283,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                   propertyInfo.propertyType,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (24 / 1920),
                   ),
@@ -313,7 +316,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                   propertyInfo.address,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Regular',
                     fontSize: width * (18 / 1920),
                   ),
@@ -350,7 +353,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                       '${propertyInfo.leastSellPrice} \$',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: getTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-ExtraBold',
                         fontSize: width * (20 / 1920),
                       ),
@@ -369,7 +372,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                       '${propertyInfo.fakePrice} \$',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: getTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-LightItalic',
                         fontSize: width * (20 / 1920),
                       ),
@@ -392,7 +395,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                       propertyInfo.isAvaliable ? 'avaliable' : 'not avaliable',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: getTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-Medium',
                         fontSize: width * (20 / 1920),
                       ),
@@ -423,7 +426,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                   'Near By :',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (28 / 1920),
                   ),
@@ -447,7 +450,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: getCardColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: width * (20 / 1920),
                               ),
@@ -477,7 +480,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                 propertyInfo.simplePropertyDescription,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: getPrimaryTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-Black',
                   fontSize: width * (36 / 1920),
                 ),

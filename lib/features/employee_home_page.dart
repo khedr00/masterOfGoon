@@ -6,12 +6,16 @@ import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/all_and_deals_only_button.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/new_and_ongoing_deals_button.dart';
+import 'package:untitled1/core/widgets/buttons/filter_button.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
+import 'package:untitled1/core/widgets/filter_widgets/deals_filter_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
 import 'package:untitled1/features/deal_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
+import 'package:untitled1/providers/new_and_ongoing_deals_db_provider.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class EmployeeHomePage extends StatefulWidget {
   const EmployeeHomePage({super.key, required this.userAuthInfo});
@@ -22,6 +26,7 @@ class EmployeeHomePage extends StatefulWidget {
 }
 
 class _EmployeeHomePageState extends State<EmployeeHomePage> {
+  // TextEditingController filterController = TextEditingController();
   final List<DealCard> _dealList = [];
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
@@ -56,6 +61,10 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
         context,
         listen: false,
       ).truingAllAreClicked();
+      Provider.of<NewAndOngoingDealsDbProvider>(
+        context,
+        listen: false,
+      ).truingNewAreClicked();
     });
     _falsingcardIsClicked();
     getDealList();
@@ -73,10 +82,17 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     final allAndDealsOnlyProvider = Provider.of<AllAndDealsOnlyProvider>(
       context,
     );
+    // final newAndDealsOnlyProvider = Provider.of<NewAndOngoingDealsDbProvider>(
+    //   context,
+    // );
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     if (allAndDealsOnlyProvider.allAreClicked) {
       _falsingcardIsClicked();
     }
+    // if (newAndDealsOnlyProvider.newAreClicked) {
+    //   print('hhhhhhhh');
+    // }
     double width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
@@ -90,14 +106,37 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
             child: Row(
               children: [
                 SizedBox(width: width * (42 / 1920)),
+                IconButton(
+                  icon: Icon(
+                    themeProvider.isDarkMode
+                        ? Icons.light_mode
+                        : Icons.dark_mode,
+                    color: themeProvider.isDarkMode
+                        ? getPrimaryTextColor(true)
+                        : getPrimaryTextColor(false),
+                  ),
+                  onPressed: () {
+                    themeProvider.toggleTheme();
+                  },
+                  tooltip: 'Toggle Theme',
+                ),
+                SizedBox(width: width * (28 / 1920)),
                 NewAndOngoingDealsButton(),
                 SizedBox(width: width * (28 / 1920)),
-                ButtonWithImage(
-                  image: 'assets/images/Slider.png',
-                  widthOfButton: width * (60 / 1920),
-                  heightOfButton: width * (40 / 1920),
-                  heightOfImage: width * (30 / 1920),
-                  widthOfImage: width * (30 / 1920),
+                FilterButton(
+                  buttonAction: () {
+                    showDialog(
+                      context: context,
+                      barrierColor: themeProvider.isDarkMode
+                          // ignore: deprecated_member_use
+                          ? Colors.white.withOpacity(0.4)
+                          // ignore: deprecated_member_use
+                          : Colors.black.withOpacity(0.4),
+                      builder: (context) {
+                        return DealsFilterWidget();
+                      },
+                    );
+                  },
                 ),
                 SizedBox(width: width * (28 / 1920)),
                 ButtonWithImage(
@@ -122,7 +161,9 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                   width: width * ((939 + 38) / 1920),
                   child: _dealList.isEmpty
                       ? Container(
-                          color: backGroundColor,
+                          color: themeProvider.isDarkMode
+                              ? darkBackGroundColor
+                              : backGroundColor,
                           child: Center(child: CircularProgressIndicator()),
                         )
                       : ListView.builder(
@@ -166,8 +207,12 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                                         height: width * (200 / 1920),
                                         decoration: BoxDecoration(
                                           color: _cardIsClicked[i]
-                                              ? thirdColorPrimary
-                                              : backGroundColor,
+                                              ? (themeProvider.isDarkMode
+                                                    ? darkThirdColorPrimary
+                                                    : thirdColorPrimary)
+                                              : (themeProvider.isDarkMode
+                                                    ? darkBackGroundColor
+                                                    : backGroundColor),
                                           borderRadius: BorderRadius.only(
                                             topRight: Radius.circular(
                                               width * (50 / 1920),

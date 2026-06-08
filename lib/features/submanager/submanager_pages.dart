@@ -4,6 +4,7 @@ import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/submanager/submanager_page_header.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class SubmanagerPages extends StatelessWidget {
   const SubmanagerPages({
@@ -19,8 +20,11 @@ class SubmanagerPages extends StatelessWidget {
     final submanagerPageSelectorProvider =
         Provider.of<SubmanagerPageSelectorProvider>(context);
     double width = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: themeProvider.isDarkMode
+          ? darkBackGroundColor
+          : backGroundColor,
       appBar: SubmanagerPageHeader(width: width, userAuthInfo: userAuthInfo),
       body: submanagerPageSelectorProvider.getPageSelected,
     );

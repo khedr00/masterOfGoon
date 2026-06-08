@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 enum FontFamily { bold, light }
 
@@ -23,6 +26,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     final String fontFamilyUsed = fontFamily == FontFamily.bold
         ? 'NunitoSans-Bold'
@@ -32,10 +36,11 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         controller: TextEditingController(),
         onChanged: onChanged,
-        cursorColor: Colors.black,
+        cursorColor: getPrimaryTextColor(themeProvider.isDarkMode),
         style: TextStyle(
           fontSize: width * (fontSize / 1920),
           fontFamily: fontFamilyUsed,
+          color: getPrimaryTextColor(themeProvider.isDarkMode),
         ),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
@@ -50,9 +55,9 @@ class CustomTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(
             fontSize: width * (fontSize / 1920),
-            color: fillColor == Colors.white
-                ? const Color.fromARGB(87, 0, 0, 0)
-                : const Color.fromARGB(151, 255, 255, 255),
+            color: fillColor == getCardColor(themeProvider.isDarkMode)
+                ? getHintTextColor(themeProvider.isDarkMode)
+                : getHintTextColor(themeProvider.isDarkMode),
             fontFamily: fontFamilyUsed,
           ),
           filled: true,

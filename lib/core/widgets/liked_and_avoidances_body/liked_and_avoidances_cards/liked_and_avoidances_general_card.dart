@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class LikedAndAvoidancesGeneralCard extends StatelessWidget {
   const LikedAndAvoidancesGeneralCard({
@@ -11,6 +14,7 @@ class LikedAndAvoidancesGeneralCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width * (373 / 1920),
@@ -31,7 +35,7 @@ class LikedAndAvoidancesGeneralCard extends StatelessWidget {
           child: Text(
             theNote,
             style: TextStyle(
-              color: Colors.black,
+              color: getPrimaryTextColor(themeProvider.isDarkMode),
               fontFamily: 'NunitoSans-Medium',
               fontSize: width * (24 / 1920),
             ),

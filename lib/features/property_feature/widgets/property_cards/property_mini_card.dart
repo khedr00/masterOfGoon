@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyMiniCard extends StatelessWidget {
   const PropertyMiniCard({
@@ -19,17 +21,18 @@ class PropertyMiniCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width * (381 / 1920),
       height: width * (449 / 1920),
-      color: backGroundColor,
+      color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
       child: Center(
         child: Container(
           width: width * (357 / 1920),
           height: width * (449 / 1920),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: getCardColor(themeProvider.isDarkMode),
             boxShadow: [
               BoxShadow(
                 color: fourthColorPrimaryBrown,
@@ -134,7 +137,7 @@ class PropertyMiniCard extends StatelessWidget {
                   Text(
                     '${propertyCardModuleInfo.leastSellPrice}\$',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-Regular',
                       fontSize: width * (20 / 1920),
                     ),
@@ -150,7 +153,7 @@ class PropertyMiniCard extends StatelessWidget {
                   Text(
                     changingDataText,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-Regular',
                       fontSize: width * (20 / 1920),
                     ),
@@ -172,7 +175,7 @@ class PropertyMiniCard extends StatelessWidget {
                     Text(
                       '${propertyCardModuleInfo.numberOfRooms.toString()} Rooms',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-Regular',
                         fontSize: width * (20 / 1920),
                       ),
@@ -187,7 +190,7 @@ class PropertyMiniCard extends StatelessWidget {
                     Text(
                       '${propertyCardModuleInfo.sqft.toString()} M',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-Regular',
                         fontSize: width * (20 / 1920),
                       ),
@@ -199,7 +202,7 @@ class PropertyMiniCard extends StatelessWidget {
               Container(
                 width: width * (375 / 1920),
                 height: width * (10 / 1920),
-                color: backGroundColor,
+                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -212,6 +215,7 @@ class PropertyMiniCard extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'NunitoSans-ExtraBold',
                           fontSize: width * (22 / 1920),
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                         ),
                       ),
                       Text(
@@ -219,6 +223,7 @@ class PropertyMiniCard extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'NunitoSans-Regular',
                           fontSize: width * (18 / 1920),
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                         ),
                       ),
                     ],

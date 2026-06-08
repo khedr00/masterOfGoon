@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class DealActionsWidget extends StatefulWidget {
   const DealActionsWidget({super.key});
@@ -51,13 +53,14 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     _dayName = getDayNameFromDateTime(_dateTime);
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width * (_debugWidth / 1920),
       height: width * (_debugHeight / 1920),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: getCardColor(themeProvider.isDarkMode),
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(width * (30 / 1920)),
           bottomLeft: Radius.circular(width * (30 / 1920)),
@@ -71,7 +74,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
               ? Container(
                   width: width * (_debugWidth / 1920),
                   height: width * (((_debugHeight / 4) * 2) / 1920),
-                  color: Colors.white,
+                  color: getCardColor(themeProvider.isDarkMode),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -82,14 +85,14 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                         child: Text(
                           'MEETING date at : $_dayName ${_dateTime.toString().substring(0, 16)}',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (24 / 1920),
                           ),
                         ),
                       ),
                       CustomTextField(
-                        fillColor: thirdColorSecondary,
+                        fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                         onChanged: _onTextChanged,
                         hintText: 'Enter Description',
                         fontSize: 20,
@@ -127,7 +130,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                 )
               : Container(
                   width: width * (_debugWidth / 1920),
-                  color: Colors.white,
+                  color: getCardColor(themeProvider.isDarkMode),
                   child: Center(
                     child: ButtonWithText(
                       widthOfButton: width * (261 / 1920),
@@ -143,7 +146,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
               ? Container(
                   width: width * (_debugWidth / 1920),
                   height: width * (((_debugHeight / 4) * 2) / 1920),
-                  color: Colors.white,
+                  color: getCardColor(themeProvider.isDarkMode),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -154,14 +157,14 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                         child: Text(
                           'please address the reason for reassign request : ',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (24 / 1920),
                           ),
                         ),
                       ),
                       CustomTextField(
-                        fillColor: thirdColorSecondary,
+                        fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                         onChanged: _onTextChanged,
                         hintText: 'Enter Description',
                         fontSize: 20,
@@ -199,7 +202,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                 )
               : Container(
                   width: width * (_debugWidth / 1920),
-                  color: Colors.white,
+                  color: getCardColor(themeProvider.isDarkMode),
                   child: Center(
                     child: ButtonWithText(
                       widthOfButton: width * (261 / 1920),
@@ -215,7 +218,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                 ),
           Container(
             width: width * (_debugWidth / 1920),
-            color: Colors.white,
+            color: getCardColor(themeProvider.isDarkMode),
             child: Center(
               child: ButtonWithText(
                 widthOfButton: width * (261 / 1920),
@@ -228,7 +231,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
               ? Container(
                   width: width * (_debugWidth / 1920),
                   height: width * (((_debugHeight / 4) * 2) / 1920),
-                  color: Colors.white,
+                  color: getCardColor(themeProvider.isDarkMode),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -239,14 +242,14 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                         child: Text(
                           'please address the reason for cancelling the deal : ',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (24 / 1920),
                           ),
                         ),
                       ),
                       CustomTextField(
-                        fillColor: thirdColorSecondary,
+                        fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                         onChanged: _onTextChanged,
                         hintText: 'Enter Description',
                         fontSize: 20,
@@ -284,7 +287,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                 )
               : Container(
                   width: width * (_debugWidth / 1920),
-                  color: Colors.white,
+                  color: getCardColor(themeProvider.isDarkMode),
                   child: Center(
                     child: ButtonWithText(
                       widthOfButton: width * (261 / 1920),

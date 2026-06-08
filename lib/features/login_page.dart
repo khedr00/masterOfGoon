@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/login/login.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
+import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
 import 'package:untitled1/features/employee_home_page.dart';
 import 'package:untitled1/features/general_manager_pages.dart/general_manager_pages.dart';
@@ -14,6 +15,7 @@ import 'package:untitled1/features/support_employee/features/home_feature/presen
 import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -59,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (!mounted) return;
 
-      if (userAuthInfo.role == 'submanager') {
+      if (userAuthInfo.role == 'SALES_MANAGER') {
         submanagerProvider.selectPage(
           SubmanagerHomePage(userAuthInfo: userAuthInfo),
         );
@@ -69,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
             builder: (_) => SubmanagerPages(userAuthInfo: userAuthInfo),
           ),
         );
-      } else if (userAuthInfo.role == 'general') {
+      } else if (userAuthInfo.role == 'GENERAL_MANAGER') {
         generalmanagerPageSelectorProvider.selectPage(GeneralmanagerHomePage());
         Navigator.pushReplacement(
           context,
@@ -106,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
@@ -144,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'Support Center',
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: infoColor,
                               fontFamily: 'NunitoSans-Bold',
                               fontSize: width * (28 / 1920),
                             ),
@@ -159,7 +162,9 @@ class _LoginPageState extends State<LoginPage> {
                   height: width * (883 / 1920),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(width * (10 / 1920)),
-                    color: const Color(0xffF0F0F0),
+                    color: themeProvider.isDarkMode
+                        ? darkCardColor
+                        : const Color(0xffF0F0F0),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -169,6 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(
                           fontFamily: 'NunitoSans-Bold',
                           fontSize: width * (64 / 1920),
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                         ),
                       ),
                       Text(
@@ -177,10 +183,13 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(
                           fontFamily: 'NunitoSans-Regular',
                           fontSize: width * (36 / 1920),
+                          color: getSecondaryTextColor(
+                            themeProvider.isDarkMode,
+                          ),
                         ),
                       ),
                       CustomTextField(
-                        fillColor: Colors.white,
+                        fillColor: getCardColor(themeProvider.isDarkMode),
                         onChanged: (v) {
                           email = v.trim();
                         },
@@ -191,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                         maxLines: 1,
                       ),
                       CustomTextField(
-                        fillColor: Colors.white,
+                        fillColor: getCardColor(themeProvider.isDarkMode),
                         onChanged: (v) {
                           password = v.trim();
                         },
@@ -208,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                               heightOfButton: width * (90 / 1920),
                               text: 'Sign in',
                               fontSize: width * (40 / 1920),
-                              textColor: Colors.white,
+                              textColor: getTextColor(themeProvider.isDarkMode),
                               buttonAction: login,
                             ),
                     ],

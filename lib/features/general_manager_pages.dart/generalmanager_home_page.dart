@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class GeneralmanagerHomePage extends StatefulWidget {
   const GeneralmanagerHomePage({super.key});
@@ -19,322 +21,161 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
     'All Types',
   ];
 
-  final List<String> margins = ['10%', '12%', '15%', '18%', '20%', '25%'];
-
-  late List<String> selectedAreas;
-  late List<String> selectedTypes;
-  late List<String> selectedSaleMargins;
-  late List<String> selectedRentMargins;
+  late _MarginConfig propertyProfitMargins;
+  late _MarginConfig listingPriceMargins;
+  late _AdjustmentConfig propertyPriceAdjustment;
+  int _inputVersion = 0;
 
   @override
   void initState() {
     super.initState();
 
-    selectedAreas = ['Damascus', 'Hama', 'Homs', 'Tartous', 'Aleppo'];
+    propertyProfitMargins = _MarginConfig(
+      region: 'Damascus',
+      propertyType: 'Apartment',
+      saleMargin: '15',
+      rentMargin: '10',
+    );
 
-    selectedTypes = [
-      'Apartment',
-      'Villa',
-      'Office',
-      'Store + Office',
-      'All Types',
-    ];
+    listingPriceMargins = _MarginConfig(
+      region: 'Hama',
+      propertyType: 'Villa',
+      saleMargin: '12',
+      rentMargin: '8',
+    );
 
-    selectedSaleMargins = ['20%', '25%', '18%', '18%', '18%'];
-
-    selectedRentMargins = ['12%', '15%', '10%', '10%', '10%'];
+    propertyPriceAdjustment = _AdjustmentConfig(
+      region: 'Homs',
+      propertyType: 'Office',
+      saleSign: '+',
+      saleAdjustment: '5',
+      rentSign: '-',
+      rentAdjustment: '10',
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
 
     return Container(
       width: width * (1920 / 1920),
       height: width * (882 / 1920),
-      color: backGroundColor,
+      color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
 
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: width * (40 / 1920),
-          vertical: width * (20 / 1920),
-        ),
-
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// LEFT SIDE
-            Expanded(
-              child: Column(
-                children: [
-                  /// TOP CARDS
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    children: [
-                      _topCard(
-                        width,
-                        title: 'Total Revenue',
-                        value: '\$2,580,000',
-                        icon: Icons.attach_money_rounded,
-                      ),
-
-                      _topCard(
-                        width,
-                        title: 'Net Profit',
-                        value: '\$1,340,000',
-                        icon: Icons.account_balance_wallet_rounded,
-                      ),
-
-                      _topCard(
-                        width,
-                        title: 'Profit Margin',
-                        value: '52%',
-                        icon: Icons.percent_rounded,
-                      ),
-
-                      _topCard(
-                        width,
-                        title: 'Monthly Growth',
-                        value: '\$1,340,000',
-                        icon: Icons.trending_up_rounded,
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: width * (45 / 1920)),
-
-                  /// TABLE SECTION
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: secondaryColor,
-                        borderRadius: BorderRadius.circular(
-                          width * (28 / 1920),
-                        ),
-
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: width * (8 / 1920),
-                            color: Colors.black26,
-                            offset: Offset(0, width * (4 / 1920)),
-                          ),
-                        ],
-                      ),
-
-                      child: Column(
-                        children: [
-                          /// HEADER
-                          Container(
-                            width: double.infinity,
-                            height: width * (100 / 1920),
-
-                            decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(width * (28 / 1920)),
-                                topRight: Radius.circular(width * (28 / 1920)),
-                              ),
-                            ),
-
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                left: width * (45 / 1920),
-                              ),
-
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-
-                                child: Text(
-                                  'Pricing Margin & Rules',
-                                  style: TextStyle(
-                                    fontFamily: 'NunitoSans-Bold',
-                                    color: Colors.white,
-                                    fontSize: width * (30 / 1920),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: width * (28 / 1920),
-                                vertical: width * (24 / 1920),
-                              ),
-
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      _tableTitle(width, 'Area'),
-                                      _tableTitle(width, 'Type'),
-                                      _tableTitle(width, 'Sale Margin'),
-                                      _tableTitle(width, 'Rent Margin'),
-                                    ],
-                                  ),
-
-                                  SizedBox(height: width * (16 / 1920)),
-
-                                  Expanded(
-                                    child: ListView.separated(
-                                      physics: const BouncingScrollPhysics(),
-
-                                      itemCount: 5,
-
-                                      separatorBuilder: (_, _) =>
-                                          SizedBox(height: width * (14 / 1920)),
-
-                                      itemBuilder: (context, index) {
-                                        return Row(
-                                          children: [
-                                            _dropDownBox(
-                                              width,
-                                              value: selectedAreas[index],
-                                              items: areas,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  selectedAreas[index] = value!;
-                                                });
-                                              },
-                                            ),
-
-                                            _dropDownBox(
-                                              width,
-                                              value: selectedTypes[index],
-                                              items: propertyTypes,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  selectedTypes[index] = value!;
-                                                });
-                                              },
-                                            ),
-
-                                            _dropDownBox(
-                                              width,
-                                              value: selectedSaleMargins[index],
-                                              items: margins,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  selectedSaleMargins[index] =
-                                                      value!;
-                                                });
-                                              },
-                                            ),
-
-                                            _dropDownBox(
-                                              width,
-                                              value: selectedRentMargins[index],
-                                              items: margins,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  selectedRentMargins[index] =
-                                                      value!;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: width * (40 / 1920),
+              vertical: width * (20 / 1920),
             ),
-
-            SizedBox(width: width * (35 / 1920)),
-
-            /// RIGHT SIDE
-            SizedBox(
-              width: width * (500 / 1920),
-
-              child: Column(
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    themeProvider.isDarkMode
+                        ? Icons.light_mode
+                        : Icons.dark_mode,
+                    color: themeProvider.isDarkMode
+                        ? getPrimaryTextColor(true)
+                        : getPrimaryTextColor(false),
+                  ),
+                  onPressed: () {
+                    themeProvider.toggleTheme();
+                  },
+                  tooltip: 'Toggle Theme',
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * (40 / 1920)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// BUSINESS HEALTH
-                  Container(
-                    width: double.infinity,
-                    height: width * (430 / 1920),
-
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF8BC2CF),
-
-                      borderRadius: BorderRadius.circular(width * (24 / 1920)),
-
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: width * (8 / 1920),
-                          color: Colors.black26,
-                          offset: Offset(0, width * (4 / 1920)),
-                        ),
-                      ],
-                    ),
-
+                  /// LEFT SIDE
+                  Expanded(
                     child: Column(
                       children: [
-                        Container(
-                          width: double.infinity,
-                          height: width * (78 / 1920),
-
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF2E8F90),
-
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(width * (24 / 1920)),
-                              topRight: Radius.circular(width * (24 / 1920)),
-                            ),
-                          ),
-
-                          child: Center(
-                            child: Text(
-                              'Business Health Indicator',
-                              style: TextStyle(
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: width * (25 / 1920),
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-
                         Expanded(
-                          child: Column(
+                          child: ListView(
+                            physics: const BouncingScrollPhysics(),
                             children: [
-                              _healthRow(
+                              _marginConfigurationCard(
                                 width,
-                                image: 'assets/images/Handshake.png',
-                                title: 'Active deals',
-                                value: '22',
+                                title: 'Property Profit Margins',
+                                config: propertyProfitMargins,
+                                onChanged: (config) {
+                                  setState(() {
+                                    propertyProfitMargins = config;
+                                  });
+                                },
+                                onConfirm: () {
+                                  setState(() {
+                                    propertyProfitMargins =
+                                        propertyProfitMargins.confirmed();
+                                    _inputVersion++;
+                                  });
+                                },
+                                onCancel: () {
+                                  setState(() {
+                                    propertyProfitMargins =
+                                        propertyProfitMargins.cancelled();
+                                    _inputVersion++;
+                                  });
+                                },
                               ),
-
-                              _healthRow(
+                              SizedBox(height: width * (22 / 1920)),
+                              _marginConfigurationCard(
                                 width,
-                                icon: Icons.home_work_rounded,
-                                title: 'Idle properties',
-                                value: '40',
+                                title: 'Listing Price Margins',
+                                config: listingPriceMargins,
+                                onChanged: (config) {
+                                  setState(() {
+                                    listingPriceMargins = config;
+                                  });
+                                },
+                                onConfirm: () {
+                                  setState(() {
+                                    listingPriceMargins = listingPriceMargins
+                                        .confirmed();
+                                    _inputVersion++;
+                                  });
+                                },
+                                onCancel: () {
+                                  setState(() {
+                                    listingPriceMargins = listingPriceMargins
+                                        .cancelled();
+                                    _inputVersion++;
+                                  });
+                                },
                               ),
-
-                              _healthRow(
+                              SizedBox(height: width * (22 / 1920)),
+                              _priceAdjustmentCard(
                                 width,
-                                icon: Icons.warning_rounded,
-                                title: 'High Risk Deals',
-                                value: '8',
-                              ),
-
-                              _healthRow(
-                                width,
-                                image: 'assets/images/profilePhoto-icon.png',
-                                title: 'Employee Utilization',
-                                value: '69%',
-                                isLast: true,
+                                config: propertyPriceAdjustment,
+                                onChanged: (config) {
+                                  setState(() {
+                                    propertyPriceAdjustment = config;
+                                  });
+                                },
+                                onConfirm: () {
+                                  setState(() {
+                                    propertyPriceAdjustment =
+                                        propertyPriceAdjustment.confirmed();
+                                    _inputVersion++;
+                                  });
+                                },
+                                onCancel: () {
+                                  setState(() {
+                                    propertyPriceAdjustment =
+                                        propertyPriceAdjustment.cancelled();
+                                    _inputVersion++;
+                                  });
+                                },
                               ),
                             ],
                           ),
@@ -343,216 +184,623 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
                     ),
                   ),
 
-                  SizedBox(height: width * (28 / 1920)),
+                  SizedBox(width: width * (35 / 1920)),
 
-                  /// ALERTS
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
+                  /// RIGHT SIDE
+                  SizedBox(
+                    width: width * (500 / 1920),
 
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+                    child: Column(
+                      children: [
+                        /// BUSINESS HEALTH
+                        Container(
+                          width: double.infinity,
+                          height: width * (430 / 1920),
 
-                        borderRadius: BorderRadius.circular(
-                          width * (24 / 1920),
-                        ),
-
-                        border: Border.all(
-                          color: Colors.red,
-                          width: width * (2 / 1920),
-                        ),
-                      ),
-
-                      child: Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: width * (78 / 1920),
-
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFAA1116),
-
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(width * (24 / 1920)),
-                                topRight: Radius.circular(width * (24 / 1920)),
-                              ),
+                          decoration: BoxDecoration(
+                            color: getBusinessHealthColor(
+                              themeProvider.isDarkMode,
                             ),
 
-                            child: Center(
-                              child: Text(
-                                'Alerts',
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans-Bold',
-                                  color: Colors.white,
-                                  fontSize: width * (32 / 1920),
+                            borderRadius: BorderRadius.circular(
+                              width * (24 / 1920),
+                            ),
+
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: width * (8 / 1920),
+                                color: getShadowColor(themeProvider.isDarkMode),
+                                offset: Offset(0, width * (4 / 1920)),
+                              ),
+                            ],
+                          ),
+
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: width * (78 / 1920),
+
+                                decoration: BoxDecoration(
+                                  color: getBusinessHealthHeaderColor(
+                                    themeProvider.isDarkMode,
+                                  ),
+
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                      width * (24 / 1920),
+                                    ),
+                                    topRight: Radius.circular(
+                                      width * (24 / 1920),
+                                    ),
+                                  ),
+                                ),
+
+                                child: Center(
+                                  child: Text(
+                                    'Business Health Indicator',
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans-Bold',
+                                      fontSize: width * (25 / 1920),
+                                      color: getPrimaryTextColor(
+                                        themeProvider.isDarkMode,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    _healthRow(
+                                      width,
+                                      image: 'assets/images/Handshake.png',
+                                      title: 'Active deals',
+                                      value: '22',
+                                    ),
+
+                                    _healthRow(
+                                      width,
+                                      icon: Icons.home_work_rounded,
+                                      title: 'Idle properties',
+                                      value: '40',
+                                    ),
+
+                                    _healthRow(
+                                      width,
+                                      icon: Icons.warning_rounded,
+                                      title: 'High Risk Deals',
+                                      value: '8',
+                                    ),
+
+                                    _healthRow(
+                                      width,
+                                      image:
+                                          'assets/images/profilePhoto-icon.png',
+                                      title: 'Employee Utilization',
+                                      value: '69%',
+                                      isLast: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
 
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(width * (20 / 1920)),
+                        SizedBox(height: width * (28 / 1920)),
 
-                              child: ListView.separated(
-                                physics: const BouncingScrollPhysics(),
+                        /// ALERTS
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
 
-                                itemCount: 3,
+                            decoration: BoxDecoration(
+                              color: getCardColor(themeProvider.isDarkMode),
 
-                                separatorBuilder: (_, _) =>
-                                    SizedBox(height: width * (16 / 1920)),
+                              borderRadius: BorderRadius.circular(
+                                width * (24 / 1920),
+                              ),
 
-                                itemBuilder: (context, index) {
-                                  List<String> alerts = [
-                                    '12 properties have been Idle\nfor over 90 days',
-                                    'Revenue in Homs dropped by\n50% this month',
-                                    'Employee Productivity have\ndecreased by 6%',
-                                  ];
-
-                                  return _alertCard(width, alerts[index]);
-                                },
+                              border: Border.all(
+                                color: themeProvider.isDarkMode
+                                    ? darkAlertBorderColor
+                                    : lightAlertBorderColor,
+                                width: width * (2 / 1920),
                               ),
                             ),
+
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  height: width * (78 / 1920),
+
+                                  decoration: BoxDecoration(
+                                    color: getAlertHeaderColor(
+                                      themeProvider.isDarkMode,
+                                    ),
+
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(
+                                        width * (24 / 1920),
+                                      ),
+                                      topRight: Radius.circular(
+                                        width * (24 / 1920),
+                                      ),
+                                    ),
+                                  ),
+
+                                  child: Center(
+                                    child: Text(
+                                      'Alerts',
+                                      style: TextStyle(
+                                        fontFamily: 'NunitoSans-Bold',
+                                        color: getTextColor(
+                                          themeProvider.isDarkMode,
+                                        ),
+                                        fontSize: width * (32 / 1920),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                      width * (20 / 1920),
+                                    ),
+
+                                    child: ListView.separated(
+                                      physics: const BouncingScrollPhysics(),
+
+                                      itemCount: 3,
+
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(height: width * (16 / 1920)),
+
+                                      itemBuilder: (context, index) {
+                                        List<String> alerts = [
+                                          '12 properties have been Idle\nfor over 90 days',
+                                          'Revenue in Homs dropped by\n50% this month',
+                                          'Employee Productivity have\ndecreased by 6%',
+                                        ];
+
+                                        return _alertCard(width, alerts[index]);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _topCard(
-    double width, {
-    required String title,
-    required String value,
-    required IconData icon,
-  }) {
-    return Container(
-      width: width * (260 / 1920),
-      height: width * (150 / 1920),
-
-      decoration: BoxDecoration(
-        color: primaryColor,
-
-        borderRadius: BorderRadius.circular(width * (12 / 1920)),
-
-        boxShadow: [
-          BoxShadow(
-            blurRadius: width * (6 / 1920),
-            color: Colors.black26,
-            offset: Offset(0, width * (3 / 1920)),
           ),
         ],
       ),
+    );
+  }
 
-      child: Padding(
-        padding: EdgeInsets.all(width * (18 / 1920)),
-
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: Colors.white, size: width * (34 / 1920)),
-
-                SizedBox(width: width * (12 / 1920)),
-
-                Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontFamily: 'NunitoSans-Regular',
-                      color: Colors.white,
-                      fontSize: width * (17 / 1920),
-                    ),
-                  ),
-                ),
-              ],
+  Widget _marginConfigurationCard(
+    double width, {
+    required String title,
+    required _MarginConfig config,
+    required ValueChanged<_MarginConfig> onChanged,
+    required VoidCallback onConfirm,
+    required VoidCallback onCancel,
+  }) {
+    return _configurationCard(
+      width,
+      title: title,
+      region: config.region,
+      propertyType: config.propertyType,
+      hasChanges: config.hasChanges,
+      onRegionChanged: (value) => onChanged(config.copyWith(region: value)),
+      onTypeChanged: (value) => onChanged(config.copyWith(propertyType: value)),
+      onConfirm: onConfirm,
+      onCancel: onCancel,
+      child: Row(
+        children: [
+          Expanded(
+            child: _numberInput(
+              width,
+              label: 'For Sale Profit Margin (%)',
+              value: config.saleMargin,
+              onChanged: (value) =>
+                  onChanged(config.copyWith(saleMargin: value)),
             ),
+          ),
+          SizedBox(width: width * (24 / 1920)),
+          Expanded(
+            child: _numberInput(
+              width,
+              label: 'For Rent Profit Margin (%)',
+              value: config.rentMargin,
+              onChanged: (value) =>
+                  onChanged(config.copyWith(rentMargin: value)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-            Center(
-              child: Text(
-                value,
-                style: TextStyle(
-                  fontFamily: 'NunitoSans-Bold',
-                  color: Colors.white,
-                  fontSize: width * (28 / 1920),
-                ),
+  Widget _priceAdjustmentCard(
+    double width, {
+    required _AdjustmentConfig config,
+    required ValueChanged<_AdjustmentConfig> onChanged,
+    required VoidCallback onConfirm,
+    required VoidCallback onCancel,
+  }) {
+    return _configurationCard(
+      width,
+      title: 'Global Property Price Adjustment',
+      region: config.region,
+      propertyType: config.propertyType,
+      hasChanges: config.hasChanges,
+      onRegionChanged: (value) => onChanged(config.copyWith(region: value)),
+      onTypeChanged: (value) => onChanged(config.copyWith(propertyType: value)),
+      onConfirm: onConfirm,
+      onCancel: onCancel,
+      child: Row(
+        children: [
+          Expanded(
+            child: _signedNumberInput(
+              width,
+              label: 'For Sale Adjustment',
+              sign: config.saleSign,
+              value: config.saleAdjustment,
+              onSignChanged: (value) =>
+                  onChanged(config.copyWith(saleSign: value)),
+              onValueChanged: (value) =>
+                  onChanged(config.copyWith(saleAdjustment: value)),
+            ),
+          ),
+          SizedBox(width: width * (24 / 1920)),
+          Expanded(
+            child: _signedNumberInput(
+              width,
+              label: 'For Rent Adjustment',
+              sign: config.rentSign,
+              value: config.rentAdjustment,
+              onSignChanged: (value) =>
+                  onChanged(config.copyWith(rentSign: value)),
+              onValueChanged: (value) =>
+                  onChanged(config.copyWith(rentAdjustment: value)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _configurationCard(
+    double width, {
+    required String title,
+    required String region,
+    required String propertyType,
+    required bool hasChanges,
+    required ValueChanged<String> onRegionChanged,
+    required ValueChanged<String> onTypeChanged,
+    required VoidCallback onConfirm,
+    required VoidCallback onCancel,
+    required Widget child,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: ThemeProvider().isDarkMode ? darkSecondaryColor : secondaryColor,
+        borderRadius: BorderRadius.circular(width * (28 / 1920)),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: width * (8 / 1920),
+            color: getShadowColor(ThemeProvider().isDarkMode),
+            offset: Offset(0, width * (4 / 1920)),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            height: width * (96 / 1920),
+            decoration: BoxDecoration(
+              color: ThemeProvider().isDarkMode
+                  ? darkPrimaryColor
+                  : primaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(width * (28 / 1920)),
+                topRight: Radius.circular(width * (28 / 1920)),
               ),
             ),
-          ],
-        ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * (28 / 1920)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: 'NunitoSans-Bold',
+                        color: Colors.white,
+                        fontSize: width * (28 / 1920),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: width * (18 / 1920)),
+                  _compactDropDownBox(
+                    width,
+                    value: region,
+                    items: areas,
+                    onChanged: (value) => onRegionChanged(value!),
+                  ),
+                  SizedBox(width: width * (14 / 1920)),
+                  _compactDropDownBox(
+                    width,
+                    value: propertyType,
+                    items: propertyTypes,
+                    onChanged: (value) => onTypeChanged(value!),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: width * (28 / 1920),
+              vertical: width * (24 / 1920),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                child,
+                if (hasChanges) ...[
+                  SizedBox(height: width * (20 / 1920)),
+                  _actionButtons(
+                    width,
+                    onConfirm: onConfirm,
+                    onCancel: onCancel,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _tableTitle(double width, String title) {
-    return Expanded(
-      child: Text(
-        title,
-        style: TextStyle(
-          fontFamily: 'NunitoSans-Bold',
-          fontSize: width * (22 / 1920),
-          color: Colors.black,
-        ),
-      ),
-    );
-  }
-
-  Widget _dropDownBox(
+  Widget _compactDropDownBox(
     double width, {
     required String value,
     required List<String> items,
     required Function(String?) onChanged,
   }) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.only(right: width * (18 / 1920)),
+    return Container(
+      width: width * (190 / 1920),
+      height: width * (52 / 1920),
+      padding: EdgeInsets.symmetric(horizontal: width * (12 / 1920)),
+      decoration: BoxDecoration(
+        color: getInputBackgroundColor(ThemeProvider().isDarkMode),
+        borderRadius: BorderRadius.circular(width * (6 / 1920)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: value,
+          isExpanded: true,
+          dropdownColor: getInputBackgroundColor(ThemeProvider().isDarkMode),
+          style: TextStyle(
+            fontFamily: 'NunitoSans-Regular',
+            color: getSecondaryTextColor(ThemeProvider().isDarkMode),
+            fontSize: width * (15 / 1920),
+          ),
+          icon: Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: ThemeProvider().isDarkMode ? darkPrimaryColor : primaryColor,
+            size: width * (26 / 1920),
+          ),
+          onChanged: onChanged,
+          items: items.map((item) {
+            return DropdownMenuItem(value: item, child: Text(item));
+          }).toList(),
+        ),
+      ),
+    );
+  }
 
-        child: Container(
-          height: width * (68 / 1920),
-
-          padding: EdgeInsets.symmetric(horizontal: width * (12 / 1920)),
-
+  Widget _numberInput(
+    double width, {
+    required String label,
+    required String value,
+    required ValueChanged<String> onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'NunitoSans-Bold',
+            fontSize: width * (19 / 1920),
+            color: getPrimaryTextColor(ThemeProvider().isDarkMode),
+          ),
+        ),
+        SizedBox(height: width * (10 / 1920)),
+        Container(
+          height: width * (62 / 1920),
+          padding: EdgeInsets.symmetric(horizontal: width * (14 / 1920)),
           decoration: BoxDecoration(
-            color: const Color(0xFFE8E4DB),
-
+            color: getInputBackgroundColor(ThemeProvider().isDarkMode),
             borderRadius: BorderRadius.circular(width * (6 / 1920)),
           ),
-
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: value,
-              isExpanded: true,
-
-              dropdownColor: const Color(0xFFE8E4DB),
-
-              style: TextStyle(
-                fontFamily: 'NunitoSans-Regular',
-                color: Colors.black87,
-                fontSize: width * (17 / 1920),
-              ),
-
-              icon: Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: primaryColor,
-                size: width * (30 / 1920),
-              ),
-
-              onChanged: onChanged,
-
-              items: items.map((item) {
-                return DropdownMenuItem(value: item, child: Text(item));
-              }).toList(),
+          child: TextFormField(
+            key: ValueKey('$label-$_inputVersion'),
+            initialValue: value,
+            keyboardType: TextInputType.number,
+            style: TextStyle(
+              fontFamily: 'NunitoSans-Regular',
+              color: getSecondaryTextColor(ThemeProvider().isDarkMode),
+              fontSize: width * (18 / 1920),
             ),
+            decoration: const InputDecoration(border: InputBorder.none),
+            onChanged: onChanged,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _signedNumberInput(
+    double width, {
+    required String label,
+    required String sign,
+    required String value,
+    required ValueChanged<String> onSignChanged,
+    required ValueChanged<String> onValueChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'NunitoSans-Bold',
+            fontSize: width * (19 / 1920),
+            color: getPrimaryTextColor(ThemeProvider().isDarkMode),
+          ),
+        ),
+        SizedBox(height: width * (10 / 1920)),
+        Row(
+          children: [
+            _signSelector(width, sign: sign, onChanged: onSignChanged),
+            SizedBox(width: width * (12 / 1920)),
+            Expanded(
+              child: Container(
+                height: width * (62 / 1920),
+                padding: EdgeInsets.symmetric(horizontal: width * (14 / 1920)),
+                decoration: BoxDecoration(
+                  color: getInputBackgroundColor(ThemeProvider().isDarkMode),
+                  borderRadius: BorderRadius.circular(width * (6 / 1920)),
+                ),
+                child: TextFormField(
+                  key: ValueKey('$label-$_inputVersion'),
+                  initialValue: value,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
+                    fontFamily: 'NunitoSans-Regular',
+                    color: getSecondaryTextColor(ThemeProvider().isDarkMode),
+                    fontSize: width * (18 / 1920),
+                  ),
+                  decoration: const InputDecoration(border: InputBorder.none),
+                  onChanged: onValueChanged,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _signSelector(
+    double width, {
+    required String sign,
+    required ValueChanged<String> onChanged,
+  }) {
+    return Container(
+      width: width * (72 / 1920),
+      height: width * (62 / 1920),
+      padding: EdgeInsets.symmetric(horizontal: width * (10 / 1920)),
+      decoration: BoxDecoration(
+        color: getInputBackgroundColor(ThemeProvider().isDarkMode),
+        borderRadius: BorderRadius.circular(width * (6 / 1920)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: sign,
+          isExpanded: true,
+          dropdownColor: getInputBackgroundColor(ThemeProvider().isDarkMode),
+          style: TextStyle(
+            fontFamily: 'NunitoSans-Bold',
+            color: ThemeProvider().isDarkMode ? darkPrimaryColor : primaryColor,
+            fontSize: width * (22 / 1920),
+          ),
+          icon: Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: ThemeProvider().isDarkMode ? darkPrimaryColor : primaryColor,
+            size: width * (22 / 1920),
+          ),
+          onChanged: (value) => onChanged(value!),
+          items: const [
+            DropdownMenuItem(value: '+', child: Text('+')),
+            DropdownMenuItem(value: '-', child: Text('-')),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _actionButtons(
+    double width, {
+    required VoidCallback onConfirm,
+    required VoidCallback onCancel,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _actionButton(
+          width,
+          label: 'Cancel',
+          color: getInputBackgroundColor(ThemeProvider().isDarkMode),
+          textColor: getSecondaryTextColor(ThemeProvider().isDarkMode),
+          onPressed: onCancel,
+        ),
+        SizedBox(width: width * (14 / 1920)),
+        _actionButton(
+          width,
+          label: 'Confirm',
+          color: ThemeProvider().isDarkMode ? darkPrimaryColor : primaryColor,
+          textColor: getTextColor(ThemeProvider().isDarkMode),
+          onPressed: onConfirm,
+        ),
+      ],
+    );
+  }
+
+  Widget _actionButton(
+    double width, {
+    required String label,
+    required Color color,
+    required Color textColor,
+    required VoidCallback onPressed,
+  }) {
+    return SizedBox(
+      width: width * (130 / 1920),
+      height: width * (46 / 1920),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(width * (8 / 1920)),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'NunitoSans-Bold',
+            fontSize: width * (16 / 1920),
+            color: textColor,
           ),
         ),
       ),
@@ -574,7 +822,7 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
               ? null
               : Border(
                   bottom: BorderSide(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(ThemeProvider().isDarkMode),
                     width: width * (1 / 1920),
                   ),
                 ),
@@ -601,7 +849,7 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
                   style: TextStyle(
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (18 / 1920),
-                    color: Colors.black,
+                    color: getPrimaryTextColor(ThemeProvider().isDarkMode),
                   ),
                 ),
               ),
@@ -611,7 +859,7 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
                 style: TextStyle(
                   fontFamily: 'NunitoSans-Bold',
                   fontSize: width * (34 / 1920),
-                  color: Colors.black,
+                  color: getPrimaryTextColor(ThemeProvider().isDarkMode),
                 ),
               ),
             ],
@@ -630,7 +878,7 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
       ),
 
       decoration: BoxDecoration(
-        color: const Color(0xFFF04C4E),
+        color: getAlertBackgroundColor(ThemeProvider().isDarkMode),
 
         borderRadius: BorderRadius.circular(width * (10 / 1920)),
       ),
@@ -639,10 +887,166 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
         text,
         style: TextStyle(
           fontFamily: 'NunitoSans-Regular',
-          color: Colors.white,
+          color: getTextColor(ThemeProvider().isDarkMode),
           fontSize: width * (16 / 1920),
         ),
       ),
+    );
+  }
+}
+
+class _MarginConfig {
+  const _MarginConfig({
+    required this.region,
+    required this.propertyType,
+    required this.saleMargin,
+    required this.rentMargin,
+    String? savedRegion,
+    String? savedPropertyType,
+    String? savedSaleMargin,
+    String? savedRentMargin,
+  }) : savedRegion = savedRegion ?? region,
+       savedPropertyType = savedPropertyType ?? propertyType,
+       savedSaleMargin = savedSaleMargin ?? saleMargin,
+       savedRentMargin = savedRentMargin ?? rentMargin;
+
+  final String region;
+  final String propertyType;
+  final String saleMargin;
+  final String rentMargin;
+  final String savedRegion;
+  final String savedPropertyType;
+  final String savedSaleMargin;
+  final String savedRentMargin;
+
+  bool get hasChanges =>
+      region != savedRegion ||
+      propertyType != savedPropertyType ||
+      saleMargin != savedSaleMargin ||
+      rentMargin != savedRentMargin;
+
+  _MarginConfig copyWith({
+    String? region,
+    String? propertyType,
+    String? saleMargin,
+    String? rentMargin,
+  }) {
+    return _MarginConfig(
+      region: region ?? this.region,
+      propertyType: propertyType ?? this.propertyType,
+      saleMargin: saleMargin ?? this.saleMargin,
+      rentMargin: rentMargin ?? this.rentMargin,
+      savedRegion: savedRegion,
+      savedPropertyType: savedPropertyType,
+      savedSaleMargin: savedSaleMargin,
+      savedRentMargin: savedRentMargin,
+    );
+  }
+
+  _MarginConfig confirmed() {
+    return _MarginConfig(
+      region: region,
+      propertyType: propertyType,
+      saleMargin: saleMargin,
+      rentMargin: rentMargin,
+    );
+  }
+
+  _MarginConfig cancelled() {
+    return _MarginConfig(
+      region: savedRegion,
+      propertyType: savedPropertyType,
+      saleMargin: savedSaleMargin,
+      rentMargin: savedRentMargin,
+    );
+  }
+}
+
+class _AdjustmentConfig {
+  const _AdjustmentConfig({
+    required this.region,
+    required this.propertyType,
+    required this.saleSign,
+    required this.saleAdjustment,
+    required this.rentSign,
+    required this.rentAdjustment,
+    String? savedRegion,
+    String? savedPropertyType,
+    String? savedSaleSign,
+    String? savedSaleAdjustment,
+    String? savedRentSign,
+    String? savedRentAdjustment,
+  }) : savedRegion = savedRegion ?? region,
+       savedPropertyType = savedPropertyType ?? propertyType,
+       savedSaleSign = savedSaleSign ?? saleSign,
+       savedSaleAdjustment = savedSaleAdjustment ?? saleAdjustment,
+       savedRentSign = savedRentSign ?? rentSign,
+       savedRentAdjustment = savedRentAdjustment ?? rentAdjustment;
+
+  final String region;
+  final String propertyType;
+  final String saleSign;
+  final String saleAdjustment;
+  final String rentSign;
+  final String rentAdjustment;
+  final String savedRegion;
+  final String savedPropertyType;
+  final String savedSaleSign;
+  final String savedSaleAdjustment;
+  final String savedRentSign;
+  final String savedRentAdjustment;
+
+  bool get hasChanges =>
+      region != savedRegion ||
+      propertyType != savedPropertyType ||
+      saleSign != savedSaleSign ||
+      saleAdjustment != savedSaleAdjustment ||
+      rentSign != savedRentSign ||
+      rentAdjustment != savedRentAdjustment;
+
+  _AdjustmentConfig copyWith({
+    String? region,
+    String? propertyType,
+    String? saleSign,
+    String? saleAdjustment,
+    String? rentSign,
+    String? rentAdjustment,
+  }) {
+    return _AdjustmentConfig(
+      region: region ?? this.region,
+      propertyType: propertyType ?? this.propertyType,
+      saleSign: saleSign ?? this.saleSign,
+      saleAdjustment: saleAdjustment ?? this.saleAdjustment,
+      rentSign: rentSign ?? this.rentSign,
+      rentAdjustment: rentAdjustment ?? this.rentAdjustment,
+      savedRegion: savedRegion,
+      savedPropertyType: savedPropertyType,
+      savedSaleSign: savedSaleSign,
+      savedSaleAdjustment: savedSaleAdjustment,
+      savedRentSign: savedRentSign,
+      savedRentAdjustment: savedRentAdjustment,
+    );
+  }
+
+  _AdjustmentConfig confirmed() {
+    return _AdjustmentConfig(
+      region: region,
+      propertyType: propertyType,
+      saleSign: saleSign,
+      saleAdjustment: saleAdjustment,
+      rentSign: rentSign,
+      rentAdjustment: rentAdjustment,
+    );
+  }
+
+  _AdjustmentConfig cancelled() {
+    return _AdjustmentConfig(
+      region: savedRegion,
+      propertyType: savedPropertyType,
+      saleSign: savedSaleSign,
+      saleAdjustment: savedSaleAdjustment,
+      rentSign: savedRentSign,
+      rentAdjustment: savedRentAdjustment,
     );
   }
 }

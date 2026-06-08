@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/client_chat/client_chat_widget.dart';
 import 'package:untitled1/core/widgets/constants.dart';
@@ -10,10 +11,10 @@ import 'package:untitled1/core/widgets/liked_and_avoidances_body/liked_only_body
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/property_card/property_card.dart';
 import 'package:untitled1/core/widgets/simple_deal_info_card/simple_deal_info_card.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class DealPage extends StatefulWidget {
   const DealPage({super.key});
-
   @override
   State<DealPage> createState() => _DealPageState();
 }
@@ -21,9 +22,10 @@ class DealPage extends StatefulWidget {
 class _DealPageState extends State<DealPage> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
       body: SingleChildScrollView(
         child: SizedBox(
           width: width,
@@ -83,7 +85,7 @@ class _DealPageState extends State<DealPage> {
                   tabs: [
                     TabOfTabableCard(
                       tabName: 'schedule',
-                      tabColor: thirdColorPrimary,
+                      tabColor: themeProvider.isDarkMode ? darkThirdColorPrimary : thirdColorPrimary,
                       bodyOfTheTab: DealsOnlyScheduleWidget(
                         dealId: 1,
                         forDealPage: true,
@@ -91,7 +93,7 @@ class _DealPageState extends State<DealPage> {
                     ),
                     TabOfTabableCard(
                       tabName: 'Actions',
-                      tabColor: primaryColor,
+                      tabColor: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                       bodyOfTheTab: DealActionsWidget(),
                     ),
                     TabOfTabableCard(
@@ -101,7 +103,7 @@ class _DealPageState extends State<DealPage> {
                         width: width * (881 / 1920),
                         height: width * (910 / 1920),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: getCardColor(themeProvider.isDarkMode),
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(width * (30 / 1920)),
                             bottomLeft: Radius.circular(width * (30 / 1920)),

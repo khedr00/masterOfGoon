@@ -80,7 +80,8 @@ Future<List<dynamic>> getDealCardsInfo({
           dealStage: temp[i]['dealStage'],
           successProbability: temp[i]['successProbability'],
           startingDate: temp[i]['startingDate'],
-          propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+          propertyPrimaryImage:
+              'https://images3.alphacoders.com/940/thumb-1920-940522.png',
           propertyType: 'hall',
           propertyPrice: 30003,
           propertySimpleDescription:
@@ -101,7 +102,8 @@ Future<List<dynamic>> getDealCardsInfo({
           dealStage: temp[i]['dealStage'],
           successProbability: temp[i]['successProbability'],
           startingDate: temp[i]['startingDate'],
-          propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+          propertyPrimaryImage:
+              'https://images3.alphacoders.com/940/thumb-1920-940522.png',
           propertyType: 'hall',
           propertyPrice: 30003,
           propertySimpleDescription:

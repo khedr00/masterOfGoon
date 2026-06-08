@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_deal_note.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/note_widget.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class DealNoteWidget extends StatefulWidget {
   const DealNoteWidget({super.key, required this.scheduleDealNote});
@@ -15,12 +17,15 @@ class _NoteWidgetState extends State<DealNoteWidget> {
   bool isHoverd = false;
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return NoteWidget(
       scheduleNote: widget.scheduleDealNote,
       clockColor: widget.scheduleDealNote.title == "MEETING"
           ? Colors.red
-          : thirdColorSecondary,
+          : (themeProvider.isDarkMode
+                ? darkThirdColorSecondary
+                : thirdColorSecondary),
       handsIcon: MouseRegion(
         onEnter: (event) {
           setState(() {
@@ -48,7 +53,9 @@ class _NoteWidgetState extends State<DealNoteWidget> {
                     width: width * (117 / 1920),
                     height: width * (100 / 1920),
                     decoration: BoxDecoration(
-                      color: Color(0xff545454),
+                      color: themeProvider.isDarkMode
+                          ? Color(0xff757575)
+                          : Color(0xff545454),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(width * (10 / 1920)),
                         bottomLeft: Radius.circular(width * (10 / 1920)),
@@ -94,7 +101,9 @@ class _NoteWidgetState extends State<DealNoteWidget> {
                     width: width * (23 / 1920),
                     height: width * (100 / 1920),
                     decoration: BoxDecoration(
-                      color: Color(0xff545454),
+                      color: themeProvider.isDarkMode
+                          ? Color(0xff757575)
+                          : Color(0xff545454),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.elliptical(
                           width * (23 / 1920),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/buttons/button.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 import 'package:untitled1/features/profile_feature/widgets/profile_card_photo_till_the_small_container_section.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -8,13 +10,14 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Container(
           width: width * (411 / 1920),
           height: width * (950 / 1920),
-          color: backGroundColor,
+          color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
           child: Column(
             children: [
               //اول قسم من فوق
@@ -24,7 +27,7 @@ class ProfileCard extends StatelessWidget {
                 width: width * (411 / 1920),
                 height: width * (155 / 1920),
                 decoration: BoxDecoration(
-                  color: secondaryColor,
+                  color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(width * (5 / 1920)),
                     bottomRight: Radius.circular(width * (5 / 1920)),
@@ -49,7 +52,7 @@ class ProfileCard extends StatelessWidget {
                           Text(
                             'Settings',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: getTextColor(themeProvider.isDarkMode),
                               fontFamily: 'NunitoSans-Medium',
                               fontSize: width * (24 / 1920),
                             ),
@@ -73,7 +76,7 @@ class ProfileCard extends StatelessWidget {
                           Text(
                             'Log out',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: getTextColor(themeProvider.isDarkMode),
                               fontFamily: 'NunitoSans-Medium',
                               fontSize: width * (24 / 1920),
                             ),
@@ -93,7 +96,7 @@ class ProfileCard extends StatelessWidget {
             width: width * (141 / 1920),
             height: width * (185 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(width * (30 / 1920)),
               ),
@@ -110,7 +113,7 @@ class ProfileCard extends StatelessWidget {
                 Text(
                   'Sales',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-ExtraBold',
                     fontSize: width * (24 / 1920),
                   ),
@@ -118,7 +121,7 @@ class ProfileCard extends StatelessWidget {
                 Text(
                   'Employee',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (24 / 1920),
                   ),
@@ -134,7 +137,7 @@ class ProfileCard extends StatelessWidget {
             width: width * (250 / 1920),
             height: width * (100 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(width * (5 / 1920)),
                 bottomRight: Radius.circular(width * (5 / 1920)),
@@ -144,7 +147,7 @@ class ProfileCard extends StatelessWidget {
               child: Text(
                 'Khedr issa',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: getTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-ExtraBold',
                   fontSize: width * (36 / 1920),
                 ),
@@ -159,7 +162,7 @@ class ProfileCard extends StatelessWidget {
             width: width * (227 / 1920),
             height: width * (87 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(width * (5 / 1920)),
               ),
@@ -170,7 +173,7 @@ class ProfileCard extends StatelessWidget {
                 Text(
                   'Total number of Deals',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-ExtraBold',
                     fontSize: width * (18 / 1920),
                   ),
@@ -186,7 +189,7 @@ class ProfileCard extends StatelessWidget {
                     Text(
                       '40',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: getTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-Bold',
                         fontSize: width * (40 / 1920),
                       ),

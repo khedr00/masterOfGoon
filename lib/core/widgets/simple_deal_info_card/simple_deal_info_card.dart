@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class SimpleDealInfoCard extends StatelessWidget {
   const SimpleDealInfoCard({
@@ -20,18 +22,19 @@ class SimpleDealInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Container(
           width: width * (407 / 1920),
           height: width * (220 / 1920),
-          decoration: BoxDecoration(color: backGroundColor),
+          decoration: BoxDecoration(color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor),
           child: Center(
             child: Container(
               width: width * (387 / 1920),
               height: width * (200 / 1920),
-              decoration: BoxDecoration(color: secondaryColor),
+              decoration: BoxDecoration(color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor),
               child: Column(
                 children: [
                   // هون موجود اول قسم فوقاني فيه التاريخ و الآي دي و الفلر لأول ستاك
@@ -51,7 +54,7 @@ class SimpleDealInfoCard extends StatelessWidget {
                                     width * (10 / 1920),
                                   ),
                                 ),
-                                color: backGroundColor,
+                                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                               ),
                             ),
                             SizedBox(
@@ -64,7 +67,7 @@ class SimpleDealInfoCard extends StatelessWidget {
                                   Text(
                                     dealDate,
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                                       fontFamily: 'NunitoSans-MediumItalic',
                                       fontSize: width * (18 / 1920),
                                     ),
@@ -72,7 +75,7 @@ class SimpleDealInfoCard extends StatelessWidget {
                                   Text(
                                     'ID : $dealId',
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                                       fontFamily: 'NunitoSans-MediumItalic',
                                       fontSize: width * (18 / 1920),
                                     ),
@@ -89,7 +92,7 @@ class SimpleDealInfoCard extends StatelessWidget {
                             child: Text(
                               '$priceRange \$',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-ExtraBold',
                                 fontSize: width * (24 / 1920),
                               ),
@@ -106,12 +109,12 @@ class SimpleDealInfoCard extends StatelessWidget {
                       Container(
                         width: width * (255 / 1920),
                         height: width * (89 / 1920),
-                        color: secondaryColor,
+                        color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
                         child: Center(
                           child: Text(
                             dealTitle,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: getPrimaryTextColor(themeProvider.isDarkMode),
                               fontFamily: 'NunitoSans-Bold',
                               fontSize: width * (24 / 1920),
                             ),
@@ -122,7 +125,7 @@ class SimpleDealInfoCard extends StatelessWidget {
                         width: width * (129 / 1920),
                         height: width * (89 / 1920),
                         decoration: BoxDecoration(
-                          color: backGroundColor,
+                          color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(width * (10 / 1920)),
                             bottomLeft: Radius.circular(width * (10 / 1920)),
@@ -143,7 +146,7 @@ class SimpleDealInfoCard extends StatelessWidget {
             width: width * (112 / 1920),
             height: width * (43 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(width * (10 / 1920)),
                 bottomRight: Radius.circular(width * (10 / 1920)),
@@ -153,7 +156,7 @@ class SimpleDealInfoCard extends StatelessWidget {
               child: Text(
                 dealStage,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: getTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-Bold',
                   fontSize: width * (14 / 1920),
                 ),
@@ -168,7 +171,7 @@ class SimpleDealInfoCard extends StatelessWidget {
             width: width * (129 / 1920),
             height: width * (71 / 1920),
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(width * (10 / 1920)),
                 bottomLeft: Radius.circular(width * (10 / 1920)),
@@ -178,7 +181,7 @@ class SimpleDealInfoCard extends StatelessWidget {
               child: Text(
                 'Success Rate : \n $successRate',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: getTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-Bold',
                   fontSize: width * (14 / 1920),
                 ),

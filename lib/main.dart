@@ -8,7 +8,9 @@ import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 import 'package:untitled1/providers/icon_selector_provider.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
+import 'package:untitled1/providers/new_and_ongoing_deals_db_provider.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 void main() {
   runApp(
@@ -17,6 +19,11 @@ void main() {
         ChangeNotifierProvider(
           create: (context) {
             return AllAndDealsOnlyProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return NewAndOngoingDealsDbProvider();
           },
         ),
         ChangeNotifierProvider(
@@ -45,6 +52,11 @@ void main() {
             return ChatProvider(SocketService());
           },
         ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return ThemeProvider();
+          },
+        ),
       ],
 
       child: const MyApp(),
@@ -57,9 +69,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(backgroundColor: backGroundColor, body: LoginPage()),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: backGroundColor,
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: darkBackGroundColor,
+          ),
+          themeMode: themeProvider.isDarkMode
+              ? ThemeMode.dark
+              : ThemeMode.light,
+          home: Scaffold(
+            backgroundColor: themeProvider.isDarkMode
+                ? darkBackGroundColor
+                : backGroundColor,
+            body: LoginPage(),
+          ),
+        );
+      },
     );
   }
 }

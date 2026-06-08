@@ -13,6 +13,7 @@ class SubmanagerDashbourd extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [FirstSection(), PropertiesDashboardWidget()],
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/providers/icon_selector_provider.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyCardLowerSection extends StatelessWidget {
   const PropertyCardLowerSection({super.key});
@@ -9,17 +10,18 @@ class PropertyCardLowerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final allAndDealsOnlyProvider = Provider.of<IconSelectorProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
       width: width * (866 / 1920),
       height: width * (247 / 1920),
       child: Row(
         children: [
-          Container(width: width * (10 / 1920), color: Colors.white),
+          Container(width: width * (10 / 1920), color: getCardColor(themeProvider.isDarkMode)),
           Container(
             width: width * (856 / 1920),
             decoration: BoxDecoration(
-              color: fourthColorSecondaryLightBrown,
+              color: themeProvider.isDarkMode ? darkFourthColorSecondaryLightBrown : fourthColorSecondaryLightBrown,
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(width * (10 / 1920)),
               ),
@@ -47,7 +49,7 @@ class PropertyCardLowerSection extends StatelessWidget {
                               allAndDealsOnlyProvider.gettextSelected,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: width * (28 / 1920),
                               ),
@@ -59,7 +61,7 @@ class PropertyCardLowerSection extends StatelessWidget {
                       Container(
                         height: width * (153 / 1920),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: getCardColor(themeProvider.isDarkMode),
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(width * (10 / 1920)),
                           ),
@@ -76,7 +78,7 @@ class PropertyCardLowerSection extends StatelessWidget {
                       'A clean and comfortable apartment with good space and natural light. Close to shops and public transportation.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-Medium',
                         fontSize: width * (28 / 1920),
                       ),

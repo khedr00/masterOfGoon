@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 import 'package:untitled1/features/deal_page.dart';
 import 'package:untitled1/features/profile_feature/widgets/profile_card.dart';
 import 'package:untitled1/features/profile_feature/widgets/stats_widget.dart/stats_widget.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class EmployeeInfoForSm extends StatefulWidget {
   const EmployeeInfoForSm({super.key});
@@ -49,6 +51,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
       width: width * (1438 / 1920),
@@ -64,7 +67,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
           Container(
             width: width * (5 / 1920),
             height: width * (920 / 1920),
-            color: Colors.white,
+            color: getDividerColor(themeProvider.isDarkMode),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -84,6 +87,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                             ? 'NunitoSans-Bold'
                             : 'NunitoSans-Black',
                         fontSize: width * (28 / 1920),
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                       ),
                     ),
                   ),
@@ -102,6 +106,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                               ? 'NunitoSans-Bold'
                               : 'NunitoSans-Black',
                           fontSize: width * (28 / 1920),
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                         ),
                       ),
                     ),
@@ -116,7 +121,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                         width: width * ((939 + 38) / 1920),
                         child: _dealList.isEmpty
                             ? Container(
-                                color: backGroundColor,
+                                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                                 child: Center(
                                   child: CircularProgressIndicator(),
                                 ),
@@ -155,7 +160,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                                               width: width * (15 / 1920),
                                               height: width * (200 / 1920),
                                               decoration: BoxDecoration(
-                                                color: backGroundColor,
+                                                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                                                 borderRadius: BorderRadius.only(
                                                   topRight: Radius.circular(
                                                     width * (50 / 1920),

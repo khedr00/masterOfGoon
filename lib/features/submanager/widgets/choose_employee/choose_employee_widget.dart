@@ -1,16 +1,23 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/submanager/widgets/choose_employee/choose_employee_card.dart/choose_employee_card.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class ChooseEmployeeWidget extends StatelessWidget {
   const ChooseEmployeeWidget({super.key});
 
   void _showPriceDialog(BuildContext context, double width) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     TextEditingController priceController = TextEditingController();
 
     showDialog(
       context: context,
-      // ignore: deprecated_member_use
-      barrierColor: Colors.black.withOpacity(0.4),
+      barrierColor: themeProvider.isDarkMode
+          ? Colors.white.withOpacity(0.4)
+          : Colors.black.withOpacity(0.4),
       builder: (context) {
         return Dialog(
           backgroundColor: Colors.transparent,
@@ -18,7 +25,9 @@ class ChooseEmployeeWidget extends StatelessWidget {
             width: width * (500 / 1920),
             padding: EdgeInsets.all(width * (25 / 1920)),
             decoration: BoxDecoration(
-              color: const Color(0xFF94BAF0),
+              color: themeProvider.isDarkMode
+                  ? darkSecondaryColor
+                  : secondaryColor,
               borderRadius: BorderRadius.circular(width * (15 / 1920)),
             ),
             child: Column(
@@ -28,7 +37,7 @@ class ChooseEmployeeWidget extends StatelessWidget {
                   'Choose the price range',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
                     fontSize: width * (24 / 1920),
                   ),
@@ -42,17 +51,17 @@ class ChooseEmployeeWidget extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'NunitoSans-Regular',
                     fontSize: width * (18 / 1920),
-                    color: Colors.black,
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
                   ),
                   decoration: InputDecoration(
                     hintText: 'Enter price range',
                     hintStyle: TextStyle(
                       fontFamily: 'NunitoSans-Regular',
                       fontSize: width * (18 / 1920),
-                      color: Colors.grey,
+                      color: getHintTextColor(themeProvider.isDarkMode),
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: getCardColor(themeProvider.isDarkMode),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: width * (20 / 1920),
                       vertical: width * (18 / 1920),
@@ -71,7 +80,9 @@ class ChooseEmployeeWidget extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1E6A8C),
+                        backgroundColor: themeProvider.isDarkMode
+                            ? darkPrimaryColor
+                            : primaryColor,
                         padding: EdgeInsets.symmetric(
                           horizontal: width * (35 / 1920),
                           vertical: width * (15 / 1920),
@@ -88,7 +99,7 @@ class ChooseEmployeeWidget extends StatelessWidget {
                       child: Text(
                         'Cancel',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: getTextColor(themeProvider.isDarkMode),
                           fontFamily: 'NunitoSans-Bold',
                           fontSize: width * (18 / 1920),
                         ),
@@ -132,6 +143,7 @@ class ChooseEmployeeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     List<ChooseEmployeeCard> chooseEmployeeCard = List.filled(
       5,
       const ChooseEmployeeCard(),
@@ -151,7 +163,7 @@ class ChooseEmployeeWidget extends StatelessWidget {
               child: Text(
                 'Recommended Employees',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: getPrimaryTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-Bold',
                   fontSize: width * (20 / 1920),
                 ),

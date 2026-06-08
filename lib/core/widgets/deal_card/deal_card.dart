@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/deals/deal_card_info/rent_and_lease_deal_card_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_deal_satge_section.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_client_section.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_property_section.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class DealCard extends StatelessWidget {
   const DealCard({super.key, required this.dealCardInfo});
@@ -11,6 +13,7 @@ class DealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -18,7 +21,7 @@ class DealCard extends StatelessWidget {
           width: width * (939 / 1920),
           height: width * (246 / 1920),
           decoration: BoxDecoration(
-            color: secondaryColor,
+            color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
             borderRadius: BorderRadius.circular(width * (10 / 1920)),
           ),
           child: Row(
@@ -40,7 +43,7 @@ class DealCard extends StatelessWidget {
               DealCardPropertySection(
                 dealDate: dealCardInfo.startingDate,
                 dealId: dealCardInfo.id.toString(),
-                propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+                propertyPrimaryImage: dealCardInfo.propertyPrimaryImage,
                 propertyType: 'villa',
                 propertyPrice: 30000,
                 propertySimpleDescription:
@@ -65,7 +68,7 @@ class DealCard extends StatelessWidget {
                 bottomLeft: Radius.circular(width * (10 / 1920)),
                 bottomRight: Radius.circular(width * (10 / 1920)),
               ),
-              color: backGroundColor,
+              color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
             ),
             child: Row(
               children: [
@@ -79,14 +82,14 @@ class DealCard extends StatelessWidget {
                     width: width * (452 / 1920),
                     height: width * (62 / 1920),
                     decoration: BoxDecoration(
-                      color: secondaryColor,
+                      color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
                       child: Text(
                         dealCardInfo.title,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                           fontFamily: 'NunitoSans-ExtraBold',
                           fontSize: width * (22 / 1920),
                         ),
@@ -104,7 +107,7 @@ class DealCard extends StatelessWidget {
                     width: width * (129 / 1920),
                     height: width * (71 / 1920),
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                       borderRadius: BorderRadius.vertical(
                         bottom: Radius.circular(width * (10 / 1920)),
                       ),
@@ -114,7 +117,7 @@ class DealCard extends StatelessWidget {
                         ' Success Rate :\n${dealCardInfo.successProbability.toString()} %',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: getTextColor(themeProvider.isDarkMode),
                           fontFamily: 'NunitoSans-ExtraBold',
                           fontSize: width * (16 / 1920),
                         ),

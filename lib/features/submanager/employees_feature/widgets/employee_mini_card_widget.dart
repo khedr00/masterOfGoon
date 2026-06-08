@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class EmployeeMiniCardWidget extends StatelessWidget {
   const EmployeeMiniCardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
 
     return Container(
@@ -14,13 +17,13 @@ class EmployeeMiniCardWidget extends StatelessWidget {
       height: width * (449 / 1920),
 
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: getCardColor(themeProvider.isDarkMode),
         borderRadius: BorderRadius.circular(width * (28 / 1920)),
-        border: Border.all(color: primaryColor, width: width * (8 / 1920)),
+        border: Border.all(color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor, width: width * (8 / 1920)),
         boxShadow: [
           BoxShadow(
             blurRadius: width * (10 / 1920),
-            color: Colors.black,
+            color: themeProvider.isDarkMode ? Colors.black54 : Colors.black26,
             offset: Offset(0, width * (4 / 1920)),
           ),
         ],
@@ -37,7 +40,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
 
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFFE8EAD9),
+              color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFE8EAD9),
             ),
 
             child: Center(
@@ -62,7 +65,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'NunitoSans-Regular',
                 fontSize: width * (20 / 1920),
-                color: Colors.black,
+                color: getPrimaryTextColor(themeProvider.isDarkMode),
               ),
             ),
           ),
@@ -80,7 +83,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                   width: width * (145 / 1920),
                   height: width * (118 / 1920),
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                     borderRadius: BorderRadius.circular(width * (14 / 1920)),
                   ),
                   child: Column(
@@ -92,13 +95,13 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                         percent: 0.55,
                         animation: true,
                         circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: secondaryColor,
-                        backgroundColor: Colors.white,
+                        progressColor: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                        backgroundColor: getCardColor(themeProvider.isDarkMode),
                         center: Text(
                           '55%',
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Bold',
-                            color: Colors.white,
+                            color: getTextColor(themeProvider.isDarkMode),
                             fontSize: width * (16 / 1920),
                           ),
                         ),
@@ -106,7 +109,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                           'Productivity',
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Regular',
-                            color: Colors.white,
+                            color: getTextColor(themeProvider.isDarkMode),
                             fontSize: width * (15 / 1920),
                           ),
                         ),
@@ -121,7 +124,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                   height: width * (118 / 1920),
 
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                     borderRadius: BorderRadius.circular(width * (14 / 1920)),
                   ),
 
@@ -138,7 +141,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                           'Current Deals',
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Regular',
-                            color: Colors.white,
+                            color: getTextColor(themeProvider.isDarkMode),
                             fontSize: width * (16 / 1920),
                           ),
                         ),
@@ -157,7 +160,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                                 '34',
                                 style: TextStyle(
                                   fontFamily: 'NunitoSans-Bold',
-                                  color: Colors.white,
+                                  color: getTextColor(themeProvider.isDarkMode),
                                   fontSize: width * (42 / 1920),
                                 ),
                               ),
@@ -178,7 +181,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             height: width * (10 / 1920),
-            color: backGroundColor,
+            color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
           ),
 
           Expanded(
@@ -210,7 +213,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (28 / 1920),
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                           ),
                         ),
 
@@ -222,7 +225,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Regular',
                             fontSize: width * (24 / 1920),
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                           ),
                         ),
                       ],

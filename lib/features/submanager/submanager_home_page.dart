@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/deal_requests/deal_request_card_info.dart';
 import 'package:untitled1/back_end_test/deal_requests/get_deal_request_card_info.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
@@ -10,6 +11,7 @@ import 'package:untitled1/core/widgets/property_card/property_card.dart';
 import 'package:untitled1/core/widgets/property_photos_shower/property_photos_shower_widget.dart';
 import 'package:untitled1/features/submanager/widgets/choose_employee/choose_employee_widget.dart';
 import 'package:untitled1/features/submanager/widgets/deal_request_card/deal_request_card.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class SubmanagerHomePage extends StatefulWidget {
   const SubmanagerHomePage({super.key, required this.userAuthInfo});
@@ -64,6 +66,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Row(
@@ -81,6 +84,17 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                   child: Row(
                     children: [
                       SizedBox(width: width * (42 / 1920)),
+                      IconButton(
+                        icon: Icon(
+                          themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                          color: themeProvider.isDarkMode ? getPrimaryTextColor(true) : getPrimaryTextColor(false),
+                        ),
+                        onPressed: () {
+                          themeProvider.toggleTheme();
+                        },
+                        tooltip: 'Toggle Theme',
+                      ),
+                      SizedBox(width: width * (28 / 1920)),
                       DealRequestsAndSignedDealRequistsButton(),
                       SizedBox(width: width * (28 / 1920)),
                       ButtonWithImage(
@@ -115,12 +129,12 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                           width: width * ((670 + 41) / 1920),
                           decoration: BoxDecoration(
                             border: Border.symmetric(
-                              horizontal: BorderSide(color: primaryColor),
+                              horizontal: BorderSide(color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor),
                             ),
                           ),
                           child: _dealRequestList.isEmpty
                               ? Container(
-                                  color: backGroundColor,
+                                  color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
                                   child: Center(
                                     child: CircularProgressIndicator(),
                                   ),
@@ -160,8 +174,8 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                                                   height: width * (200 / 1920),
                                                   decoration: BoxDecoration(
                                                     color: _cardIsClicked[i]
-                                                        ? primaryColor
-                                                        : backGroundColor,
+                                                        ? (themeProvider.isDarkMode ? darkPrimaryColor : primaryColor)
+                                                        : (themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor),
                                                     borderRadius:
                                                         BorderRadius.only(
                                                           topRight:
@@ -197,9 +211,9 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
             width: width * (1150 / 1920),
             height: width * (950 / 1920),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: getCardColor(themeProvider.isDarkMode),
               border: Border.all(
-                color: primaryColor,
+                color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                 width: width * (4 / 1920),
               ),
               borderRadius: BorderRadius.circular(width * (10 / 1920)),
@@ -215,11 +229,11 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                       width: width * (200 / 1920),
                       height: width * (40 / 1920),
                       decoration: BoxDecoration(
-                        color: primaryColor,
+                        color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                         borderRadius: BorderRadius.circular(width * (5 / 1920)),
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor,
+                            color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                             blurRadius: 5,
                             spreadRadius: 1,
                           ),
@@ -229,7 +243,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                         child: Text(
                           'Lead Info :',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: getTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (20 / 1920),
                           ),
@@ -241,11 +255,11 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                     width: width * (1120 / 1920),
                     height: width * (200 / 1920),
                     decoration: BoxDecoration(
-                      color: secondaryColor,
+                      color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
                       borderRadius: BorderRadius.circular(width * (5 / 1920)),
                       boxShadow: [
                         BoxShadow(
-                          color: secondaryColor,
+                          color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
                           blurRadius: 5,
                           spreadRadius: 1,
                         ),
@@ -262,7 +276,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                                   width: width * (189 / 1920),
                                   height: width * (200 / 1920),
                                   decoration: BoxDecoration(
-                                    color: secondaryColor,
+                                    color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(
                                         width * (10 / 1920),
@@ -321,7 +335,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                                   width: width * (170 / 1920),
                                   height: width * (140 / 1920),
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: getCardColor(themeProvider.isDarkMode),
                                     borderRadius: BorderRadius.circular(
                                       width * (10 / 1920),
                                     ),
@@ -331,7 +345,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                                       'I would like to know more about this property',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: getPrimaryTextColor(themeProvider.isDarkMode),
                                         fontFamily: 'NunitoSans-SemiBold',
                                         fontSize: width * (14 / 1920),
                                       ),
@@ -347,7 +361,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                           child: Container(
                             width: width * (1 / 1920),
                             height: width * (200 / 1920),
-                            color: Colors.grey,
+                            color: getDividerColor(themeProvider.isDarkMode),
                           ),
                         ),
                         Column(
@@ -384,7 +398,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                           child: Container(
                             width: width * (1 / 1920),
                             height: width * (200 / 1920),
-                            color: Colors.grey,
+                            color: getDividerColor(themeProvider.isDarkMode),
                           ),
                         ),
                         Column(
@@ -402,7 +416,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                               'Hot',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.red,
+                                color: themeProvider.isDarkMode ? darkSixthColorSecondaryLightRed : sixthColorSecondaryLightRed,
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: width * (32 / 1920),
                               ),
@@ -420,11 +434,11 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                       width: width * (200 / 1920),
                       height: width * (40 / 1920),
                       decoration: BoxDecoration(
-                        color: primaryColor,
+                        color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                         borderRadius: BorderRadius.circular(width * (5 / 1920)),
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor,
+                            color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                             blurRadius: 5,
                             spreadRadius: 1,
                           ),
@@ -434,7 +448,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                         child: Text(
                           'Property Info :',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: getTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (20 / 1920),
                           ),
@@ -468,11 +482,11 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                       width: width * (200 / 1920),
                       height: width * (40 / 1920),
                       decoration: BoxDecoration(
-                        color: primaryColor,
+                        color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                         borderRadius: BorderRadius.circular(width * (5 / 1920)),
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor,
+                            color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                             blurRadius: 5,
                             spreadRadius: 1,
                           ),
@@ -482,7 +496,7 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                         child: Text(
                           'Choose Employee :',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: getTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (20 / 1920),
                           ),

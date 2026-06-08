@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/general_tabable_card.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/tab_of_tabable_card.dart';
 import 'package:untitled1/features/profile_feature/widgets/notification/inside_personal_notification_widget.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class NotificationWidget extends StatefulWidget {
   const NotificationWidget({
@@ -20,6 +22,7 @@ class NotificationWidget extends StatefulWidget {
 class _NotificationWidgetState extends State<NotificationWidget> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -29,14 +32,14 @@ class _NotificationWidgetState extends State<NotificationWidget> {
             tabs: [
               TabOfTabableCard(
                 tabName: 'Personal',
-                tabColor: thirdColorPrimary,
+                tabColor: themeProvider.isDarkMode ? darkThirdColorPrimary : thirdColorPrimary,
                 bodyOfTheTab: InsidePersonalNotificationWidget(
                   notesList: widget.personalNotes,
                 ),
               ),
               TabOfTabableCard(
                 tabName: 'Managers',
-                tabColor: primaryColor,
+                tabColor: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                 bodyOfTheTab: InsidePersonalNotificationWidget(
                   notesList: widget.managerNotes,
                 ),
@@ -52,7 +55,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
             width: width * (45 / 1920),
             height: width * (45 / 1920),
             decoration: BoxDecoration(
-              color: thirdColorPrimary,
+              color: themeProvider.isDarkMode ? darkThirdColorPrimary : thirdColorPrimary,
               borderRadius: BorderRadius.circular(width * (10 / 1920)),
             ),
             child: Image.asset('assets/images/Notification.png'),

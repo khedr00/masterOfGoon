@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class DealCardDealSatgeSection extends StatelessWidget {
   const DealCardDealSatgeSection({super.key, required this.dealStage});
@@ -7,6 +9,7 @@ class DealCardDealSatgeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Row(
       children: [
@@ -14,7 +17,7 @@ class DealCardDealSatgeSection extends StatelessWidget {
           width: width * (136 / 1920),
           height: width * (52 / 1920),
           decoration: BoxDecoration(
-            color: backGroundColor,
+            color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(width * (10 / 1920)),
             ),
@@ -25,7 +28,7 @@ class DealCardDealSatgeSection extends StatelessWidget {
               width: width * (136 / 1920),
               height: width * (43 / 1920),
               decoration: BoxDecoration(
-                color: primaryColor,
+                color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(width * (10 / 1920)),
                 ),
@@ -34,7 +37,7 @@ class DealCardDealSatgeSection extends StatelessWidget {
                 child: Text(
                   dealStage,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-ExtraBold',
                     fontSize: width * (16 / 1920),
                   ),

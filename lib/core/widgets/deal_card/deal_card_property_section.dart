@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class DealCardPropertySection extends StatelessWidget {
   const DealCardPropertySection({
@@ -26,6 +28,7 @@ class DealCardPropertySection extends StatelessWidget {
   // PropertyInfoInsideDealCard? _propertyInfoInsideDealCard;
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
 
     // if (_propertyInfoInsideDealCard == null) {
@@ -44,7 +47,7 @@ class DealCardPropertySection extends StatelessWidget {
               width: width * (413 / 1920),
               height: width * (79 / 1920),
               decoration: BoxDecoration(
-                color: secondaryColor,
+                color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
                 borderRadius: BorderRadius.circular(width * (10 / 1920)),
               ),
             ),
@@ -58,7 +61,7 @@ class DealCardPropertySection extends StatelessWidget {
                   Text(
                     dealDate,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-MediumItalic',
                       fontSize: width * (16 / 1920),
                     ),
@@ -66,7 +69,7 @@ class DealCardPropertySection extends StatelessWidget {
                   Text(
                     'ID : $dealId',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-MediumItalic',
                       fontSize: width * (16 / 1920),
                     ),
@@ -103,7 +106,7 @@ class DealCardPropertySection extends StatelessWidget {
                             Text(
                               propertyType,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-SemiBold',
                                 fontSize: width * (22 / 1920),
                               ),
@@ -123,7 +126,7 @@ class DealCardPropertySection extends StatelessWidget {
                             Text(
                               '${propertyPrice.toString()} \$',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-SemiBold',
                                 fontSize: width * (22 / 1920),
                               ),
@@ -140,7 +143,7 @@ class DealCardPropertySection extends StatelessWidget {
                             Text(
                               propertyType,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-SemiBold',
                                 fontSize: width * (16 / 1920),
                               ),
@@ -160,7 +163,7 @@ class DealCardPropertySection extends StatelessWidget {
                             Text(
                               '${propertyPrice.toString()} \$',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-SemiBold',
                                 fontSize: width * (16 / 1920),
                               ),
@@ -181,7 +184,7 @@ class DealCardPropertySection extends StatelessWidget {
                             Text(
                               '${rentalPeriod.toString()} Months',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: getPrimaryTextColor(themeProvider.isDarkMode),
                                 fontFamily: 'NunitoSans-SemiBold',
                                 fontSize: width * (16 / 1920),
                               ),
@@ -202,7 +205,7 @@ class DealCardPropertySection extends StatelessWidget {
                         child: Text(
                           propertySimpleDescription,
                           style: TextStyle(
-                            color: Colors.black,
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
                             fontFamily: 'NunitoSans-Medium',
                             fontSize: width * (18 / 1920),
                           ),
@@ -220,7 +223,7 @@ class DealCardPropertySection extends StatelessWidget {
                       Text(
                         propertyAddress,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                           fontFamily: 'NunitoSans-SemiBold',
                           fontSize: width * (13 / 1920),
                         ),

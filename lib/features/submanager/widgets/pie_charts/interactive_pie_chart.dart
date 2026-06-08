@@ -1,5 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class InteractivePieChart extends StatefulWidget {
   const InteractivePieChart({super.key});
@@ -13,6 +16,7 @@ class _InteractivePieChartState extends State<InteractivePieChart> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Center(
       child: SizedBox(
@@ -58,7 +62,7 @@ class _InteractivePieChartState extends State<InteractivePieChart> {
                     titleStyle: TextStyle(
                       fontSize: fontSize,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                     ),
                   );
 
@@ -71,7 +75,7 @@ class _InteractivePieChartState extends State<InteractivePieChart> {
                     titleStyle: TextStyle(
                       fontSize: fontSize,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                     ),
                   );
 
@@ -84,7 +88,7 @@ class _InteractivePieChartState extends State<InteractivePieChart> {
                     titleStyle: TextStyle(
                       fontSize: fontSize,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                     ),
                   );
 

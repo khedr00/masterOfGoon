@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_note.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class NoteWidget extends StatefulWidget {
   const NoteWidget({
@@ -25,6 +27,7 @@ class NoteWidget extends StatefulWidget {
 class _NoteWidgetState extends State<NoteWidget> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -36,16 +39,16 @@ class _NoteWidgetState extends State<NoteWidget> {
               Container(
                 height: width * (24 / 1920),
                 width: width * (322 / 1920),
-                color: Colors.white,
+                color: getCardColor(themeProvider.isDarkMode),
               ),
               Container(
                 width: width * (322 / 1920),
                 decoration: BoxDecoration(
-                  color: thirdColorSecondary,
+                  color: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                   borderRadius: BorderRadius.circular(width * (5 / 1920)),
                   boxShadow: [
                     BoxShadow(
-                      color: thirdColorSecondary,
+                      color: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
                       spreadRadius: width * (2 / 1920),
                       blurRadius: width * (3 / 1920),
                     ),
@@ -67,7 +70,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                                   child: Text(
                                     widget.scheduleNote.title,
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                                       fontFamily: 'NunitoSans-Bold',
                                       fontSize: width * (26 / 1920),
                                     ),
@@ -88,7 +91,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                       child: Text(
                         widget.scheduleNote.description,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: getPrimaryTextColor(themeProvider.isDarkMode),
                           fontFamily: 'NunitoSans-Light',
                           fontSize: width * (24 / 1920),
                         ),
@@ -106,7 +109,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             width: width * (65 / 1920),
             height: width * (65 / 1920),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: getCardColor(themeProvider.isDarkMode),
               borderRadius: BorderRadius.circular(1000),
             ),
             child: Center(
@@ -128,7 +131,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                   child: Text(
                     widget.scheduleNote.time,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-Bold',
                       fontSize: width * (22 / 1920),
                     ),

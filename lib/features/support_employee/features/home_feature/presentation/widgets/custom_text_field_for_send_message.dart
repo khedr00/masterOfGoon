@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/support_employee/features/home_feature/presentation/chat_provider.dart';
+import 'package:untitled1/providers/theme_provider.dart';
 
 class CustomTextFieldForSendMessage extends StatelessWidget {
   const CustomTextFieldForSendMessage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Expanded(
       child: Consumer<ChatProvider>(
@@ -15,7 +18,7 @@ class CustomTextFieldForSendMessage extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
+                  color: themeProvider.isDarkMode ? Colors.white.withValues(alpha: 0.2) : Colors.black.withValues(alpha: 0.2),
                   offset: Offset(0, 3),
                   blurRadius: 10,
                 ),
@@ -30,14 +33,14 @@ class CustomTextFieldForSendMessage extends StatelessWidget {
                   vertical: width * 0.005,
                   horizontal: width * 0.02,
                 ),
-                fillColor: Color(0xffEDF6F9),
+                fillColor: themeProvider.isDarkMode ? Color(0xff2A2A2A) : Color(0xffEDF6F9),
                 filled: true,
                 // prefixIcon: Padding(
                 //   padding: EdgeInsets.only(left: width * 0.02, right: width * 0.01),
                 // ),
                 hintText: 'Write a Message',
                 hintStyle: TextStyle(
-                  color: Color(0xff5F6264),
+                  color: getHintTextColor(themeProvider.isDarkMode),
                   // fontFamily: fontFamily,
                   fontSize: width * 0.015,
                 ),
@@ -48,7 +51,7 @@ class CustomTextFieldForSendMessage extends StatelessWidget {
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
                   ),
-                  borderSide: BorderSide(color: Color(0xffE5F0F4), width: 1),
+                  borderSide: BorderSide(color: themeProvider.isDarkMode ? Color(0xff3A3A3A) : Color(0xffE5F0F4), width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.only(
@@ -57,7 +60,7 @@ class CustomTextFieldForSendMessage extends StatelessWidget {
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
                   ),
-                  borderSide: BorderSide(color: Color(0xffE5F0F4), width: 1),
+                  borderSide: BorderSide(color: themeProvider.isDarkMode ? Color(0xff3A3A3A) : Color(0xffE5F0F4), width: 1),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.only(
@@ -66,7 +69,7 @@ class CustomTextFieldForSendMessage extends StatelessWidget {
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
                   ),
-                  borderSide: BorderSide(color: Color(0xffE5F0F4), width: 1),
+                  borderSide: BorderSide(color: themeProvider.isDarkMode ? Color(0xff3A3A3A) : Color(0xffE5F0F4), width: 1),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.only(
@@ -75,7 +78,7 @@ class CustomTextFieldForSendMessage extends StatelessWidget {
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
                   ),
-                  borderSide: BorderSide(color: Color(0xffE5F0F4), width: 1),
+                  borderSide: BorderSide(color: themeProvider.isDarkMode ? Color(0xff3A3A3A) : Color(0xffE5F0F4), width: 1),
                 ),
               ),
             ),
