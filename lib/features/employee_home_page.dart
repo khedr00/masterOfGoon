@@ -14,6 +14,7 @@ import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/person
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
 import 'package:untitled1/features/deal_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
+import 'package:untitled1/providers/employee_deals_filter_provider.dart';
 import 'package:untitled1/providers/new_and_ongoing_deals_db_provider.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
@@ -26,7 +27,6 @@ class EmployeeHomePage extends StatefulWidget {
 }
 
 class _EmployeeHomePageState extends State<EmployeeHomePage> {
-  // TextEditingController filterController = TextEditingController();
   final List<DealCard> _dealList = [];
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
@@ -34,11 +34,48 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       role: widget.userAuthInfo.role,
       id: widget.userAuthInfo.id,
       cancelToken: _cancelToken,
+      dealStage: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).dealStage,
+      propertyType: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).propertyTypes,
+      propertyArea: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).cities,
+      minPriceRange: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).minPriceRange,
+      maxPriceRange: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).maxPriceRange,
+      minSR: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).minSuccessRateRange,
+      maxSR: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).maxSuccessRateRange,
+      minDate: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).minDateRange.toString(),
+      maxDate: Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).maxDateRange.toString(),
     );
     if (!mounted) {
       return;
     }
     setState(() {
+      _dealList.clear();
       for (int i = 0; i < dealList.length; i++) {
         _dealList.add(DealCard(dealCardInfo: dealList[i]));
       }
@@ -65,6 +102,22 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
         context,
         listen: false,
       ).truingNewAreClicked();
+      Provider.of<EmployeeDealsFilterProvider>(
+        context,
+        listen: false,
+      ).fillFilterInfo(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      );
     });
     _falsingcardIsClicked();
     getDealList();
@@ -82,6 +135,8 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     final allAndDealsOnlyProvider = Provider.of<AllAndDealsOnlyProvider>(
       context,
     );
+    // final employeeDealsFilterProvider =
+    //     Provider.of<EmployeeDealsFilterProvider>(context);
     // final newAndDealsOnlyProvider = Provider.of<NewAndOngoingDealsDbProvider>(
     //   context,
     // );
@@ -124,8 +179,8 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                 NewAndOngoingDealsButton(),
                 SizedBox(width: width * (28 / 1920)),
                 FilterButton(
-                  buttonAction: () {
-                    showDialog(
+                  buttonAction: () async {
+                    final result = await showDialog(
                       context: context,
                       barrierColor: themeProvider.isDarkMode
                           // ignore: deprecated_member_use
@@ -136,6 +191,13 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                         return DealsFilterWidget();
                       },
                     );
+
+                    if (result == true) {
+                      setState(() {
+                        _dealList.clear();
+                      });
+                      getDealList();
+                    }
                   },
                 ),
                 SizedBox(width: width * (28 / 1920)),

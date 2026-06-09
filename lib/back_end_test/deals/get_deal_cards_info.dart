@@ -6,8 +6,18 @@ Future<List<dynamic>> getDealCardsInfo({
   required String role,
   required int id,
   CancelToken? cancelToken,
+  String? dealStage,
+  List<String>? propertyType,
+  List<String>? propertyArea,
+  int? minPriceRange,
+  int? maxPriceRange,
+  int? minSR,
+  int? maxSR,
+  String? minDate,
+  String? maxDate,
 }) async {
   await Future.delayed(const Duration(seconds: 3));
+
   List<Map<String, dynamic>> temp = [
     {
       'id': 1,
@@ -80,8 +90,7 @@ Future<List<dynamic>> getDealCardsInfo({
           dealStage: temp[i]['dealStage'],
           successProbability: temp[i]['successProbability'],
           startingDate: temp[i]['startingDate'],
-          propertyPrimaryImage:
-              'https://images3.alphacoders.com/940/thumb-1920-940522.png',
+          propertyPrimaryImage: 'assets/images/profilePhoto-icon.png',
           propertyType: 'hall',
           propertyPrice: 30003,
           propertySimpleDescription:
@@ -102,8 +111,7 @@ Future<List<dynamic>> getDealCardsInfo({
           dealStage: temp[i]['dealStage'],
           successProbability: temp[i]['successProbability'],
           startingDate: temp[i]['startingDate'],
-          propertyPrimaryImage:
-              'https://images3.alphacoders.com/940/thumb-1920-940522.png',
+          propertyPrimaryImage: 'assets/images/profilePhoto-icon.png',
           propertyType: 'hall',
           propertyPrice: 30003,
           propertySimpleDescription:

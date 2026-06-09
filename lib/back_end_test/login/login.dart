@@ -73,7 +73,8 @@ Future<UserAuthInfo> getUserAuthInfo({
 } 
   // on DioException catch (e) {
   //   if (CancelToken.isCancel(e)) {
-  //     throw Exception('Request cancelled');
+  //     throw Exception('Request cancelled')+
+  // ;
   //   }
 
   //   if (e.response != null) {
