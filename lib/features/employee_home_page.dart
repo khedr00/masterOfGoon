@@ -188,7 +188,52 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                           // ignore: deprecated_member_use
                           : Colors.black.withOpacity(0.4),
                       builder: (context) {
-                        return DealsFilterWidget();
+                        return DealsFilterWidget(
+                          dealStage: Provider.of<EmployeeDealsFilterProvider>(
+                            context,
+                            listen: false,
+                          ).dealStage,
+                          propertyTypes:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).propertyTypes,
+                          propertyAreas:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).cities,
+                          minPriceRange:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).minPriceRange,
+                          maxPriceRange:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).maxPriceRange,
+                          minSuccessRateRange:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).minSuccessRateRange,
+                          maxSuccessRateRange:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).maxSuccessRateRange,
+                          minDateRange:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).minDateRange,
+                          maxDateRange:
+                              Provider.of<EmployeeDealsFilterProvider>(
+                                context,
+                                listen: false,
+                              ).maxDateRange,
+                        );
                       },
                     );
 

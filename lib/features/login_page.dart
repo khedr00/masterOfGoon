@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/login/login.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
@@ -137,20 +138,20 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Row(
                       children: [
-                        Image.asset(
-                          'assets/images/Online Support.png',
-                          width: width * (40 / 1920),
-                          height: width * (40 / 1290),
+                        ButtonWithImage(
+                          image: 'assets/images/Online Support.png',
+                          widthOfButton: width * (60 / 1920),
+                          heightOfButton: width * (60 / 1920),
+                          widthOfImage: width * (40 / 1920),
+                          heightOfImage: width * (40 / 1920),
                         ),
+
                         Padding(
-                          padding: EdgeInsets.only(left: width * (15 / 1920)),
-                          child: Text(
-                            'Support Center',
-                            style: TextStyle(
-                              color: infoColor,
-                              fontFamily: 'NunitoSans-Bold',
-                              fontSize: width * (28 / 1920),
-                            ),
+                          padding: EdgeInsets.only(left: width * (20 / 1920)),
+                          child: ButtonWithText(
+                            widthOfButton: width * (250 / 1920),
+                            heightOfButton: width * (50 / 1920),
+                            text: 'Support Center',
                           ),
                         ),
                       ],

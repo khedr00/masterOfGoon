@@ -6,7 +6,33 @@ import 'package:untitled1/providers/employee_deals_filter_provider.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class DealsFilterWidget extends StatefulWidget {
-  const DealsFilterWidget({super.key});
+  const DealsFilterWidget({
+    super.key,
+    this.freshIsTrue,
+    this.negIsTrue,
+    this.dealStage,
+    this.propertyTypes,
+    this.minPriceRange,
+    this.maxPriceRange,
+    this.minSuccessRateRange,
+    this.maxSuccessRateRange,
+    this.minDateRange,
+    this.maxDateRange,
+    this.propertyAreas,
+  });
+  final bool? freshIsTrue;
+  final bool? negIsTrue;
+  final String? dealStage;
+  final List<String>? propertyTypes;
+  final List<String>? propertyAreas;
+
+  final int? minPriceRange;
+  final int? maxPriceRange;
+  final int? minSuccessRateRange;
+  final int? maxSuccessRateRange;
+  final int? minDateRange;
+  final int? maxDateRange;
+
 
   @override
   State<DealsFilterWidget> createState() => _DealsFilterWidgetState();
@@ -19,9 +45,9 @@ class _DealsFilterWidgetState extends State<DealsFilterWidget> {
   List<String> propertyTypes = [];
   List<String> cities = [];
 
-  String messageOrder = 'latest';
-  String dateOrder = 'newest';
-  String successRateOrder = 'highest';
+  // String messageOrder = 'latest';
+  // String dateOrder = 'newest';
+  // String successRateOrder = 'highest';
   RangeValues priceRange = const RangeValues(0, 1000000);
   RangeValues successRateRange = const RangeValues(0, 100);
   RangeValues dateRange = const RangeValues(2020, 2026);
