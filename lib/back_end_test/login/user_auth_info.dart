@@ -1,5 +1,5 @@
 class UserAuthInfo {
-  final int id;
+  final String id;
   final String role;
   String accessToken;
   final String refreshToken;
@@ -11,12 +11,15 @@ class UserAuthInfo {
     required this.refreshToken,
   });
 
-  // factory UserAuthInfo.fromJson(Map<String, dynamic> json) {
-  //   return UserAuthInfo(
-  //     id: json['id'],
-  //     role: json['role'],
-  //     accessToken: json['accessToken'],
-  //     refreshToken: json['refreshToken'],
-  //   );
-  // }
+  factory UserAuthInfo.fromJson(
+    Map<String, dynamic> json,
+    String refreshToken,
+  ) {
+    return UserAuthInfo(
+      id: json['data']['employee']['id'],
+      role: json['data']['employee']['role'],
+      accessToken: json['token'],
+      refreshToken: refreshToken,
+    );
+  }
 }

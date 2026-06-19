@@ -23,7 +23,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
   void getDealList() async {
     List<dynamic> dealList = await getDealCardsInfo(
       role: '',
-      id: 1,
+      id: '1',
       cancelToken: _cancelToken,
     );
     if (!mounted) {
@@ -121,7 +121,9 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                         width: width * ((939 + 38) / 1920),
                         child: _dealList.isEmpty
                             ? Container(
-                                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+                                color: themeProvider.isDarkMode
+                                    ? darkBackGroundColor
+                                    : backGroundColor,
                                 child: Center(
                                   child: CircularProgressIndicator(),
                                 ),
@@ -160,7 +162,9 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                                               width: width * (15 / 1920),
                                               height: width * (200 / 1920),
                                               decoration: BoxDecoration(
-                                                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+                                                color: themeProvider.isDarkMode
+                                                    ? darkBackGroundColor
+                                                    : backGroundColor,
                                                 borderRadius: BorderRadius.only(
                                                   topRight: Radius.circular(
                                                     width * (50 / 1920),

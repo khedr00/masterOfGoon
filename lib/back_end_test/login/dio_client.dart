@@ -20,7 +20,6 @@ class DioClient {
         onRequest: (options, handler) {
           options.headers['Authorization'] =
               'Bearer ${userAuthInfo.accessToken}';
-
           handler.next(options);
         },
 

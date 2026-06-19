@@ -31,6 +31,44 @@ class _HistoryPageState extends State<HistoryPage> {
         clientName: 'aliAhmad2',
       ),
     ),
+    DealCard(
+      dealCardInfo: DealCardInfo(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        title: 'the mountain vella deal',
+        dealStage: 'negotiation',
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+        propertyType: 'hall',
+        propertyPrice: 30003,
+        propertySimpleDescription:
+            'Furnished Apartment with pool and 2 balconies 3',
+        propertyAddress: 'homs_shien3',
+        clientPhoto: 'assets/images/profilePhoto-icon.png',
+        clientName: 'aliAhmad2',
+      ),
+    ),
+    DealCard(
+      dealCardInfo: DealCardInfo(
+        id: 1,
+        propertyId: 2,
+        clientId: 3,
+        title: 'the mountain vella deal',
+        dealStage: 'negotiation',
+        successProbability: 23,
+        startingDate: '2/2/2026',
+        propertyPrimaryImage: 'assets/images/test_photos/1.jpg',
+        propertyType: 'hall',
+        propertyPrice: 30003,
+        propertySimpleDescription:
+            'Furnished Apartment with pool and 2 balconies 3',
+        propertyAddress: 'homs_shien3',
+        clientPhoto: 'assets/images/profilePhoto-icon.png',
+        clientName: 'aliAhmad2',
+      ),
+    ),
   ];
 
   @override

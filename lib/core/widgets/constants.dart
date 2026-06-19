@@ -193,3 +193,5 @@ String getDateFromDateTime(DateTime dateTime) {
 String getTimeFromDateTime(DateTime dateTime) {
   return '${dateTime.hour}:${dateTime.minute}';
 }
+
+String base = 'https://crm-8vyz.onrender.com/';

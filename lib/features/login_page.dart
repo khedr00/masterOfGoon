@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
             builder: (_) => GeneralManagerPages(userAuthInfo: userAuthInfo),
           ),
         );
-      } else if (userAuthInfo.role == 'support') {
+      } else if (userAuthInfo.role == 'SUPPORT') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => Scaffold(body: BodyHomePage())),

@@ -4,7 +4,7 @@ import 'package:untitled1/back_end_test/deals/deal_card_info/rent_and_lease_deal
 
 Future<List<dynamic>> getDealCardsInfo({
   required String role,
-  required int id,
+  required String id,
   CancelToken? cancelToken,
   String? dealStage,
   List<String>? propertyType,
@@ -90,7 +90,8 @@ Future<List<dynamic>> getDealCardsInfo({
           dealStage: temp[i]['dealStage'],
           successProbability: temp[i]['successProbability'],
           startingDate: temp[i]['startingDate'],
-          propertyPrimaryImage: 'assets/images/profilePhoto-icon.png',
+          propertyPrimaryImage:
+              'assets/images/test_photos/property_primary_photo.png',
           propertyType: 'hall',
           propertyPrice: 30003,
           propertySimpleDescription:
@@ -111,7 +112,8 @@ Future<List<dynamic>> getDealCardsInfo({
           dealStage: temp[i]['dealStage'],
           successProbability: temp[i]['successProbability'],
           startingDate: temp[i]['startingDate'],
-          propertyPrimaryImage: 'assets/images/profilePhoto-icon.png',
+          propertyPrimaryImage:
+              'assets/images/test_photos/property_primary_photo.png',
           propertyType: 'hall',
           propertyPrice: 30003,
           propertySimpleDescription:

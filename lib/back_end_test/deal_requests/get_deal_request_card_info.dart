@@ -3,7 +3,7 @@ import 'package:untitled1/back_end_test/deal_requests/deal_request_card_info.dar
 
 Future<List<DealRequestCardInfo>> getDealRequestCardsInfo({
   required String role,
-  required int id,
+  required String id,
   CancelToken? cancelToken,
 }) async {
   await Future.delayed(const Duration(seconds: 3));
