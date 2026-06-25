@@ -14,10 +14,6 @@ Future<UserAuthInfo> getUserAuthInfo({
     );
     return UserAuthInfo.fromJson(response.data, '');
   } on DioException catch (e) {
-    print(e.type);
-    print(e.message);
-    print(e.response?.statusCode);
-    print(e.response?.data);
     if (CancelToken.isCancel(e)) {
       throw Exception('Request cancelled');
     }

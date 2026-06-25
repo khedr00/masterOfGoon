@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/create_schedule.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
@@ -7,8 +11,8 @@ import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/person
 import 'package:untitled1/providers/theme_provider.dart';
 
 class SchedulePage extends StatefulWidget {
-  const SchedulePage({super.key});
-
+  const SchedulePage({super.key, required this.userAuthInfo});
+  final UserAuthInfo userAuthInfo;
   @override
   State<SchedulePage> createState() => _SchedulePageState();
 }
@@ -17,6 +21,37 @@ class _SchedulePageState extends State<SchedulePage> {
   bool _isClicked = false;
   DateTime _dateTime = DateTime.now();
   String _dayName = '';
+  String type = '';
+  String date = '';
+  String title = '';
+  String description = '';
+  String? dealId;
+  String? requestId;
+  bool _isCompletedSchedule = false;
+  final CancelToken _cancelToken = CancelToken();
+
+  Future<void> doCreateSchedule(
+    String type,
+    String date,
+    String title,
+    String description,
+    String? dealId,
+    String? requestId,
+  ) async {
+    String isCompletedOrRejectedSchedule = await createSchedule(
+      cancelToken: _cancelToken,
+      dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
+      type: type,
+      date: date,
+      title: title,
+      description: description,
+    );
+    setState(() {
+      isCompletedOrRejectedSchedule == 'success'
+          ? _isCompletedSchedule = true
+          : _isCompletedSchedule = false;
+    });
+  }
 
   Future<void> _pickDate() async {
     final date = await showDatePicker(
@@ -48,6 +83,12 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
@@ -65,7 +106,9 @@ class _SchedulePageState extends State<SchedulePage> {
                         Text(
                           'Note date at : $_dayName ${_dateTime.toString().substring(0, 16)}',
                           style: TextStyle(
-                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (24 / 1920),
                           ),
@@ -73,8 +116,12 @@ class _SchedulePageState extends State<SchedulePage> {
                         Padding(
                           padding: EdgeInsets.only(top: width * (20 / 1920)),
                           child: CustomTextField(
-                            fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
-                            onChanged: (value) {},
+                            fillColor: themeProvider.isDarkMode
+                                ? darkThirdColorSecondary
+                                : thirdColorSecondary,
+                            onChanged: (value) {
+                              title = value.trim();
+                            },
                             hintText: 'Enter Title',
                             widthOfTextField: debugWidth / 1.2,
                             fontSize: 20,
@@ -88,8 +135,12 @@ class _SchedulePageState extends State<SchedulePage> {
                             bottom: width * (30 / 1920),
                           ),
                           child: CustomTextField(
-                            fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
-                            onChanged: (value) {},
+                            fillColor: themeProvider.isDarkMode
+                                ? darkThirdColorSecondary
+                                : thirdColorSecondary,
+                            onChanged: (value) {
+                              description = value.trim();
+                            },
                             hintText: 'Enter Description',
                             fontSize: 20,
                             fontFamily: FontFamily.light,
@@ -99,7 +150,9 @@ class _SchedulePageState extends State<SchedulePage> {
                         Text(
                           'Attatch to a deal :',
                           style: TextStyle(
-                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (24 / 1920),
                           ),
@@ -110,8 +163,12 @@ class _SchedulePageState extends State<SchedulePage> {
                             bottom: width * (30 / 1920),
                           ),
                           child: CustomTextField(
-                            fillColor: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
-                            onChanged: (value) {},
+                            fillColor: themeProvider.isDarkMode
+                                ? darkThirdColorSecondary
+                                : thirdColorSecondary,
+                            onChanged: (value) {
+                              dealId = value.trim();
+                            },
                             hintText: 'ID',
                             widthOfTextField: debugWidth / 3,
                             fontSize: 20,
@@ -136,10 +193,59 @@ class _SchedulePageState extends State<SchedulePage> {
                               widthOfButton: width * (139 / 1920),
                               heightOfButton: width * (84 / 1920),
                               text: 'confirm',
-                              buttonAction: () {
-                                setState(() {
-                                  _isClicked = false;
-                                });
+                              buttonAction: () async {
+                                await doCreateSchedule(
+                                  dealId != null && dealId != ''
+                                      ? 'DEAL'
+                                      : 'PERSONAL',
+                                  _dateTime.toUtc().toIso8601String(),
+                                  title,
+                                  description,
+                                  dealId,
+                                  requestId,
+                                );
+                                if (_isCompletedSchedule) {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                          'Schedule is done',
+                                          style: TextStyle(
+                                            color: getPrimaryTextColor(
+                                              themeProvider.isDarkMode,
+                                            ),
+                                            fontFamily: 'NunitoSans-Bold',
+                                            fontSize: width * (24 / 1920),
+                                          ),
+                                        ),
+                                        duration: Duration(seconds: 3),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          'Schedule is rejected',
+                                          style: TextStyle(
+                                            color: getPrimaryTextColor(
+                                              themeProvider.isDarkMode,
+                                            ),
+                                            fontFamily: 'NunitoSans-Bold',
+                                            fontSize: width * (24 / 1920),
+                                          ),
+                                        ),
+                                        duration: Duration(seconds: 3),
+                                      ),
+                                    );
+                                  }
+                                  setState(() {
+                                    _isClicked = false;
+                                  });
+                                }
                               },
                             ),
                           ],

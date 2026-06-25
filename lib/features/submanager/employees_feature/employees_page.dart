@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/submanager/employees_feature/widgets/employee_info_for_sm.dart';
 import 'package:untitled1/features/submanager/employees_feature/widgets/employee_mini_card_widget.dart';
 
 class EmployeesPage extends StatefulWidget {
-  const EmployeesPage({super.key});
+  const EmployeesPage({super.key, required this.userAuthInfo});
+  final UserAuthInfo userAuthInfo;
 
   @override
   State<EmployeesPage> createState() => _EmployeesPageState();
@@ -154,7 +156,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
               ),
             ],
           ),
-          EmployeeInfoForSm(),
+          EmployeeInfoForSm(userAuthInfo: widget.userAuthInfo),
         ],
       ),
     );

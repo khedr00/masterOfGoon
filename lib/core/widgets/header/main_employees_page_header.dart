@@ -49,7 +49,9 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
                 appBarComponentImage: 'assets/images/profilePhoto-icon.png',
                 appBarCopmonentName: 'Profile',
                 onTap: () {
-                  mainEmployesspageSelectorProvider.selectPage(ProfilePage());
+                  mainEmployesspageSelectorProvider.selectPage(
+                    ProfilePage(userAuthInfo: widget.userAuthInfo),
+                  );
                 },
               ),
               AppBarComponentInfo(
@@ -65,7 +67,9 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
                 appBarComponentImage: 'assets/images/notes-icon.png',
                 appBarCopmonentName: 'Schedule',
                 onTap: () {
-                  mainEmployesspageSelectorProvider.selectPage(SchedulePage());
+                  mainEmployesspageSelectorProvider.selectPage(
+                    SchedulePage(userAuthInfo: widget.userAuthInfo),
+                  );
                 },
               ),
               AppBarComponentInfo(

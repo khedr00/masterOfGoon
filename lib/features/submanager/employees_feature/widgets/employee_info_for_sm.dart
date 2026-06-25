@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 import 'package:untitled1/features/deal_page.dart';
@@ -10,7 +11,8 @@ import 'package:untitled1/features/profile_feature/widgets/stats_widget.dart/sta
 import 'package:untitled1/providers/theme_provider.dart';
 
 class EmployeeInfoForSm extends StatefulWidget {
-  const EmployeeInfoForSm({super.key});
+  const EmployeeInfoForSm({super.key, required this.userAuthInfo});
+  final UserAuthInfo userAuthInfo;
 
   @override
   State<EmployeeInfoForSm> createState() => _EmployeeInfoForSmState();
@@ -62,7 +64,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
         children: [
           Padding(
             padding: EdgeInsets.only(top: width * (43 / 1920)),
-            child: ProfileCard(),
+            child: ProfileCard(userAuthInfo: widget.userAuthInfo),
           ),
           Container(
             width: width * (5 / 1920),

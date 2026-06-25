@@ -76,7 +76,9 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
                 appBarComponentImage: 'assets/images/Manager.png',
                 appBarCopmonentName: 'Employs',
                 onTap: () {
-                  submanagerpageSelectorProvider.selectPage(EmployeesPage());
+                  submanagerpageSelectorProvider.selectPage(
+                    EmployeesPage(userAuthInfo: widget.userAuthInfo),
+                  );
                 },
               ),
               AppBarComponentInfo(
