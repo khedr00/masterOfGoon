@@ -77,7 +77,10 @@ class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
                 appBarCopmonentName: 'Employs',
                 onTap: () {
                   generalmanagerPageSelectorProvider.selectPage(
-                    EmployeesPage(userAuthInfo: widget.userAuthInfo),
+                    EmployeesPage(
+                      userAuthInfo: widget.userAuthInfo,
+                      isForGeneralManager: true,
+                    ),
                   );
                 },
               ),

@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
+import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/general_manager_pages.dart/widgets/add_employee_widget.dart';
 import 'package:untitled1/features/submanager/employees_feature/widgets/employee_info_for_sm.dart';
 import 'package:untitled1/features/submanager/employees_feature/widgets/employee_mini_card_widget.dart';
 
 class EmployeesPage extends StatefulWidget {
-  const EmployeesPage({super.key, required this.userAuthInfo});
+  const EmployeesPage({
+    super.key,
+    required this.userAuthInfo,
+    required this.isForGeneralManager,
+  });
   final UserAuthInfo userAuthInfo;
+  final bool isForGeneralManager;
 
   @override
   State<EmployeesPage> createState() => _EmployeesPageState();
 }
 
 class _EmployeesPageState extends State<EmployeesPage> {
+  bool addEmployeeOrShowEmployee = false;
   final List<EmployeeMiniCardWidget> _employeeMiniCardWidget = List.filled(
     5,
     EmployeeMiniCardWidget(),
@@ -74,6 +82,19 @@ class _EmployeesPageState extends State<EmployeesPage> {
                       heightOfImage: width * (30 / 1920),
                       widthOfImage: width * (30 / 1920),
                     ),
+                    SizedBox(width: width * (28 / 1920)),
+                    widget.isForGeneralManager
+                        ? ButtonWithText(
+                            widthOfButton: width * (60 / 1920),
+                            heightOfButton: width * (40 / 1920),
+                            text: 'Add Employee',
+                            buttonAction: () {
+                              setState(() {
+                                addEmployeeOrShowEmployee = true;
+                              });
+                            },
+                          )
+                        : SizedBox(),
                   ],
                 ),
               ),
@@ -156,7 +177,9 @@ class _EmployeesPageState extends State<EmployeesPage> {
               ),
             ],
           ),
-          EmployeeInfoForSm(userAuthInfo: widget.userAuthInfo),
+          addEmployeeOrShowEmployee
+              ? AddEmployeeWidget(userAuthInfo: widget.userAuthInfo)
+              : EmployeeInfoForSm(userAuthInfo: widget.userAuthInfo),
         ],
       ),
     );
