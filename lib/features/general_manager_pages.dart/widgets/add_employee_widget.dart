@@ -104,32 +104,34 @@ class _AddEmployeeWidgetState extends State<AddEmployeeWidget> {
   }) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
-    return Container(
-      width: width * (432 / 1920),
-      height: width * (89 / 1920),
-      padding: EdgeInsets.symmetric(horizontal: width * (25 / 1920)),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: getTextColor(themeProvider.isDarkMode),
-          width: width * (2 / 1920),
-        ),
-      ),
-      child: Center(
-        child: TextField(
-          controller: controller,
-          obscureText: obscureText,
-          style: TextStyle(
-            color: getTextColor(themeProvider.isDarkMode),
-            fontFamily: 'NunitoSans-Medium',
-            fontSize: width * (24 / 1920),
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hint,
-            hintStyle: TextStyle(
+    return Dialog(
+      child: Container(
+        width: width * (200 / 1920),
+        height: width * (60 / 1920),
+        padding: EdgeInsets.symmetric(horizontal: width * (25 / 1920)),
+        // decoration: BoxDecoration(
+        //   border: Border.all(
+        //     color: getPrimaryTextColor(themeProvider.isDarkMode),
+        //     width: width * (2 / 1920),
+        //   ),
+        // ),
+        child: Center(
+          child: TextField(
+            controller: controller,
+            obscureText: obscureText,
+            style: TextStyle(
               color: getPrimaryTextColor(themeProvider.isDarkMode),
               fontFamily: 'NunitoSans-Medium',
               fontSize: width * (24 / 1920),
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: hint,
+              hintStyle: TextStyle(
+                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                fontFamily: 'NunitoSans-Medium',
+                fontSize: width * (24 / 1920),
+              ),
             ),
           ),
         ),
@@ -140,33 +142,35 @@ class _AddEmployeeWidgetState extends State<AddEmployeeWidget> {
   Widget _roleDropdown(double width) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
-    return Container(
-      width: width * (432 / 1920),
-      height: width * (89 / 1920),
-      padding: EdgeInsets.symmetric(horizontal: width * (20 / 1920)),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: getTextColor(themeProvider.isDarkMode),
-          width: width * (2 / 1920),
-        ),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: _selectedRole,
-          isExpanded: true,
-          style: TextStyle(
-            color: getTextColor(themeProvider.isDarkMode),
-            fontFamily: 'NunitoSans-Medium',
-            fontSize: width * (24 / 1920),
+    return Dialog(
+      child: Container(
+        width: width * (200 / 1920),
+        height: width * (60 / 1920),
+        padding: EdgeInsets.symmetric(horizontal: width * (20 / 1920)),
+        // decoration: BoxDecoration(
+        //   border: Border.all(
+        //     color: getPrimaryTextColor(themeProvider.isDarkMode),
+        //     width: width * (2 / 1920),
+        //   ),
+        // ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: _selectedRole,
+            isExpanded: true,
+            style: TextStyle(
+              color: getPrimaryTextColor(themeProvider.isDarkMode),
+              fontFamily: 'NunitoSans-Medium',
+              fontSize: width * (24 / 1920),
+            ),
+            items: _roles.map((role) {
+              return DropdownMenuItem(value: role, child: Text(role));
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedRole = value!;
+              });
+            },
           ),
-          items: _roles.map((role) {
-            return DropdownMenuItem(value: role, child: Text(role));
-          }).toList(),
-          onChanged: (value) {
-            setState(() {
-              _selectedRole = value!;
-            });
-          },
         ),
       ),
     );
@@ -178,98 +182,124 @@ class _AddEmployeeWidgetState extends State<AddEmployeeWidget> {
 
     double width = MediaQuery.of(context).size.width;
 
-    return Container(
-      color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  _textField(
-                    width: width,
-                    hint: 'Employee Name',
-                    controller: _nameController,
-                  ),
-                  SizedBox(height: width * (55 / 1920)),
-                  _textField(
-                    width: width,
-                    hint: 'Full Name',
-                    controller: _fullNameController,
-                  ),
-                  SizedBox(height: width * (55 / 1920)),
-                  _textField(
-                    width: width,
-                    hint: 'Employee Email',
-                    controller: _emailController,
-                  ),
-                  SizedBox(height: width * (55 / 1920)),
-                  _textField(
-                    width: width,
-                    hint: 'Employee Password',
-                    controller: _passwordController,
-                    obscureText: true,
-                  ),
-                ],
-              ),
-
-              Column(
-                children: [
-                  Text(
-                    'Employee Type',
-                    style: TextStyle(
-                      color: getTextColor(themeProvider.isDarkMode),
-                      fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (32 / 1920),
+    return Dialog(
+      child: SingleChildScrollView(
+        child: Container(
+          width: width * (1000 / 1920),
+          height: width * (700 / 1920),
+          color: themeProvider.isDarkMode
+              ? darkBackGroundColor
+              : backGroundColor,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        _textField(
+                          width: width,
+                          hint: 'Employee Name',
+                          controller: _nameController,
+                        ),
+                        SizedBox(height: width * (10 / 1920)),
+                        _textField(
+                          width: width,
+                          hint: 'Full Name',
+                          controller: _fullNameController,
+                        ),
+                        SizedBox(height: width * (10 / 1920)),
+                        _textField(
+                          width: width,
+                          hint: 'Employee Email',
+                          controller: _emailController,
+                        ),
+                        SizedBox(height: width * (10 / 1920)),
+                        _textField(
+                          width: width,
+                          hint: 'Employee Password',
+                          controller: _passwordController,
+                          obscureText: true,
+                        ),
+                      ],
                     ),
-                  ),
 
-                  SizedBox(height: width * (20 / 1920)),
+                    Column(
+                      children: [
+                        Text(
+                          'Employee Type',
+                          style: TextStyle(
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
+                            fontFamily: 'NunitoSans-Bold',
+                            fontSize: width * (32 / 1920),
+                          ),
+                        ),
 
-                  _roleDropdown(width),
+                        SizedBox(height: width * (10 / 1920)),
 
-                  SizedBox(height: width * (55 / 1920)),
+                        _roleDropdown(width),
 
-                  _textField(
-                    width: width,
-                    hint: 'Phone',
-                    controller: _phoneController,
-                  ),
+                        SizedBox(height: width * (10 / 1920)),
 
-                  SizedBox(height: width * (55 / 1920)),
+                        _textField(
+                          width: width,
+                          hint: 'Phone',
+                          controller: _phoneController,
+                        ),
 
-                  _textField(
-                    width: width,
-                    hint: 'Location',
-                    controller: _locationController,
-                  ),
+                        SizedBox(height: width * (10 / 1920)),
 
-                  SizedBox(height: width * (55 / 1920)),
+                        _textField(
+                          width: width,
+                          hint: 'Location',
+                          controller: _locationController,
+                        ),
 
-                  _textField(
-                    width: width,
-                    hint: 'Salary',
-                    controller: _salaryController,
-                  ),
-                ],
-              ),
-            ],
-          ),
+                        SizedBox(height: width * (10 / 1920)),
 
-          SizedBox(height: width * (80 / 1920)),
-
-          _isLoading
-              ? const CircularProgressIndicator()
-              : ButtonWithText(
-                  widthOfButton: width * (420 / 1920),
-                  heightOfButton: width * (90 / 1920),
-                  text: 'Add Employee',
-                  buttonAction: _addEmployee,
+                        _textField(
+                          width: width,
+                          hint: 'Salary',
+                          controller: _salaryController,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-        ],
+
+                SizedBox(height: width * (20 / 1920)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ButtonWithText(
+                      widthOfButton: width * (200 / 1920),
+                      heightOfButton: width * (60 / 1920),
+                      text: 'Cancel',
+                      buttonAction: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    _isLoading
+                        ? const CircularProgressIndicator()
+                        : ButtonWithText(
+                            widthOfButton: width * (420 / 1920),
+                            heightOfButton: width * (60 / 1920),
+                            text: 'Add Employee',
+                            buttonAction: _addEmployee,
+                          ),
+                  ],
+                ),
+
+                SizedBox(height: width * (80 / 1920)),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

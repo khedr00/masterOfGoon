@@ -77,10 +77,7 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
                 appBarCopmonentName: 'Employs',
                 onTap: () {
                   submanagerpageSelectorProvider.selectPage(
-                    EmployeesPage(
-                      userAuthInfo: widget.userAuthInfo,
-                      isForGeneralManager: false,
-                    ),
+                    EmployeesPage(userAuthInfo: widget.userAuthInfo),
                   );
                 },
               ),

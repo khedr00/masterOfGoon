@@ -132,8 +132,12 @@ class ChooseEmployeeCard extends StatelessWidget {
                     lineWidth: width * (12 / 1920),
                     animation: true,
                     animateFromLastPercent: true,
-                    progressColor: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
-                    backgroundColor: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+                    progressColor: themeProvider.isDarkMode
+                        ? darkPrimaryColor
+                        : primaryColor,
+                    backgroundColor: themeProvider.isDarkMode
+                        ? darkBackGroundColor
+                        : backGroundColor,
                     center: Text(
                       '63%',
                       style: TextStyle(
@@ -191,7 +195,11 @@ class ChooseEmployeeCard extends StatelessWidget {
 
           Container(
             width: width * (359 / 1920),
-            decoration: BoxDecoration(color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor),
+            decoration: BoxDecoration(
+              color: themeProvider.isDarkMode
+                  ? darkSecondaryColor
+                  : secondaryColor,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -201,11 +209,15 @@ class ChooseEmployeeCard extends StatelessWidget {
                   width: width * (170 / 1920),
                   height: width * (70 / 1920),
                   decoration: BoxDecoration(
-                    color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                    color: themeProvider.isDarkMode
+                        ? darkPrimaryColor
+                        : primaryColor,
                     boxShadow: [
                       BoxShadow(
                         blurRadius: width * (4 / 1920),
-                        color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                        color: themeProvider.isDarkMode
+                            ? darkPrimaryColor
+                            : primaryColor,
                         offset: Offset(0, 0),
                         spreadRadius: width * (2 / 1920),
                       ),
@@ -275,7 +287,9 @@ class ChooseEmployeeCard extends StatelessWidget {
                             style: TextStyle(
                               fontFamily: 'NunitoSans-Bold',
                               fontSize: width * (22 / 1920),
-                              color: getPrimaryTextColor(themeProvider.isDarkMode),
+                              color: getPrimaryTextColor(
+                                themeProvider.isDarkMode,
+                              ),
                             ),
                           ),
                         ],
@@ -315,7 +329,9 @@ class ChooseEmployeeCard extends StatelessWidget {
                             style: TextStyle(
                               fontFamily: 'NunitoSans-Bold',
                               fontSize: width * (22 / 1920),
-                              color: getPrimaryTextColor(themeProvider.isDarkMode),
+                              color: getPrimaryTextColor(
+                                themeProvider.isDarkMode,
+                              ),
                             ),
                           ),
                         ],

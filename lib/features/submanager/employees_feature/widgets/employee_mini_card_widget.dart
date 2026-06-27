@@ -19,7 +19,10 @@ class EmployeeMiniCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: getCardColor(themeProvider.isDarkMode),
         borderRadius: BorderRadius.circular(width * (28 / 1920)),
-        border: Border.all(color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor, width: width * (8 / 1920)),
+        border: Border.all(
+          color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+          width: width * (8 / 1920),
+        ),
         boxShadow: [
           BoxShadow(
             blurRadius: width * (10 / 1920),
@@ -40,7 +43,9 @@ class EmployeeMiniCardWidget extends StatelessWidget {
 
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFE8EAD9),
+              color: themeProvider.isDarkMode
+                  ? darkBackGroundColor
+                  : const Color(0xFFE8EAD9),
             ),
 
             child: Center(
@@ -83,7 +88,9 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                   width: width * (145 / 1920),
                   height: width * (118 / 1920),
                   decoration: BoxDecoration(
-                    color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                    color: themeProvider.isDarkMode
+                        ? darkPrimaryColor
+                        : primaryColor,
                     borderRadius: BorderRadius.circular(width * (14 / 1920)),
                   ),
                   child: Column(
@@ -95,7 +102,9 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                         percent: 0.55,
                         animation: true,
                         circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                        progressColor: themeProvider.isDarkMode
+                            ? darkSecondaryColor
+                            : secondaryColor,
                         backgroundColor: getCardColor(themeProvider.isDarkMode),
                         center: Text(
                           '55%',
@@ -124,7 +133,9 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                   height: width * (118 / 1920),
 
                   decoration: BoxDecoration(
-                    color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                    color: themeProvider.isDarkMode
+                        ? darkPrimaryColor
+                        : primaryColor,
                     borderRadius: BorderRadius.circular(width * (14 / 1920)),
                   ),
 
@@ -181,7 +192,9 @@ class EmployeeMiniCardWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             height: width * (10 / 1920),
-            color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+            color: themeProvider.isDarkMode
+                ? darkBackGroundColor
+                : backGroundColor,
           ),
 
           Expanded(
@@ -213,7 +226,9 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Bold',
                             fontSize: width * (28 / 1920),
-                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
                           ),
                         ),
 
@@ -225,7 +240,9 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Regular',
                             fontSize: width * (24 / 1920),
-                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
                           ),
                         ),
                       ],

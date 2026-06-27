@@ -161,7 +161,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                  left: width * (18 / 1920),
+                                  left: width * (16 / 1920),
                                 ),
                                 child: Text(
                                   employeeEmail,
@@ -170,7 +170,7 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                       themeProvider.isDarkMode,
                                     ),
                                     fontFamily: 'NunitoSans-Bold',
-                                    fontSize: width * (18 / 1920),
+                                    fontSize: width * (17 / 1920),
                                   ),
                                 ),
                               ),

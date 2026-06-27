@@ -8,32 +8,26 @@ import 'package:untitled1/features/submanager/employees_feature/widgets/employee
 import 'package:untitled1/features/submanager/employees_feature/widgets/employee_mini_card_widget.dart';
 
 class EmployeesPage extends StatefulWidget {
-  const EmployeesPage({
-    super.key,
-    required this.userAuthInfo,
-    required this.isForGeneralManager,
-  });
+  const EmployeesPage({super.key, required this.userAuthInfo});
   final UserAuthInfo userAuthInfo;
-  final bool isForGeneralManager;
 
   @override
   State<EmployeesPage> createState() => _EmployeesPageState();
 }
 
 class _EmployeesPageState extends State<EmployeesPage> {
-  bool addEmployeeOrShowEmployee = false;
   final List<EmployeeMiniCardWidget> _employeeMiniCardWidget = List.filled(
     5,
     EmployeeMiniCardWidget(),
   );
 
-  void getDealList() {
+  void _getEmploeeCardsInfo() {
     if (!mounted) {
       return;
     }
     setState(() {
       _falsingcardIsClicked();
-      _cardIsClicked[1] = true;
+      _cardIsClicked[0] = true;
     });
   }
 
@@ -45,7 +39,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
   @override
   void initState() {
     super.initState();
-    getDealList();
+    _getEmploeeCardsInfo();
   }
 
   @override
@@ -83,14 +77,21 @@ class _EmployeesPageState extends State<EmployeesPage> {
                       widthOfImage: width * (30 / 1920),
                     ),
                     SizedBox(width: width * (28 / 1920)),
-                    widget.isForGeneralManager
+                    widget.userAuthInfo.role == 'GENERAL_MANAGER'
                         ? ButtonWithText(
-                            widthOfButton: width * (60 / 1920),
+                            widthOfButton: width * (200 / 1920),
                             heightOfButton: width * (40 / 1920),
                             text: 'Add Employee',
                             buttonAction: () {
                               setState(() {
-                                addEmployeeOrShowEmployee = true;
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AddEmployeeWidget(
+                                      userAuthInfo: widget.userAuthInfo,
+                                    );
+                                  },
+                                );
                               });
                             },
                           )
@@ -177,9 +178,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
               ),
             ],
           ),
-          addEmployeeOrShowEmployee
-              ? AddEmployeeWidget(userAuthInfo: widget.userAuthInfo)
-              : EmployeeInfoForSm(userAuthInfo: widget.userAuthInfo),
+          EmployeeInfoForSm(userAuthInfo: widget.userAuthInfo),
         ],
       ),
     );
