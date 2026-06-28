@@ -7,12 +7,14 @@ import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+
 import 'package:untitled1/providers/theme_provider.dart';
 import 'package:untitled1/features/profile_feature/widgets/profile_card_photo_till_the_small_container_section.dart';
 
 class ProfileCard extends StatefulWidget {
-  const ProfileCard({super.key, required this.userAuthInfo});
+  const ProfileCard({super.key, required this.userAuthInfo, this.employeeId});
   final UserAuthInfo userAuthInfo;
+  final String? employeeId;
 
   @override
   State<ProfileCard> createState() => _ProfileCardState();
@@ -25,6 +27,8 @@ class _ProfileCardState extends State<ProfileCard> {
   Future<void> _getMyInfo() async {
     EmployeeInfo employeeInfo = await getEmployeeInfo(
       dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
+      cancelToken: _cancelToken,
+      employeeId: widget.employeeId,
     );
     setState(() {
       _employeeInfo = employeeInfo;
@@ -45,6 +49,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
+    _getMyInfo();
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
 

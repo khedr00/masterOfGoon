@@ -13,6 +13,7 @@ import 'package:untitled1/features/main_employees_pages.dart';
 import 'package:untitled1/features/submanager/submanager_home_page.dart';
 import 'package:untitled1/features/submanager/submanager_pages.dart';
 import 'package:untitled1/features/support_employee/features/home_feature/presentation/widgets/body_home_page.dart';
+import 'package:untitled1/providers/auth_provider.dart';
 import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
@@ -54,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
             context,
             listen: false,
           );
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
       UserAuthInfo userAuthInfo = await getUserAuthInfo(
         email: email,
@@ -61,6 +63,13 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (!mounted) return;
+
+      authProvider.setAuthData(
+        accessToken: userAuthInfo.accessToken,
+        refreshToken: userAuthInfo.refreshToken,
+        role: userAuthInfo.role,
+        id: userAuthInfo.id,
+      );
 
       if (userAuthInfo.role == 'SALES_MANAGER') {
         submanagerProvider.selectPage(

@@ -24,7 +24,9 @@ class AdditionalStatsWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(width * (5 / 1920)),
               boxShadow: [
                 BoxShadow(
-                  color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                  color: themeProvider.isDarkMode
+                      ? darkPrimaryColor
+                      : primaryColor,
                   blurRadius: 20,
                   spreadRadius: 2,
                   offset: Offset(0, 4),
@@ -141,7 +143,9 @@ class AdditionalStatsWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(width * (5 / 1920)),
               boxShadow: [
                 BoxShadow(
-                  color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                  color: themeProvider.isDarkMode
+                      ? darkPrimaryColor
+                      : primaryColor,
                   blurRadius: 20,
                   spreadRadius: 2,
                   offset: Offset(0, 4),
@@ -178,7 +182,9 @@ class AdditionalStatsWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(width * (5 / 1920)),
               boxShadow: [
                 BoxShadow(
-                  color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                  color: themeProvider.isDarkMode
+                      ? darkPrimaryColor
+                      : primaryColor,
                   blurRadius: 20,
                   spreadRadius: 2,
                   offset: Offset(0, 4),

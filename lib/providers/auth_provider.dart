@@ -1,42 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 
 class AuthProvider extends ChangeNotifier {
-  String? _accessToken;
-  String? _refreshToken;
-  String? _role;
-  String? _name;
+  final UserAuthInfo _userAuthInfo = UserAuthInfo(
+    id: '',
+    role: '',
+    accessToken: '',
+    refreshToken: '',
+  );
 
-  String? get accessToken => _accessToken;
-  String? get refreshToken => _refreshToken;
-  String? get role => _role;
-  String? get name => _name;
+  String? get accessToken => _userAuthInfo.accessToken;
+  String? get refreshToken => _userAuthInfo.refreshToken;
+  String? get role => _userAuthInfo.role;
+  String? get id => _userAuthInfo.id;
 
-  bool get isLoggedIn => _accessToken != null;
+  // bool get isLoggedIn =>  _userAuthInfo.accessToken ;
 
   void setAuthData({
     required String accessToken,
     required String refreshToken,
     required String role,
-    required String name,
+    required String id,
   }) {
-    _accessToken = accessToken;
-    _refreshToken = refreshToken;
-    _role = role;
-    _name = name;
+    _userAuthInfo.accessToken = accessToken;
+    _userAuthInfo.refreshToken = refreshToken;
+    _userAuthInfo.role = role;
+    _userAuthInfo.id = id;
 
     notifyListeners();
   }
 
-  void updateAccessToken(String newAccessToken) {
-    _accessToken = newAccessToken;
-    notifyListeners();
-  }
+  // void updateAccessToken(String newAccessToken) {
+  //   _accessToken = newAccessToken;
+  //   notifyListeners();
+  // }
 
-  void logout() {
-    _accessToken = null;
-    _refreshToken = null;
-    _role = null;
-    _name = null;
-    notifyListeners();
-  }
+  // void logout() {
+  //   _accessToken = null;
+  //   _refreshToken = null;
+  //   _role = null;
+  //   _name = null;
+  //   notifyListeners();
+  // }
 }

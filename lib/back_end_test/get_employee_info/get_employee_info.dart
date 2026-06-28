@@ -6,9 +6,13 @@ import 'package:untitled1/core/widgets/constants.dart';
 Future<EmployeeInfo> getEmployeeInfo({
   required DioClient dioClient,
   CancelToken? cancelToken,
+  String? employeeId,
 }) async {
-  try {
-    final response = await dioClient.dio.get('${base}api/v1/auth/getMe');
+  // try {
+  final dynamic response;
+  if (employeeId == null) {
+    response = await dioClient.dio.get('${base}api/v1/auth/getMe');
+
     return EmployeeInfo(
       employeeName: response.data['data']['employee']['fullName'],
       employeeType: response.data['data']['employee']['role'],
@@ -19,17 +23,32 @@ Future<EmployeeInfo> getEmployeeInfo({
       productivity: response.data['data']['employee']['productivity'],
       avgResponseTime: response.data['data']['employee']['averageResponseTime'],
     );
-  } on DioException catch (e) {
-    if (CancelToken.isCancel(e)) {
-      throw Exception('Request cancelled');
-    }
-
-    if (e.response != null) {
-      throw Exception(e.response?.data['message'] ?? 'Server Error');
-    }
-
-    throw Exception('Connection Error getMe');
-  } catch (e) {
-    throw Exception(e);
+  } else {
+    response = await dioClient.dio.get(
+      '${base}api/v1/employees/bb518099-d51b-4b2d-9bdf-76a40ecb5ded',
+    );
+    return EmployeeInfo(
+      employeeName: response.data['data']['fullName'],
+      employeeType: response.data['data']['role'],
+      employeePhoto: response.data['data']['photo'],
+      employeeEmail: response.data['data']['user']['email'],
+      employeePhoneNumber: response.data['data']['phone'],
+      employeeLocation: response.data['data']['location'],
+      productivity: response.data['data']['productivity'],
+      avgResponseTime: response.data['data']['averageResponseTime'],
+    );
   }
+  // } on DioException catch (e) {
+  //   if (CancelToken.isCancel(e)) {
+  //     throw Exception('Request cancelled');
+  //   }
+
+  //   if (e.response != null) {
+  //     throw Exception(e.response?.data['message'] ?? 'Server Error');
+  //   }
+
+  //   throw Exception('Connection Error getMe');
+  // } catch (e) {
+  //   throw Exception(e);
+  // }
 }

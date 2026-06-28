@@ -11,8 +11,13 @@ import 'package:untitled1/features/profile_feature/widgets/stats_widget.dart/sta
 import 'package:untitled1/providers/theme_provider.dart';
 
 class EmployeeInfoForSm extends StatefulWidget {
-  const EmployeeInfoForSm({super.key, required this.userAuthInfo});
+  const EmployeeInfoForSm({
+    super.key,
+    required this.userAuthInfo,
+    required this.employeeId,
+  });
   final UserAuthInfo userAuthInfo;
+  final String employeeId;
 
   @override
   State<EmployeeInfoForSm> createState() => _EmployeeInfoForSmState();
@@ -64,7 +69,10 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
         children: [
           Padding(
             padding: EdgeInsets.only(top: width * (43 / 1920)),
-            child: ProfileCard(userAuthInfo: widget.userAuthInfo),
+            child: ProfileCard(
+              userAuthInfo: widget.userAuthInfo,
+              employeeId: widget.employeeId,
+            ),
           ),
           Container(
             width: width * (5 / 1920),

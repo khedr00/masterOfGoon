@@ -1,8 +1,8 @@
 class UserAuthInfo {
-  final String id;
-  final String role;
+  String id;
+  String role;
   String accessToken;
-  final String refreshToken;
+  String refreshToken;
 
   UserAuthInfo({
     required this.id,

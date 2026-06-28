@@ -20,6 +20,8 @@ class EmployeesPage extends StatefulWidget {
 }
 
 class _EmployeesPageState extends State<EmployeesPage> {
+  String _employeeId = '';
+  List<EmployeeCardInfo> _employeeCardInfoList = [];
   final List<EmployeeMiniCardWidget> _employeeMiniCardWidget = [];
   final CancelToken _cancelToken = CancelToken();
   void _getEmploeeCardsInfo() async {
@@ -32,6 +34,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
       return;
     }
     setState(() {
+      _employeeCardInfoList = employeeCardsInfoList;
       for (int i = 0; i < employeeCardsInfoList.length; i++) {
         _employeeMiniCardWidget.add(
           EmployeeMiniCardWidget(employeeCardInfo: employeeCardsInfoList[i]),
@@ -39,6 +42,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
       }
       _falsingcardIsClicked();
       _cardIsClicked[0] = true;
+      _employeeId = _employeeCardInfoList[0].employeeId;
     });
   }
 
@@ -153,6 +157,10 @@ class _EmployeesPageState extends State<EmployeesPage> {
                                             setState(() {
                                               _falsingcardIsClicked();
                                               _cardIsClicked[i] = true;
+
+                                              _employeeId =
+                                                  _employeeCardInfoList[i]
+                                                      .employeeId;
                                             });
                                           },
                                           child: _employeeMiniCardWidget[i],
@@ -195,7 +203,10 @@ class _EmployeesPageState extends State<EmployeesPage> {
               ),
             ],
           ),
-          EmployeeInfoForSm(userAuthInfo: widget.userAuthInfo),
+          EmployeeInfoForSm(
+            userAuthInfo: widget.userAuthInfo,
+            employeeId: _employeeId,
+          ),
         ],
       ),
     );

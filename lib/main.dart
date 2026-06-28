@@ -5,9 +5,11 @@ import 'package:untitled1/features/login_page.dart';
 import 'package:untitled1/features/support_employee/core/services/socket_service.dart';
 import 'package:untitled1/features/support_employee/features/home_feature/presentation/chat_provider.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
+import 'package:untitled1/providers/auth_provider.dart';
 import 'package:untitled1/providers/employee_deals_filter_provider.dart';
 import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 import 'package:untitled1/providers/icon_selector_provider.dart';
+import 'package:untitled1/providers/id_transport_provider.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
 import 'package:untitled1/providers/new_and_ongoing_deals_db_provider.dart';
 import 'package:untitled1/providers/submanager_page_selector_provider.dart';
@@ -17,6 +19,16 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) {
+            return AuthProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return IdTransportProvider();
+          },
+        ),
         ChangeNotifierProvider(
           create: (context) {
             return AllAndDealsOnlyProvider();
