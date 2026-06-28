@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/get_all_employees/employee_card_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class EmployeeMiniCardWidget extends StatelessWidget {
-  const EmployeeMiniCardWidget({super.key});
+  const EmployeeMiniCardWidget({super.key, required this.employeeCardInfo});
+  final EmployeeCardInfo employeeCardInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width * (18 / 1920)),
             child: Text(
-              'Al-Qadmous,Tartous,Syria',
+              employeeCardInfo.employeeLocation,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
@@ -107,7 +109,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                             : secondaryColor,
                         backgroundColor: getCardColor(themeProvider.isDarkMode),
                         center: Text(
-                          '55%',
+                          '${employeeCardInfo.productivity}%',
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Bold',
                             color: getTextColor(themeProvider.isDarkMode),
@@ -149,7 +151,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Current Deals',
+                          'total number of deals',
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Regular',
                             color: getTextColor(themeProvider.isDarkMode),
@@ -168,7 +170,7 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                               ),
 
                               Text(
-                                '34',
+                                employeeCardInfo.numberOfTotalDeals.toString(),
                                 style: TextStyle(
                                   fontFamily: 'NunitoSans-Bold',
                                   color: getTextColor(themeProvider.isDarkMode),
@@ -219,13 +221,13 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Khedr issa',
+                          employeeCardInfo.employeeName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Bold',
-                            fontSize: width * (28 / 1920),
+                            fontSize: width * (22 / 1920),
                             color: getPrimaryTextColor(
                               themeProvider.isDarkMode,
                             ),
@@ -233,13 +235,13 @@ class EmployeeMiniCardWidget extends StatelessWidget {
                         ),
 
                         Text(
-                          'Sales Employee',
+                          '${employeeCardInfo.employeeType} Employee',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'NunitoSans-Regular',
-                            fontSize: width * (24 / 1920),
+                            fontSize: width * (18 / 1920),
                             color: getPrimaryTextColor(
                               themeProvider.isDarkMode,
                             ),

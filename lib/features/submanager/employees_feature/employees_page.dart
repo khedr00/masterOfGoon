@@ -1,4 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled1/back_end_test/get_all_employees/employee_card_info.dart';
+import 'package:untitled1/back_end_test/get_all_employees/get_employee_cards_info.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
@@ -16,16 +20,23 @@ class EmployeesPage extends StatefulWidget {
 }
 
 class _EmployeesPageState extends State<EmployeesPage> {
-  final List<EmployeeMiniCardWidget> _employeeMiniCardWidget = List.filled(
-    5,
-    EmployeeMiniCardWidget(),
-  );
-
-  void _getEmploeeCardsInfo() {
+  final List<EmployeeMiniCardWidget> _employeeMiniCardWidget = [];
+  final CancelToken _cancelToken = CancelToken();
+  void _getEmploeeCardsInfo() async {
+    DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
+    List<EmployeeCardInfo> employeeCardsInfoList = await getEmployeeCardsInfo(
+      dioClient: dioClient,
+      cancelToken: _cancelToken,
+    );
     if (!mounted) {
       return;
     }
     setState(() {
+      for (int i = 0; i < employeeCardsInfoList.length; i++) {
+        _employeeMiniCardWidget.add(
+          EmployeeMiniCardWidget(employeeCardInfo: employeeCardsInfoList[i]),
+        );
+      }
       _falsingcardIsClicked();
       _cardIsClicked[0] = true;
     });
@@ -40,6 +51,12 @@ class _EmployeesPageState extends State<EmployeesPage> {
   void initState() {
     super.initState();
     _getEmploeeCardsInfo();
+  }
+
+  @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
   }
 
   @override
