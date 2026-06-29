@@ -203,10 +203,16 @@ class _EmployeesPageState extends State<EmployeesPage> {
               ),
             ],
           ),
-          EmployeeInfoForSm(
-            userAuthInfo: widget.userAuthInfo,
-            employeeId: _employeeId,
-          ),
+          _employeeId == ''
+              ? SizedBox(
+                  width: width * (1438 / 1920),
+                  height: width * (950 / 1920),
+                )
+              : EmployeeInfoForSm(
+                  key: ValueKey(_employeeId),
+                  userAuthInfo: widget.userAuthInfo,
+                  employeeId: _employeeId,
+                ),
         ],
       ),
     );

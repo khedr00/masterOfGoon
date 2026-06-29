@@ -24,9 +24,8 @@ Future<EmployeeInfo> getEmployeeInfo({
       avgResponseTime: response.data['data']['employee']['averageResponseTime'],
     );
   } else {
-    response = await dioClient.dio.get(
-      '${base}api/v1/employees/bb518099-d51b-4b2d-9bdf-76a40ecb5ded',
-    );
+    response = await dioClient.dio.get('${base}api/v1/employees/$employeeId');
+
     return EmployeeInfo(
       employeeName: response.data['data']['fullName'],
       employeeType: response.data['data']['role'],

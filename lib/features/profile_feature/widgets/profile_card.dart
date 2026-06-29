@@ -30,6 +30,9 @@ class _ProfileCardState extends State<ProfileCard> {
       cancelToken: _cancelToken,
       employeeId: widget.employeeId,
     );
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _employeeInfo = employeeInfo;
     });
@@ -49,10 +52,21 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    _getMyInfo();
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
-
+    if (_employeeInfo == null) {
+      return Container(
+        width: width * (411 / 1920),
+        height: width * (950 / 1920),
+        color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+        child: CircularProgressIndicator(
+          padding: EdgeInsets.symmetric(
+            vertical: width * (428 / 1920),
+            horizontal: width * (180 / 1920),
+          ),
+        ),
+      );
+    }
     return Stack(
       children: [
         Container(
@@ -64,16 +78,14 @@ class _ProfileCardState extends State<ProfileCard> {
           child: Column(
             children: [
               //اول قسم من فوق
-              _employeeInfo == null
-                  ? CircularProgressIndicator()
-                  : ProfileCardPhotoTillTheSmallContainerSection(
-                      employeePhoto: _employeeInfo.employeePhoto,
-                      productivity: _employeeInfo.productivity.toString(),
-                      employeeEmail: _employeeInfo.employeeEmail,
-                      employeePhoneNumber: _employeeInfo.employeePhoneNumber,
-                      employeeLocation: _employeeInfo.employeeLocation,
-                      avgResponseTime: _employeeInfo.avgResponseTime.toString(),
-                    ),
+              ProfileCardPhotoTillTheSmallContainerSection(
+                employeePhoto: _employeeInfo.employeePhoto,
+                productivity: _employeeInfo.productivity.toString(),
+                employeeEmail: _employeeInfo.employeeEmail,
+                employeePhoneNumber: _employeeInfo.employeePhoneNumber,
+                employeeLocation: _employeeInfo.employeeLocation,
+                avgResponseTime: _employeeInfo.avgResponseTime.toString(),
+              ),
               // تاني شقفة صغيرة من تحت
               Container(
                 width: width * (411 / 1920),
@@ -155,37 +167,35 @@ class _ProfileCardState extends State<ProfileCard> {
                 topRight: Radius.circular(width * (30 / 1920)),
               ),
             ),
-            child: _employeeInfo == null
-                ? CircularProgressIndicator()
-                : Column(
-                    children: [
-                      Spacer(flex: 1),
-                      SizedBox(
-                        width: width * (70 / 1920),
-                        height: width * (70 / 1920),
-                        child: Image.asset('assets/images/Profit.png'),
-                      ),
-                      Spacer(flex: 2),
+            child: Column(
+              children: [
+                Spacer(flex: 1),
+                SizedBox(
+                  width: width * (70 / 1920),
+                  height: width * (70 / 1920),
+                  child: Image.asset('assets/images/Profit.png'),
+                ),
+                Spacer(flex: 2),
 
-                      Text(
-                        _employeeInfo.employeeType,
-                        style: TextStyle(
-                          color: getTextColor(themeProvider.isDarkMode),
-                          fontFamily: 'NunitoSans-ExtraBold',
-                          fontSize: width * (24 / 1920),
-                        ),
-                      ),
-                      Text(
-                        'Employee',
-                        style: TextStyle(
-                          color: getTextColor(themeProvider.isDarkMode),
-                          fontFamily: 'NunitoSans-Bold',
-                          fontSize: width * (24 / 1920),
-                        ),
-                      ),
-                      Spacer(flex: 1),
-                    ],
+                Text(
+                  _employeeInfo.employeeType,
+                  style: TextStyle(
+                    color: getTextColor(themeProvider.isDarkMode),
+                    fontFamily: 'NunitoSans-ExtraBold',
+                    fontSize: width * (24 / 1920),
                   ),
+                ),
+                Text(
+                  'Employee',
+                  style: TextStyle(
+                    color: getTextColor(themeProvider.isDarkMode),
+                    fontFamily: 'NunitoSans-Bold',
+                    fontSize: width * (24 / 1920),
+                  ),
+                ),
+                Spacer(flex: 1),
+              ],
+            ),
           ),
         ),
         Positioned(
@@ -201,16 +211,14 @@ class _ProfileCardState extends State<ProfileCard> {
               ),
             ),
             child: Center(
-              child: _employeeInfo == null
-                  ? CircularProgressIndicator()
-                  : Text(
-                      _employeeInfo.employeeName,
-                      style: TextStyle(
-                        color: getTextColor(themeProvider.isDarkMode),
-                        fontFamily: 'NunitoSans-ExtraBold',
-                        fontSize: width * (36 / 1920),
-                      ),
-                    ),
+              child: Text(
+                _employeeInfo.employeeName,
+                style: TextStyle(
+                  color: getTextColor(themeProvider.isDarkMode),
+                  fontFamily: 'NunitoSans-ExtraBold',
+                  fontSize: width * (36 / 1920),
+                ),
+              ),
             ),
           ),
         ),

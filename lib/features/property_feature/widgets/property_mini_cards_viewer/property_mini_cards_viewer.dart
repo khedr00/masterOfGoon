@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/properties/get_10_property_cards.dart';
-import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
+import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_model.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/property_feature/widgets/property_cards/apartment_mini_card.dart';
@@ -33,12 +33,9 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
       _isLoading = true;
       numberOfPastCalles++;
     });
-    List<PropertyCardModuleInfo> listOfPropertyCardsInfo =
-        await getTenPropertyCards(
-          role: 'sales',
-          numberOfPastCalles: numberOfPastCalles,
-          cancelToken: _cancelToken,
-        );
+    List<PropertyCardModel> listOfPropertyCardsInfo = await getTenPropertyCards(
+      cancelToken: _cancelToken,
+    );
     if (!mounted) {
       return;
     }
@@ -49,20 +46,20 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
     });
   }
 
-  void _getTenPropertyCardsInfoAgain() {
-    _controller.addListener(() {
-      if (_controller.position.pixels >= _controller.position.maxScrollExtent &&
-          !_isLoading) {
-        _getTenPropertyCardsInfo();
-      }
-    });
-  }
+  // void _getTenPropertyCardsInfoAgain() {
+  //   _controller.addListener(() {
+  //     if (_controller.position.pixels >= _controller.position.maxScrollExtent &&
+  //         !_isLoading) {
+  //       _getTenPropertyCardsInfo();
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
     _getTenPropertyCardsInfo();
-    _getTenPropertyCardsInfoAgain();
+    // _getTenPropertyCardsInfoAgain();
   }
 
   @override
@@ -126,8 +123,8 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }
-                switch (_listOfPropertyCardsInfo[i].propertyType) {
-                  case 'villa':
+                switch (_listOfPropertyCardsInfo[i].type) {
+                  case 'VILLA':
                     return Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: width * (20 / 1920),
@@ -138,7 +135,7 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
                         ),
                       ),
                     );
-                  case 'house':
+                  case 'HOUSE':
                     return Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: width * (20 / 1920),
@@ -149,7 +146,7 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
                         ),
                       ),
                     );
-                  case 'hall':
+                  case 'HALL':
                     return Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: width * (20 / 1920),
@@ -160,7 +157,7 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
                         ),
                       ),
                     );
-                  case 'store':
+                  case 'STORE':
                     return Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: width * (20 / 1920),
@@ -171,7 +168,7 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
                         ),
                       ),
                     );
-                  case 'apartment':
+                  case 'APARTMENT':
                     return Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: width * (20 / 1920),
@@ -183,7 +180,7 @@ class _PropertyMiniCardsViewerState extends State<PropertyMiniCardsViewer> {
                       ),
                     );
                 }
-                return null;
+                return Container(color: Colors.red);
               },
             ),
           ),
