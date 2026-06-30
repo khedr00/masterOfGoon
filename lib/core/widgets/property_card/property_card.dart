@@ -16,7 +16,8 @@ import 'package:untitled1/core/widgets/property_card/villa_card_upper_section.da
 import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyCard extends StatefulWidget {
-  const PropertyCard({super.key});
+  const PropertyCard({super.key, required this.propertyId});
+  final String propertyId;
 
   @override
   State<PropertyCard> createState() => _PropertyCardState();
@@ -27,7 +28,7 @@ class _PropertyCardState extends State<PropertyCard> {
   final CancelToken _cancelToken = CancelToken();
   void _getPropertyInfo() async {
     dynamic propertyInfo = await getPropertyInfoWithPrimaryImages(
-      id: 1,
+      id: widget.propertyId,
       cancelToken: _cancelToken,
     );
     if (!mounted) {
@@ -65,7 +66,9 @@ class _PropertyCardState extends State<PropertyCard> {
         Container(
           width: width * (866 / 1920),
           height: width * (885 / 1920),
-          color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+          color: themeProvider.isDarkMode
+              ? darkBackGroundColor
+              : backGroundColor,
           child: Column(
             children: [
               // اول قسم اساسي من فوق
@@ -101,7 +104,9 @@ class _PropertyCardState extends State<PropertyCard> {
             width: width * (168 / 1920),
             height: width * (143 / 1920),
             decoration: BoxDecoration(
-              color: themeProvider.isDarkMode ? darkFourthColorPrimaryBrown : fourthColorPrimaryBrown,
+              color: themeProvider.isDarkMode
+                  ? darkFourthColorPrimaryBrown
+                  : fourthColorPrimaryBrown,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(width * (10 / 1920)),
               ),

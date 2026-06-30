@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/deal_requests/deal_request_card_info.dart';
+import 'package:untitled1/back_end_test/sales_manager_requests/sales_manager_request_model.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
@@ -29,7 +29,9 @@ class DealRequestCard extends StatelessWidget {
               width: width * (650 / 1920),
               height: width * (340 / 1920),
               decoration: BoxDecoration(
-                color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                color: themeProvider.isDarkMode
+                    ? darkSecondaryColor
+                    : secondaryColor,
                 borderRadius: BorderRadius.circular(width * (10 / 1920)),
               ),
               child: Row(
@@ -42,7 +44,9 @@ class DealRequestCard extends StatelessWidget {
                         width: width * (189 / 1920),
                         height: width * (340 / 1920),
                         decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                          color: themeProvider.isDarkMode
+                              ? darkSecondaryColor
+                              : secondaryColor,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(width * (10 / 1920)),
                             bottomLeft: Radius.circular(width * (10 / 1920)),
@@ -80,19 +84,23 @@ class DealRequestCard extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
-                                      'Khedr Issa',
+                                      dealRequestCardInfo.clientName,
                                       style: TextStyle(
                                         fontFamily: 'NunitoSans-Bold',
                                         fontSize: width * (22 / 1920),
-                                        color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                        color: getPrimaryTextColor(
+                                          themeProvider.isDarkMode,
+                                        ),
                                       ),
                                     ),
                                     Text(
-                                      'lead Scoring: 86%',
+                                      'lead Scoring: ${dealRequestCardInfo.leadScoring}%',
                                       style: TextStyle(
                                         fontFamily: 'NunitoSans-Regular',
                                         fontSize: width * (18 / 1920),
-                                        color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                        color: getPrimaryTextColor(
+                                          themeProvider.isDarkMode,
+                                        ),
                                       ),
                                     ),
                                     Container(
@@ -102,7 +110,9 @@ class DealRequestCard extends StatelessWidget {
                                       width: width * (170 / 1920),
                                       height: width * (140 / 1920),
                                       decoration: BoxDecoration(
-                                        color: getCardColor(themeProvider.isDarkMode),
+                                        color: getCardColor(
+                                          themeProvider.isDarkMode,
+                                        ),
                                         borderRadius: BorderRadius.circular(
                                           width * (10 / 1920),
                                         ),
@@ -112,7 +122,9 @@ class DealRequestCard extends StatelessWidget {
                                           'I would like to know more about this property',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                            color: getPrimaryTextColor(
+                                              themeProvider.isDarkMode,
+                                            ),
                                             fontFamily: 'NunitoSans-SemiBold',
                                             fontSize: width * (14 / 1920),
                                           ),
@@ -134,7 +146,11 @@ class DealRequestCard extends StatelessWidget {
                       Container(
                         width: width * (10 / 1920),
                         height: width * (340 / 1920),
-                        decoration: BoxDecoration(color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor),
+                        decoration: BoxDecoration(
+                          color: themeProvider.isDarkMode
+                              ? darkBackGroundColor
+                              : backGroundColor,
+                        ),
                       ),
                     ],
                   ),
@@ -145,7 +161,9 @@ class DealRequestCard extends StatelessWidget {
                         width: width * (450 / 1920),
                         height: width * (80 / 1920),
                         decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                          color: themeProvider.isDarkMode
+                              ? darkSecondaryColor
+                              : secondaryColor,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(width * (10 / 1920)),
                           ),
@@ -165,11 +183,13 @@ class DealRequestCard extends StatelessWidget {
                             ),
                             Spacer(flex: 1),
                             Text(
-                              'H-233',
+                              dealRequestCardInfo.referenceCode,
                               style: TextStyle(
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: width * (22 / 1920),
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                color: getPrimaryTextColor(
+                                  themeProvider.isDarkMode,
+                                ),
                               ),
                             ),
                             Spacer(flex: 8),
@@ -180,11 +200,13 @@ class DealRequestCard extends StatelessWidget {
                             ),
                             Spacer(flex: 1),
                             Text(
-                              '10000\$',
+                              '${dealRequestCardInfo.listedPrice}\$',
                               style: TextStyle(
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: width * (22 / 1920),
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                color: getPrimaryTextColor(
+                                  themeProvider.isDarkMode,
+                                ),
                               ),
                             ),
                             Spacer(flex: 8),
@@ -195,7 +217,9 @@ class DealRequestCard extends StatelessWidget {
                         width: width * (450 / 1920),
                         height: width * (260 / 1920),
                         decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                          color: themeProvider.isDarkMode
+                              ? darkSecondaryColor
+                              : secondaryColor,
                           borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(width * (10 / 1920)),
                           ),
@@ -217,12 +241,14 @@ class DealRequestCard extends StatelessWidget {
                                     height: width * (20 / 1920),
                                   ),
                                   Text(
-                                    'homs-shien',
+                                    dealRequestCardInfo.location,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: 'NunitoSans-bold',
                                       fontSize: width * (20 / 1920),
-                                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                      color: getPrimaryTextColor(
+                                        themeProvider.isDarkMode,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -234,12 +260,14 @@ class DealRequestCard extends StatelessWidget {
                                 vertical: width * (15 / 1920),
                               ),
                               child: Text(
-                                'Furnished Apartment with pool and 2 bdcliahfgblcahgcjglaj,gdch.ajdgcasdcalconies Furnished Apartment with pool and 2 balconies',
+                                dealRequestCardInfo.simpleDescription,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'NunitoSans-Reguler',
                                   fontSize: width * (18 / 1920),
-                                  color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                  color: getPrimaryTextColor(
+                                    themeProvider.isDarkMode,
+                                  ),
                                 ),
                               ),
                             ),
@@ -247,7 +275,9 @@ class DealRequestCard extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+                                  color: themeProvider.isDarkMode
+                                      ? darkBackGroundColor
+                                      : backGroundColor,
                                   borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(
                                       width * (10 / 1920),
@@ -271,7 +301,9 @@ class DealRequestCard extends StatelessWidget {
               width: width * (170 / 1920),
               height: width * (90 / 1920),
               decoration: BoxDecoration(
-                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+                color: themeProvider.isDarkMode
+                    ? darkBackGroundColor
+                    : backGroundColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(width * (10 / 1920)),
                   bottomRight: Radius.circular(width * (10 / 1920)),
@@ -285,7 +317,9 @@ class DealRequestCard extends StatelessWidget {
               width: width * (150 / 1920),
               height: width * (80 / 1920),
               decoration: BoxDecoration(
-                color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                color: themeProvider.isDarkMode
+                    ? darkPrimaryColor
+                    : primaryColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(width * (10 / 1920)),
                   bottomRight: Radius.circular(width * (10 / 1920)),
@@ -293,7 +327,7 @@ class DealRequestCard extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'purchasing request',
+                  '${dealRequestCardInfo.type} request',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'NunitoSans-Bold',

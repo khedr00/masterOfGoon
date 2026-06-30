@@ -25,7 +25,9 @@ class _DealPageState extends State<DealPage> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+      backgroundColor: themeProvider.isDarkMode
+          ? darkBackGroundColor
+          : backGroundColor,
       body: SingleChildScrollView(
         child: SizedBox(
           width: width,
@@ -85,7 +87,9 @@ class _DealPageState extends State<DealPage> {
                   tabs: [
                     TabOfTabableCard(
                       tabName: 'schedule',
-                      tabColor: themeProvider.isDarkMode ? darkThirdColorPrimary : thirdColorPrimary,
+                      tabColor: themeProvider.isDarkMode
+                          ? darkThirdColorPrimary
+                          : thirdColorPrimary,
                       bodyOfTheTab: DealsOnlyScheduleWidget(
                         dealId: 1,
                         forDealPage: true,
@@ -93,7 +97,9 @@ class _DealPageState extends State<DealPage> {
                     ),
                     TabOfTabableCard(
                       tabName: 'Actions',
-                      tabColor: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                      tabColor: themeProvider.isDarkMode
+                          ? darkPrimaryColor
+                          : primaryColor,
                       bodyOfTheTab: DealActionsWidget(),
                     ),
                     TabOfTabableCard(
@@ -110,7 +116,7 @@ class _DealPageState extends State<DealPage> {
                             bottomRight: Radius.circular(width * (30 / 1920)),
                           ),
                         ),
-                        child: Center(child: PropertyCard()),
+                        child: Center(child: PropertyCard(propertyId: '1')),
                       ),
                     ),
                   ],

@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/deal_requests/deal_request_card_info.dart';
-import 'package:untitled1/back_end_test/deal_requests/get_deal_request_card_info.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/back_end_test/sales_manager_requests/gat_all_manager_requests.dart';
+import 'package:untitled1/back_end_test/sales_manager_requests/sales_manager_request_model.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/deal_requests_and_signed_deal_requists_button.dart';
 import 'package:untitled1/core/widgets/constants.dart';
@@ -22,18 +23,24 @@ class SubmanagerHomePage extends StatefulWidget {
 }
 
 class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
+  String propertyId = '';
+  List<DealRequestCardInfo> dealRequestCardInfo1 = [];
   final List<DealRequestCard> _dealRequestList = [];
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
-    List<DealRequestCardInfo> dealRequestList = await getDealRequestCardsInfo(
-      role: widget.userAuthInfo.role,
-      id: widget.userAuthInfo.id,
+    DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
+    List<DealRequestCardInfo> dealRequestList = await getAllRequests(
+      dioClient: dioClient,
       cancelToken: _cancelToken,
     );
     if (!mounted) {
       return;
     }
     setState(() {
+      dealRequestCardInfo1 = dealRequestList;
+
+      propertyId = dealRequestList[0].id;
+
       for (int i = 0; i < dealRequestList.length; i++) {
         _dealRequestList.add(
           DealRequestCard(
@@ -168,6 +175,9 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                                                 setState(() {
                                                   _falsingcardIsClicked();
                                                   _cardIsClicked[i] = true;
+                                                  propertyId =
+                                                      dealRequestCardInfo1[i]
+                                                          .id;
                                                 });
                                               },
                                               child: _dealRequestList[i],
@@ -504,7 +514,12 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
-                          PropertyCard(),
+                          propertyId == ''
+                              ? SizedBox()
+                              : PropertyCard(
+                                  key: ValueKey(propertyId),
+                                  propertyId: propertyId,
+                                ),
                           PropertyPhotosShowerWidget(
                             isPrimaryPropertyPhotos: true,
                           ),
