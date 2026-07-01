@@ -15,7 +15,8 @@ Future<List<EmployeeCardInfo>> getEmployeeCardsInfo({
       if (data[i]['role'] == 'SALES' ||
           data[i]['role'] == 'RENTAL' ||
           data[i]['role'] == 'LEASE' ||
-          data[i]['role'] == 'PURCHASING') {
+          data[i]['role'] == 'PURCHASING' ||
+          data[i]['role'] == 'CONSULTANT') {
         temp.add(EmployeeCardInfo.fromJson(data[i]));
       }
     }

@@ -28,7 +28,7 @@ class _PropertyCardState extends State<PropertyCard> {
   final CancelToken _cancelToken = CancelToken();
   void _getPropertyInfo() async {
     dynamic propertyInfo = await getPropertyInfoWithPrimaryImages(
-      id: widget.propertyId,
+      id: 1,
       cancelToken: _cancelToken,
     );
     if (!mounted) {

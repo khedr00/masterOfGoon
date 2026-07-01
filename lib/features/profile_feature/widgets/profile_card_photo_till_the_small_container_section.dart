@@ -252,7 +252,8 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                   ),
                                 ),
                                 Row(
-                                  mainAxisAlignment: .spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     SizedBox(
                                       width: width * (40 / 1920),

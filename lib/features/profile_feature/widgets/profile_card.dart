@@ -182,7 +182,7 @@ class _ProfileCardState extends State<ProfileCard> {
                   style: TextStyle(
                     color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-ExtraBold',
-                    fontSize: width * (24 / 1920),
+                    fontSize: width * (20 / 1920),
                   ),
                 ),
                 Text(

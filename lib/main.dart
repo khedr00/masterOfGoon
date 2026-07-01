@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/login_page.dart';
-import 'package:untitled1/features/support_employee/core/services/socket_service.dart';
-import 'package:untitled1/features/support_employee/features/home_feature/presentation/chat_provider.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 import 'package:untitled1/providers/auth_provider.dart';
 import 'package:untitled1/providers/employee_deals_filter_provider.dart';
@@ -66,11 +64,11 @@ void main() {
             return IconSelectorProvider();
           },
         ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return ChatProvider(SocketService());
-          },
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) {
+        //     return ChatProvider(SocketService());
+        //   },
+        // ),
         ChangeNotifierProvider(
           create: (context) {
             return ThemeProvider();

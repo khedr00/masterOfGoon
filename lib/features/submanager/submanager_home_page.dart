@@ -517,8 +517,8 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                           propertyId == ''
                               ? SizedBox()
                               : PropertyCard(
-                                  key: ValueKey(propertyId),
-                                  propertyId: propertyId,
+                                  // key: ValueKey(propertyId),
+                                  propertyId: '1',
                                 ),
                           PropertyPhotosShowerWidget(
                             isPrimaryPropertyPhotos: true,
