@@ -40,9 +40,11 @@ class _EmployeesPageState extends State<EmployeesPage> {
           EmployeeMiniCardWidget(employeeCardInfo: employeeCardsInfoList[i]),
         );
       }
-      _falsingcardIsClicked();
-      _cardIsClicked[0] = true;
-      _employeeId = _employeeCardInfoList[0].employeeId;
+      if (employeeCardsInfoList.isNotEmpty) {
+        _falsingcardIsClicked();
+        _cardIsClicked[0] = true;
+        _employeeId = _employeeCardInfoList[0].employeeId;
+      } else {}
     });
   }
 

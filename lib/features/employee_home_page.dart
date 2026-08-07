@@ -75,9 +75,11 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       return;
     }
     setState(() {
-      _dealList.clear();
-      for (int i = 0; i < dealList.length; i++) {
-        _dealList.add(DealCard(dealCardInfo: dealList[i]));
+      if (dealList.isNotEmpty) {
+        _dealList.clear();
+        for (int i = 0; i < dealList.length; i++) {
+          _dealList.add(DealCard(dealCardInfo: dealList[i]));
+        }
       }
     });
   }
