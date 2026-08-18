@@ -11,16 +11,16 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
   CancelToken? cancelToken,
 }) async {
   DioClient dioClient = DioClient(userAuthInfo: userAuthInfo);
-  String isoDate = dateTime.toUtc().toIso8601String();
-  final date = DateTime.parse(isoDate).toUtc();
 
-  final startOfDay = DateTime.utc(date.year, date.month, date.day);
+  final startOfDay = DateTime.utc(dateTime.year, dateTime.month, dateTime.day);
 
   final endOfDay = startOfDay.add(const Duration(days: 1));
 
   final newIsoDate = startOfDay.toIso8601String();
   final nextIsoDate = endOfDay.toIso8601String();
   List<dynamic> temp;
+  print(newIsoDate);
+  print(endOfDay);
 
   try {
     final dynamic response;
@@ -130,10 +130,12 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
     //     ),
     //   );
     // }
+
     scheduleNote.add(
       PersonalNoteWidget(
         scheduleNote: ScheduleNote(
-          time: temp[i]['date'],
+          time:
+              '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
           title: temp[i]['title'],
           description: temp[i]['description'],
         ),

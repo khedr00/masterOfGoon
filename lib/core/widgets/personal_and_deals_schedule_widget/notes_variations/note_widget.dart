@@ -44,11 +44,15 @@ class _NoteWidgetState extends State<NoteWidget> {
               Container(
                 width: width * (322 / 1920),
                 decoration: BoxDecoration(
-                  color: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
+                  color: themeProvider.isDarkMode
+                      ? darkThirdColorSecondary
+                      : thirdColorSecondary,
                   borderRadius: BorderRadius.circular(width * (5 / 1920)),
                   boxShadow: [
                     BoxShadow(
-                      color: themeProvider.isDarkMode ? darkThirdColorSecondary : thirdColorSecondary,
+                      color: themeProvider.isDarkMode
+                          ? darkThirdColorSecondary
+                          : thirdColorSecondary,
                       spreadRadius: width * (2 / 1920),
                       blurRadius: width * (3 / 1920),
                     ),
@@ -70,7 +74,9 @@ class _NoteWidgetState extends State<NoteWidget> {
                                   child: Text(
                                     widget.scheduleNote.title,
                                     style: TextStyle(
-                                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                      color: getPrimaryTextColor(
+                                        themeProvider.isDarkMode,
+                                      ),
                                       fontFamily: 'NunitoSans-Bold',
                                       fontSize: width * (26 / 1920),
                                     ),
@@ -133,7 +139,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                     style: TextStyle(
                       color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (22 / 1920),
+                      fontSize: width * (18 / 1920),
                     ),
                   ),
                 ),

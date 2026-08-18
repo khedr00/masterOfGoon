@@ -46,12 +46,15 @@ class _PersonalScheduleWidgetState
       firstDate: DateTime.now(),
       lastDate: DateTime(2027),
     );
+
     setState(() {
       if (date != null) {
         _dateTime = date;
-        _getPersonalAndDealsScheduleInfo();
       }
     });
+
+    _scheduleNotes = [];
+    _getPersonalAndDealsScheduleInfo();
     getDayName();
     getDate();
   }
