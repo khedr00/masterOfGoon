@@ -342,7 +342,9 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                 ),
               ),
               allAndDealsOnlyProvider.allAreClicked
-                  ? PersonalAndDealsScheduleWidget(employeeId: 1)
+                  ? PersonalAndDealsScheduleWidget(
+                      userAuthInfo: widget.userAuthInfo,
+                    )
                   : _dealId == null
                   ? SizedBox()
                   : DealsOnlyScheduleWidget(

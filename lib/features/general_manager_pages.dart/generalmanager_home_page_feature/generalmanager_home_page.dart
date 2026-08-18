@@ -51,7 +51,6 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
   String _propertyType = 'APARTMENT';
 
   Future<void> _getPricingPolicy() async {
-    print(_city);
     DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
     PricingPolicyModel pricingPolicyModel = await getPricingPolicy(
       cancelToken: _cancelToken,

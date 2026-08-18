@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_personal_and_deals_schedule_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/general_tabable_card.dart';
@@ -12,11 +13,13 @@ class PersonalAndDealsScheduleWidget extends StatefulWidget {
   const PersonalAndDealsScheduleWidget({
     super.key,
     this.fullHeight,
-    required this.employeeId,
+
+    required this.userAuthInfo,
   });
 
   final double? fullHeight;
-  final int employeeId;
+
+  final UserAuthInfo userAuthInfo;
 
   @override
   State<PersonalAndDealsScheduleWidget> createState() =>
@@ -57,7 +60,7 @@ class _PersonalScheduleWidgetState
   final CancelToken _cancelToken = CancelToken();
   void _getPersonalAndDealsScheduleInfo() async {
     List<dynamic> scheduleNote = await getPersonalAndDealsScheduleInfo(
-      employeeId: widget.employeeId,
+      userAuthInfo: widget.userAuthInfo,
       dateTime: _dateTime,
       cancelToken: _cancelToken,
     );
@@ -88,9 +91,9 @@ class _PersonalScheduleWidgetState
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
-    if (_scheduleNotes.isEmpty) {
-      return Center(child: CircularProgressIndicator());
-    }
+    // if (_scheduleNotes.isEmpty) {
+    //   return Center(child: CircularProgressIndicator());
+    // }
     return Stack(
       children: [
         SizedBox(
@@ -103,10 +106,33 @@ class _PersonalScheduleWidgetState
                 tabColor: themeProvider.isDarkMode
                     ? darkThirdColorPrimary
                     : thirdColorPrimary,
-                bodyOfTheTab: InsideTabPersonalAndDealScheduleWidget(
-                  personalAndDealsNotes: _scheduleNotes,
-                  fullHeight: widget.fullHeight ?? width * (760 / 1920),
-                ),
+                bodyOfTheTab: _scheduleNotes.isEmpty
+                    ? Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(width * (25 / 1920)),
+                            bottomLeft: Radius.circular(width * (25 / 1920)),
+                            bottomRight: Radius.circular(width * (25 / 1920)),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'There is no notes for you at this day',
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans-Bold',
+                              fontSize: width * (32 / 1920),
+                              color: getPrimaryTextColor(
+                                themeProvider.isDarkMode,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : InsideTabPersonalAndDealScheduleWidget(
+                        personalAndDealsNotes: _scheduleNotes,
+                        fullHeight: widget.fullHeight ?? width * (760 / 1920),
+                      ),
               ),
             ],
             fullCardWidth: width * (881 / 1920),
