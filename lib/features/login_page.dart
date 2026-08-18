@@ -8,7 +8,7 @@ import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
 import 'package:untitled1/features/employee_home_page.dart';
 import 'package:untitled1/features/general_manager_pages.dart/general_manager_pages.dart';
-import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/generalmanager_home_page.dart';
 import 'package:untitled1/features/main_employees_pages.dart';
 import 'package:untitled1/features/submanager/submanager_home_page.dart';
 import 'package:untitled1/features/submanager/submanager_pages.dart';
@@ -81,7 +81,9 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       } else if (userAuthInfo.role == 'GENERAL_MANAGER') {
-        generalmanagerPageSelectorProvider.selectPage(GeneralmanagerHomePage());
+        generalmanagerPageSelectorProvider.selectPage(
+          GeneralmanagerHomePage(userAuthInfo: userAuthInfo),
+        );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

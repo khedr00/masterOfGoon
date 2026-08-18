@@ -1,63 +1,107 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/data/datasources/get_pricing_policy.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/data/models/pricing_policy_model.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class GeneralmanagerHomePage extends StatefulWidget {
-  const GeneralmanagerHomePage({super.key});
+  const GeneralmanagerHomePage({super.key, required this.userAuthInfo});
+  final UserAuthInfo userAuthInfo;
 
   @override
   State<GeneralmanagerHomePage> createState() => _GeneralmanagerHomePageState();
 }
 
 class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
-  final List<String> areas = ['Damascus', 'Hama', 'Homs', 'Tartous', 'Aleppo'];
-
-  final List<String> propertyTypes = [
-    'Apartment',
-    'Villa',
-    'Office',
-    'Store + Office',
-    'All Types',
+  final List<String> areas = [
+    'Damascus',
+    'Hama',
+    'Homs',
+    'Tartous',
+    'Aleppo',
+    'Al-Hasakah',
+    'Raqqa',
+    'Deir ez-Zor',
+    'Quneitra',
+    'As-Suwayda',
+    'Jadah',
+    'Dubai',
   ];
 
-  late _MarginConfig propertyProfitMargins;
-  late _MarginConfig listingPriceMargins;
-  late _AdjustmentConfig propertyPriceAdjustment;
+  final List<String> propertyTypes = [
+    'APARTMENT',
+    'Villa',
+    'Office',
+    'Store',
+    'Hall',
+  ];
+
+  _MarginConfig? propertyProfitMargins;
+  _MarginConfig? listingPriceMargins;
+  _AdjustmentConfig? propertyPriceAdjustment;
   int _inputVersion = 0;
+
+  dynamic _pricingPolicyModel;
+  final CancelToken _cancelToken = CancelToken();
+  String _city = 'Jadah';
+  String _propertyType = 'APARTMENT';
+
+  Future<void> _getPricingPolicy() async {
+    print(_city);
+    DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
+    PricingPolicyModel pricingPolicyModel = await getPricingPolicy(
+      cancelToken: _cancelToken,
+      city: _city,
+      propertyType: _propertyType,
+      dioClient: dioClient,
+    );
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _pricingPolicyModel = pricingPolicyModel;
+      propertyProfitMargins = _MarginConfig(
+        region: _pricingPolicyModel.city,
+        propertyType: _pricingPolicyModel.propertyType,
+        saleMargin: _pricingPolicyModel.sellProfitMargin.toString(),
+        rentMargin: _pricingPolicyModel.rentProfitMargin.toString(),
+      );
+
+      listingPriceMargins = _MarginConfig(
+        region: _pricingPolicyModel.city,
+        propertyType: _pricingPolicyModel.propertyType,
+        saleMargin: _pricingPolicyModel.saleListingMargin.toString(),
+        rentMargin: _pricingPolicyModel.rentListingMargin.toString(),
+      );
+
+      propertyPriceAdjustment = _AdjustmentConfig(
+        region: _pricingPolicyModel.city,
+        propertyType: _pricingPolicyModel.propertyType,
+        saleSign: '+',
+        saleAdjustment: _pricingPolicyModel.saleGlobalAdjust.toString(),
+        rentSign: '-',
+        rentAdjustment: _pricingPolicyModel.rentGlobalAdjust.toString(),
+      );
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-
-    propertyProfitMargins = _MarginConfig(
-      region: 'Damascus',
-      propertyType: 'Apartment',
-      saleMargin: '15',
-      rentMargin: '10',
-    );
-
-    listingPriceMargins = _MarginConfig(
-      region: 'Hama',
-      propertyType: 'Villa',
-      saleMargin: '12',
-      rentMargin: '8',
-    );
-
-    propertyPriceAdjustment = _AdjustmentConfig(
-      region: 'Homs',
-      propertyType: 'Office',
-      saleSign: '+',
-      saleAdjustment: '5',
-      rentSign: '-',
-      rentAdjustment: '10',
-    );
+    _getPricingPolicy();
   }
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
+    if (propertyPriceAdjustment == null) {
+      return CircularProgressIndicator();
+    }
 
     return Container(
       width: width * (1920 / 1920),
@@ -107,23 +151,26 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
                               _marginConfigurationCard(
                                 width,
                                 title: 'Property Profit Margins',
-                                config: propertyProfitMargins,
+                                config: propertyProfitMargins!,
                                 onChanged: (config) {
                                   setState(() {
                                     propertyProfitMargins = config;
-                                  });
-                                },
-                                onConfirm: () {
-                                  setState(() {
+                                    _city = config.region;
+                                    _propertyType = config.propertyType;
                                     propertyProfitMargins =
-                                        propertyProfitMargins.confirmed();
+                                        propertyProfitMargins!.confirmed();
                                     _inputVersion++;
                                   });
+
+                                  _getPricingPolicy();
+                                },
+                                onConfirm: () {
+                                  setState(() {});
                                 },
                                 onCancel: () {
                                   setState(() {
                                     propertyProfitMargins =
-                                        propertyProfitMargins.cancelled();
+                                        propertyProfitMargins!.cancelled();
                                     _inputVersion++;
                                   });
                                 },
@@ -132,22 +179,25 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
                               _marginConfigurationCard(
                                 width,
                                 title: 'Listing Price Margins',
-                                config: listingPriceMargins,
+                                config: listingPriceMargins!,
                                 onChanged: (config) {
                                   setState(() {
                                     listingPriceMargins = config;
-                                  });
-                                },
-                                onConfirm: () {
-                                  setState(() {
-                                    listingPriceMargins = listingPriceMargins
-                                        .confirmed();
+                                    _city = config.region;
+                                    _propertyType = config.propertyType;
+                                    propertyProfitMargins =
+                                        propertyProfitMargins!.confirmed();
                                     _inputVersion++;
                                   });
+
+                                  _getPricingPolicy();
+                                },
+                                onConfirm: () {
+                                  setState(() {});
                                 },
                                 onCancel: () {
                                   setState(() {
-                                    listingPriceMargins = listingPriceMargins
+                                    listingPriceMargins = listingPriceMargins!
                                         .cancelled();
                                     _inputVersion++;
                                   });
@@ -156,23 +206,26 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
                               SizedBox(height: width * (22 / 1920)),
                               _priceAdjustmentCard(
                                 width,
-                                config: propertyPriceAdjustment,
+                                config: propertyPriceAdjustment!,
                                 onChanged: (config) {
                                   setState(() {
                                     propertyPriceAdjustment = config;
-                                  });
-                                },
-                                onConfirm: () {
-                                  setState(() {
-                                    propertyPriceAdjustment =
-                                        propertyPriceAdjustment.confirmed();
+                                    _city = config.region;
+                                    _propertyType = config.propertyType;
+                                    propertyProfitMargins =
+                                        propertyProfitMargins!.confirmed();
                                     _inputVersion++;
                                   });
+
+                                  _getPricingPolicy();
+                                },
+                                onConfirm: () {
+                                  setState(() {});
                                 },
                                 onCancel: () {
                                   setState(() {
                                     propertyPriceAdjustment =
-                                        propertyPriceAdjustment.cancelled();
+                                        propertyPriceAdjustment!.cancelled();
                                     _inputVersion++;
                                   });
                                 },

@@ -4,7 +4,7 @@ import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
-import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/generalmanager_home_page.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/submanager/employees_feature/employees_page.dart';
 import 'package:untitled1/features/submanager/submanager_dashbourd/submanager_dashbourd.dart';
@@ -86,7 +86,7 @@ class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
                 appBarCopmonentName: 'Home',
                 onTap: () {
                   generalmanagerPageSelectorProvider.selectPage(
-                    GeneralmanagerHomePage(),
+                    GeneralmanagerHomePage(userAuthInfo: widget.userAuthInfo),
                   );
                 },
               ),

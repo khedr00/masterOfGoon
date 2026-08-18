@@ -34,7 +34,7 @@ class DioClient {
 
             try {
               final refreshResponse = await dio.post(
-                'api/v1/auth/refreshToken',
+                '$base/v1/auth/refreshToken',
               );
 
               final newAccessToken = refreshResponse.data['token'];
