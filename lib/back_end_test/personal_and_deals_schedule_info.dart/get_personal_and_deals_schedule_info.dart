@@ -19,8 +19,6 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
   final newIsoDate = startOfDay.toIso8601String();
   final nextIsoDate = endOfDay.toIso8601String();
   List<dynamic> temp;
-  print(newIsoDate);
-  print(endOfDay);
 
   try {
     final dynamic response;
