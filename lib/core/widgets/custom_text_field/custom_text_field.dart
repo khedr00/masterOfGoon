@@ -15,6 +15,9 @@ class CustomTextField extends StatelessWidget {
     required this.fillColor,
     required this.fontSize,
     required this.fontFamily,
+    this.controller,
+    this.focusNode,
+    this.onSubmitted,
   });
   final Color fillColor;
   final void Function(String) onChanged;
@@ -23,6 +26,9 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final int fontSize;
   final FontFamily fontFamily;
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final void Function(String)? onSubmitted;
 
   @override
   Widget build(BuildContext context) {

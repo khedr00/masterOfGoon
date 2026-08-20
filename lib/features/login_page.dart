@@ -12,6 +12,7 @@ import 'package:untitled1/features/general_manager_pages.dart/generalmanager_hom
 import 'package:untitled1/features/main_employees_pages.dart';
 import 'package:untitled1/features/submanager/submanager_home_page.dart';
 import 'package:untitled1/features/submanager/submanager_pages.dart';
+import 'package:untitled1/features/support_employee_feature/presentation/support_home_page.dart';
 import 'package:untitled1/providers/auth_provider.dart';
 import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';
@@ -91,10 +92,13 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       } else if (userAuthInfo.role == 'SUPPORT') {
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (_) => Scaffold(body: BodyHomePage())),
-        // );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>
+                Scaffold(body: SupportHomePage(userAuthInfo: userAuthInfo)),
+          ),
+        );
       } else {
         employeeProvider.selectPage(
           EmployeeHomePage(userAuthInfo: userAuthInfo),

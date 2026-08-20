@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/a/chat/data/mock_data.dart';
+import 'package:untitled1/a/chat/widgets/chat_dialog.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
@@ -93,7 +95,11 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
               ),
             ],
           ),
-          InternalChatButton(),
+          InternalChatButton(
+            onTap: () {
+              ChatDialog.show(context, UserType.employee);
+            },
+          ),
         ],
       ),
     );

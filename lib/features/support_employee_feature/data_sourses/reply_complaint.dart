@@ -1,19 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/features/support_employee_feature/models/complaint_info.dart';
 
-Future<ComplaintInfo> getComplaintById({
+Future<String> replyComplaint({
   required DioClient dioClient,
   CancelToken? cancelToken,
-  String? complaintId,
+  required String complaintId,
+  required String replyMessage,
 }) async {
   try {
     final dynamic response;
 
-    response = await dioClient.dio.get('${base}api/v1/complaints/$complaintId');
+    response = await dioClient.dio.patch(
+      '${base}api/v1/complaints/$complaintId/reply',
+      data: {"replyMessage": replyMessage},
+    );
 
-    return ComplaintInfo.fromJson(response.data['data']);
+    return response.data['status'];
   } on DioException catch (e) {
     if (CancelToken.isCancel(e)) {
       throw Exception('Request cancelled');
