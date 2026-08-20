@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/login/login.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
-import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
@@ -34,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> login() async {
     if (email.isEmpty || password.isEmpty) return;
-
     setState(() {
       isLoading = true;
     });
@@ -111,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     } catch (e) {
-      debugPrint('${e.toString()} ffff');
+      debugPrint('${e.toString()} ');
     } finally {
       if (mounted) {
         setState(() {
@@ -150,29 +148,10 @@ class _LoginPageState extends State<LoginPage> {
                       width: width * (777 / 1920),
                       height: width * (777 / 1920),
                     ),
-                    Row(
-                      children: [
-                        ButtonWithImage(
-                          image: 'assets/images/Online Support.png',
-                          widthOfButton: width * (60 / 1920),
-                          heightOfButton: width * (60 / 1920),
-                          widthOfImage: width * (40 / 1920),
-                          heightOfImage: width * (40 / 1920),
-                        ),
-
-                        Padding(
-                          padding: EdgeInsets.only(left: width * (20 / 1920)),
-                          child: ButtonWithText(
-                            widthOfButton: width * (250 / 1920),
-                            heightOfButton: width * (50 / 1920),
-                            text: 'Support Center',
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
                 Container(
+                  padding: EdgeInsets.all(width * (60 / 1920)),
                   width: width * (911 / 1920),
                   height: width * (883 / 1920),
                   decoration: BoxDecoration(
@@ -185,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Sign in to EstateHub',
+                        'Sign in to EstateLQ',
                         style: TextStyle(
                           fontFamily: 'NunitoSans-Bold',
                           fontSize: width * (64 / 1920),
@@ -219,6 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                         onChanged: (v) {
                           password = v.trim();
                         },
+                        onSubmitted: (_) => login(),
                         hintText: 'Password',
                         widthOfTextField: 636,
                         fontSize: 32,

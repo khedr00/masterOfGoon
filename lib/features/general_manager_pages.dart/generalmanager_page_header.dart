@@ -3,10 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:untitled1/a/chat/data/mock_data.dart';
 import 'package:untitled1/a/chat/widgets/chat_dialog.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/core/widgets/floating_notification/floating_notification_card.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
 import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/generalmanager_home_page.dart';
+import 'package:untitled1/features/notification/modules/notification_model.dart';
+import 'package:untitled1/features/notification/services/socket_service.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/submanager/employees_feature/employees_page.dart';
 import 'package:untitled1/features/submanager/submanager_dashbourd/submanager_dashbourd.dart';
@@ -29,6 +32,29 @@ class GeneralmanagerPageHeader extends StatefulWidget
 }
 
 class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
+  NotificationModel? _notificationModel;
+
+  SocketService socket = SocketService();
+  Future<void> notificationTimeController() async {
+    await Future.delayed(Duration(seconds: 5));
+    setState(() {
+      _notificationModel = null;
+    });
+  }
+
+  @override
+  void initState() {
+    socket.connect("0f5986a7-d426-4e98-a94e-2491580d3aa8");
+
+    socket.onNotification = (notification) {
+      setState(() {
+        _notificationModel = notification;
+      });
+      notificationTimeController();
+    };
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final generalmanagerPageSelectorProvider =
@@ -111,11 +137,14 @@ class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
               ),
             ],
           ),
-          InternalChatButton(
-            onTap: () {
-              ChatDialog.show(context, UserType.generalManager);
-            },
-          ),
+
+          _notificationModel != null
+              ? FloatingNotificationCard()
+              : InternalChatButton(
+                  onTap: () {
+                    ChatDialog.show(context, UserType.generalManager);
+                  },
+                ),
         ],
       ),
     );

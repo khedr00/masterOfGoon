@@ -40,8 +40,10 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       width: width * (widthOfTextField / 1920),
       child: TextField(
-        controller: TextEditingController(),
+        controller: controller ?? TextEditingController(),
+        focusNode: focusNode,
         onChanged: onChanged,
+        onSubmitted: onSubmitted,
         cursorColor: getPrimaryTextColor(themeProvider.isDarkMode),
         style: TextStyle(
           fontSize: width * (fontSize / 1920),

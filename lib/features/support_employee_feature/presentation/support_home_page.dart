@@ -61,12 +61,18 @@ class _SupportHomePageState extends State<SupportHomePage> {
           break;
         case FilterOption.pending:
           _filteredComplaints = _complaints
-              .where((complaint) => complaint.complaintStatus.toLowerCase() == 'pending')
+              .where(
+                (complaint) =>
+                    complaint.complaintStatus.toLowerCase() == 'pending',
+              )
               .toList();
           break;
         case FilterOption.resolved:
           _filteredComplaints = _complaints
-              .where((complaint) => complaint.complaintStatus.toLowerCase() == 'resolved')
+              .where(
+                (complaint) =>
+                    complaint.complaintStatus.toLowerCase() == 'resolved',
+              )
               .toList();
           break;
       }
@@ -85,49 +91,51 @@ class _SupportHomePageState extends State<SupportHomePage> {
       body: Column(
         children: [
           // Filter Header
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: width * (40 / 1920),
-              vertical: width * (20 / 1920),
-            ),
-            child: Row(
-              children: [
-                _buildFilterButton(
-                  width: width,
-                  label: 'All',
-                  isSelected: _currentFilter == FilterOption.all,
-                  onTap: () {
-                    setState(() {
-                      _currentFilter = FilterOption.all;
-                      _applyFilter();
-                    });
-                  },
-                ),
-                SizedBox(width: width * (15 / 1920)),
-                _buildFilterButton(
-                  width: width,
-                  label: 'Pending',
-                  isSelected: _currentFilter == FilterOption.pending,
-                  onTap: () {
-                    setState(() {
-                      _currentFilter = FilterOption.pending;
-                      _applyFilter();
-                    });
-                  },
-                ),
-                SizedBox(width: width * (15 / 1920)),
-                _buildFilterButton(
-                  width: width,
-                  label: 'Resolved',
-                  isSelected: _currentFilter == FilterOption.resolved,
-                  onTap: () {
-                    setState(() {
-                      _currentFilter = FilterOption.resolved;
-                      _applyFilter();
-                    });
-                  },
-                ),
-              ],
+          Center(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: width * (40 / 1920),
+                vertical: width * (20 / 1920),
+              ),
+              child: Row(
+                children: [
+                  _buildFilterButton(
+                    width: width,
+                    label: 'All',
+                    isSelected: _currentFilter == FilterOption.all,
+                    onTap: () {
+                      setState(() {
+                        _currentFilter = FilterOption.all;
+                        _applyFilter();
+                      });
+                    },
+                  ),
+                  SizedBox(width: width * (15 / 1920)),
+                  _buildFilterButton(
+                    width: width,
+                    label: 'Pending',
+                    isSelected: _currentFilter == FilterOption.pending,
+                    onTap: () {
+                      setState(() {
+                        _currentFilter = FilterOption.pending;
+                        _applyFilter();
+                      });
+                    },
+                  ),
+                  SizedBox(width: width * (15 / 1920)),
+                  _buildFilterButton(
+                    width: width,
+                    label: 'Resolved',
+                    isSelected: _currentFilter == FilterOption.resolved,
+                    onTap: () {
+                      setState(() {
+                        _currentFilter = FilterOption.resolved;
+                        _applyFilter();
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           // Content
@@ -136,82 +144,86 @@ class _SupportHomePageState extends State<SupportHomePage> {
                 ? Center(
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                        themeProvider.isDarkMode
+                            ? darkPrimaryColor
+                            : primaryColor,
                       ),
                     ),
                   )
                 : _errorMessage != null
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Error loading complaints',
-                              style: TextStyle(
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: width * (18 / 1920),
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
-                              ),
-                            ),
-                            SizedBox(height: width * (10 / 1920)),
-                            Text(
-                              _errorMessage!,
-                              style: TextStyle(
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: width * (14 / 1920),
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
-                              ),
-                            ),
-                            SizedBox(height: width * (20 / 1920)),
-                            ElevatedButton(
-                              onPressed: _loadComplaints,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: themeProvider.isDarkMode
-                                    ? darkPrimaryColor
-                                    : primaryColor,
-                              ),
-                              child: Text(
-                                'Retry',
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans-Bold',
-                                  color: getTextColor(themeProvider.isDarkMode),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : _filteredComplaints.isEmpty
-                        ? Center(
-                            child: Text(
-                              'No complaints found',
-                              style: TextStyle(
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: width * (18 / 1920),
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
-                              ),
-                            ),
-                          )
-                        : Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: width * (40 / 1920),
-                              vertical: width * (10 / 1920),
-                            ),
-                            child: ListView.builder(
-                              itemCount: _filteredComplaints.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: width * (20 / 1920),
-                                  ),
-                                  child: ComplaintCard(
-                                    complaintCardInfo: _filteredComplaints[index],
-                                    userAuthInfo: widget.userAuthInfo,
-                                  ),
-                                );
-                              },
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Error loading complaints',
+                          style: TextStyle(
+                            fontFamily: 'NunitoSans-Bold',
+                            fontSize: width * (18 / 1920),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
                             ),
                           ),
+                        ),
+                        SizedBox(height: width * (10 / 1920)),
+                        Text(
+                          _errorMessage!,
+                          style: TextStyle(
+                            fontFamily: 'NunitoSans-Regular',
+                            fontSize: width * (14 / 1920),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: width * (20 / 1920)),
+                        ElevatedButton(
+                          onPressed: _loadComplaints,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: themeProvider.isDarkMode
+                                ? darkPrimaryColor
+                                : primaryColor,
+                          ),
+                          child: Text(
+                            'Retry',
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans-Bold',
+                              color: getTextColor(themeProvider.isDarkMode),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : _filteredComplaints.isEmpty
+                ? Center(
+                    child: Text(
+                      'No complaints found',
+                      style: TextStyle(
+                        fontFamily: 'NunitoSans-Bold',
+                        fontSize: width * (18 / 1920),
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * (40 / 1920),
+                      vertical: width * (10 / 1920),
+                    ),
+                    child: ListView.builder(
+                      itemCount: _filteredComplaints.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: width * (20 / 1920)),
+                          child: ComplaintCard(
+                            complaintCardInfo: _filteredComplaints[index],
+                            userAuthInfo: widget.userAuthInfo,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
           ),
         ],
       ),
@@ -235,12 +247,16 @@ class _SupportHomePageState extends State<SupportHomePage> {
         decoration: BoxDecoration(
           color: isSelected
               ? (themeProvider.isDarkMode ? darkPrimaryColor : primaryColor)
-              : (themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor),
+              : (themeProvider.isDarkMode
+                    ? darkSecondaryColor
+                    : secondaryColor),
           borderRadius: BorderRadius.circular(width * (8 / 1920)),
           border: Border.all(
             color: isSelected
                 ? (themeProvider.isDarkMode ? darkPrimaryColor : primaryColor)
-                : (themeProvider.isDarkMode ? darkBorderColor : lightBorderColor),
+                : (themeProvider.isDarkMode
+                      ? darkBorderColor
+                      : lightBorderColor),
             width: width * (2 / 1920),
           ),
         ),
