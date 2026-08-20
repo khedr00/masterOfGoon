@@ -36,7 +36,7 @@ class ConversationTile extends StatelessWidget {
         curve: Curves.easeOut,
         alignment: Alignment.topLeft,
         child: Padding(
-          padding: EdgeInsets.only(left: (isSelected ? 20 : 0) * scale),
+          padding: EdgeInsets.only(left: (isSelected ? 39 : 0) * scale),
           child: Container(
             width: wrapperWidth * scale,
             height: (_cardHeight + _borderInset * 2) * scale,
@@ -66,6 +66,61 @@ class ConversationTile extends StatelessWidget {
                           isDark: isDark,
                           surfaceColor: surfaceColor,
                           selected: true,
+                        ),
+                      ),
+                      Positioned(
+                        top: (20) * scale,
+                        right: 0,
+                        child: Container(
+                          color: surfaceColor,
+                          width: 20 * scale,
+                          height: _cardHeight * scale,
+                        ),
+                      ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          color: surfaceColor,
+                          width: 20 * scale,
+                          height: 20 * scale,
+                        ),
+                      ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: canvasColor,
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(50 * scale),
+                            ),
+                          ),
+                          width: 20 * scale,
+                          height: 20 * scale,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          color: surfaceColor,
+                          width: 20 * scale,
+                          height: 20 * scale,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: canvasColor,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(50 * scale),
+                            ),
+                          ),
+                          width: 20 * scale,
+                          height: 20 * scale,
                         ),
                       ),
                     ],
@@ -146,7 +201,10 @@ class ConversationTile extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: darkFifthColorPrimaryGreen,
-                          border: Border.all(color: surfaceColor, width: 2 * scale),
+                          border: Border.all(
+                            color: surfaceColor,
+                            width: 2 * scale,
+                          ),
                         ),
                       ),
                     ),

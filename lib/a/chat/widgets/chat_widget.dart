@@ -115,6 +115,7 @@ class _ChatWidgetState extends State<ChatWidget> {
         color: isDark ? darkBackGroundColor : backGroundColor,
         child: Stack(
           children: [
+            // the contacts container :
             Positioned(
               left: 40 * scale,
               top: 40 * scale,
@@ -130,6 +131,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                 ),
               ),
             ),
+            // the chat center widget :
             Positioned(
               left: 323 * scale,
               // The header and chat body are separate surfaces.
@@ -140,6 +142,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                 decoration: BoxDecoration(color: conversationColor),
               ),
             ),
+            //  the primary header :
             Positioned(
               left: 303 * scale,
               top: 20 * scale,
@@ -147,6 +150,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               height: 120 * scale,
               child: _buildChatHeader(scale, isDark, railColor),
             ),
+            //  the right side of the chat widget ( which contains the "X" buttton at its top) :
             Positioned(
               top: 40 * scale,
               right: 17 * scale,
@@ -161,6 +165,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                 ),
               ),
             ),
+            //  the contacts widget :
             Positioned(
               left: 0,
               top: 163 * scale,
