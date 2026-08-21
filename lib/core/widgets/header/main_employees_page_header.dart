@@ -8,7 +8,7 @@ import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
 import 'package:untitled1/features/employee_home_page.dart';
 import 'package:untitled1/features/history_feature/screens/history_page.dart';
-import 'package:untitled1/features/profile_feature/profile_page.dart';
+import 'package:untitled1/core/profile_feature/profile_page.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/schedule_feature/screen/schedule_page.dart';
 import 'package:untitled1/providers/main_employess_page_selector_provider.dart';

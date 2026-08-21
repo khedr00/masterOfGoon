@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/features/profile_feature/widgets/stats_widget.dart/additional_stats_widget.dart';
-import 'package:untitled1/features/profile_feature/widgets/stats_widget.dart/bar_chart_widget.dart';
+import 'package:untitled1/core/profile_feature/widgets/stats_widget.dart/additional_stats_widget.dart';
+import 'package:untitled1/core/profile_feature/widgets/stats_widget.dart/bar_chart_widget.dart';
 
 class StatsWidget extends StatelessWidget {
   const StatsWidget({super.key});

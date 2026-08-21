@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/presentation/widgets/side_notification_widget.dart';
 import 'package:untitled1/features/support_employee_feature/data_sourses/get_all_complaints.dart';
 import 'package:untitled1/features/support_employee_feature/models/complaint_card_info.dart';
 import 'package:untitled1/features/support_employee_feature/presentation/complaint_card.dart';
@@ -139,91 +140,109 @@ class _SupportHomePageState extends State<SupportHomePage> {
             ),
           ),
           // Content
-          Expanded(
-            child: _isLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        themeProvider.isDarkMode
-                            ? darkPrimaryColor
-                            : primaryColor,
-                      ),
-                    ),
-                  )
-                : _errorMessage != null
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Error loading complaints',
-                          style: TextStyle(
-                            fontFamily: 'NunitoSans-Bold',
-                            fontSize: width * (18 / 1920),
-                            color: getPrimaryTextColor(
-                              themeProvider.isDarkMode,
+          SizedBox(
+            width: width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: width * (850 / 1920),
+                  width: width * (1200 / 1920),
+                  child: _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              themeProvider.isDarkMode
+                                  ? darkPrimaryColor
+                                  : primaryColor,
                             ),
                           ),
-                        ),
-                        SizedBox(height: width * (10 / 1920)),
-                        Text(
-                          _errorMessage!,
-                          style: TextStyle(
-                            fontFamily: 'NunitoSans-Regular',
-                            fontSize: width * (14 / 1920),
-                            color: getPrimaryTextColor(
-                              themeProvider.isDarkMode,
-                            ),
+                        )
+                      : _errorMessage != null
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Error loading complaints',
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans-Bold',
+                                  fontSize: width * (18 / 1920),
+                                  color: getPrimaryTextColor(
+                                    themeProvider.isDarkMode,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: width * (10 / 1920)),
+                              Text(
+                                _errorMessage!,
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans-Regular',
+                                  fontSize: width * (14 / 1920),
+                                  color: getPrimaryTextColor(
+                                    themeProvider.isDarkMode,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: width * (20 / 1920)),
+                              ElevatedButton(
+                                onPressed: _loadComplaints,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: themeProvider.isDarkMode
+                                      ? darkPrimaryColor
+                                      : primaryColor,
+                                ),
+                                child: Text(
+                                  'Retry',
+                                  style: TextStyle(
+                                    fontFamily: 'NunitoSans-Bold',
+                                    color: getTextColor(
+                                      themeProvider.isDarkMode,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: width * (20 / 1920)),
-                        ElevatedButton(
-                          onPressed: _loadComplaints,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: themeProvider.isDarkMode
-                                ? darkPrimaryColor
-                                : primaryColor,
-                          ),
+                        )
+                      : _filteredComplaints.isEmpty
+                      ? Center(
                           child: Text(
-                            'Retry',
+                            'No complaints found',
                             style: TextStyle(
                               fontFamily: 'NunitoSans-Bold',
-                              color: getTextColor(themeProvider.isDarkMode),
+                              fontSize: width * (18 / 1920),
+                              color: getPrimaryTextColor(
+                                themeProvider.isDarkMode,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                : _filteredComplaints.isEmpty
-                ? Center(
-                    child: Text(
-                      'No complaints found',
-                      style: TextStyle(
-                        fontFamily: 'NunitoSans-Bold',
-                        fontSize: width * (18 / 1920),
-                        color: getPrimaryTextColor(themeProvider.isDarkMode),
-                      ),
-                    ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: width * (40 / 1920),
-                      vertical: width * (10 / 1920),
-                    ),
-                    child: ListView.builder(
-                      itemCount: _filteredComplaints.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: width * (20 / 1920)),
-                          child: ComplaintCard(
-                            complaintCardInfo: _filteredComplaints[index],
-                            userAuthInfo: widget.userAuthInfo,
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: width * (40 / 1920),
+                            vertical: width * (10 / 1920),
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                          child: ListView.builder(
+                            itemCount: _filteredComplaints.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: width * (20 / 1920),
+                                ),
+                                child: ComplaintCard(
+                                  complaintCardInfo: _filteredComplaints[index],
+                                  userAuthInfo: widget.userAuthInfo,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                ),
+                SideNotificationWidget(userAuthInfo: widget.userAuthInfo),
+              ],
+            ),
           ),
         ],
       ),

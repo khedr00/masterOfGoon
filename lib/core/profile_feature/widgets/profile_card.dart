@@ -9,7 +9,7 @@ import 'package:untitled1/core/widgets/buttons/button.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 
 import 'package:untitled1/providers/theme_provider.dart';
-import 'package:untitled1/features/profile_feature/widgets/profile_card_photo_till_the_small_container_section.dart';
+import 'package:untitled1/core/profile_feature/widgets/profile_card_photo_till_the_small_container_section.dart';
 
 class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key, required this.userAuthInfo, this.employeeId});
