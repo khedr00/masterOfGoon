@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled1/a/chat/data/mock_data.dart';
 import 'package:untitled1/a/chat/widgets/chat_dialog.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/core/widgets/contact_support_button/widgets/contact_support_button.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
@@ -45,6 +46,7 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
             height: width * (129 / 1920),
             child: Image.asset('assets/images/Estate_hub.png'),
           ),
+          ContactSupportButton(),
           AppBarWidget(
             appBarComponents: [
               AppBarComponentInfo(

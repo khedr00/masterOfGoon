@@ -41,6 +41,7 @@ class _ProfileCardState extends State<ProfileCard> {
   @override
   void initState() {
     _getMyInfo();
+
     super.initState();
   }
 
@@ -216,7 +217,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 style: TextStyle(
                   color: getTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-ExtraBold',
-                  fontSize: width * (36 / 1920),
+                  fontSize: width * (12 / 1920),
                 ),
               ),
             ),

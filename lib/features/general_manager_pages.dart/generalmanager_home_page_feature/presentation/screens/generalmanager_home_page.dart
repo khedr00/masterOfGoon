@@ -7,7 +7,7 @@ import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/data/datasources/get_pricing_policy.dart';
 import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/data/datasources/update_pricing_policy.dart';
 import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/data/models/pricing_policy_model.dart';
-import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/presentation/widgets/side_notification_widget.dart';
+import 'package:untitled1/core/widgets/side_notification_widget.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class GeneralmanagerHomePage extends StatefulWidget {
@@ -462,6 +462,7 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
                           // ),
                           SideNotificationWidget(
                             userAuthInfo: widget.userAuthInfo,
+                            wwidth: 300,
                           ),
                           SizedBox(height: width * (28 / 1920)),
 

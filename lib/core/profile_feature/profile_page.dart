@@ -18,27 +18,8 @@ class ProfilePage extends StatelessWidget {
         children: [
           ProfileCard(userAuthInfo: userAuthInfo),
           StatsWidget(),
+          // SideNotificationWidget(userAuthInfo: userAuthInfo, wwidth: 800),
           NotificationWidget(
-            managerNotes: [
-              NotificationCard(
-                notecolor: secondaryColor,
-                dangerIndicatorColor: sixthColorPrimaryRed,
-                title: 'manager MEETING',
-                subTitle: 'on expenses',
-                date: '7/9/2025',
-                description:
-                    ' You have a meeting with the sub manager at   10/9/2025',
-              ),
-              NotificationCard(
-                notecolor: secondaryColor,
-                dangerIndicatorColor: sixthColorPrimaryRed,
-                title: 'manager MEETING',
-                subTitle: 'on expenses',
-                date: '7/9/2025',
-                description:
-                    ' You have a meeting with the sub manager at   10/9/2025',
-              ),
-            ],
             personalNotes: [
               NotificationCard(
                 notecolor: thirdColorSecondary,
@@ -59,6 +40,7 @@ class ProfilePage extends StatelessWidget {
                     ' You closed the Kitlleman Villa Deal with Ali Mostafa on  V -122  in Homs , Shien at   10/9/2025 and you left it unreported .',
               ),
             ],
+            wwidth: 800,
           ),
         ],
       ),

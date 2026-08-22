@@ -9,11 +9,13 @@ import 'package:untitled1/providers/theme_provider.dart';
 class NotificationWidget extends StatefulWidget {
   const NotificationWidget({
     super.key,
-    this.managerNotes,
+
     required this.personalNotes,
+    required this.wwidth,
   });
-  final List<dynamic>? managerNotes;
+
   final List<dynamic> personalNotes;
+  final double wwidth;
 
   @override
   State<NotificationWidget> createState() => _NotificationWidgetState();
@@ -28,46 +30,21 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       children: [
         SizedBox(
           width: width * (474 / 1920),
-          child: widget.managerNotes == null
-              ? GeneralTabableCard(
-                  tabs: [
-                    TabOfTabableCard(
-                      tabName: 'Notifications',
-                      tabColor: themeProvider.isDarkMode
-                          ? darkThirdColorPrimary
-                          : thirdColorPrimary,
-                      bodyOfTheTab: InsidePersonalNotificationWidget(
-                        notesList: widget.personalNotes,
-                      ),
-                    ),
-                  ],
-                  fullCardWidth: width * (474 / 1920),
-                  fullCardHeight: width * (400 / 1920),
-                )
-              : GeneralTabableCard(
-                  tabs: [
-                    TabOfTabableCard(
-                      tabName: 'Personal',
-                      tabColor: themeProvider.isDarkMode
-                          ? darkThirdColorPrimary
-                          : thirdColorPrimary,
-                      bodyOfTheTab: InsidePersonalNotificationWidget(
-                        notesList: widget.personalNotes,
-                      ),
-                    ),
-                    TabOfTabableCard(
-                      tabName: 'Managers',
-                      tabColor: themeProvider.isDarkMode
-                          ? darkPrimaryColor
-                          : primaryColor,
-                      bodyOfTheTab: InsidePersonalNotificationWidget(
-                        notesList: widget.managerNotes!,
-                      ),
-                    ),
-                  ],
-                  fullCardWidth: width * (474 / 1920),
-                  fullCardHeight: width * (800 / 1920),
+          child: GeneralTabableCard(
+            tabs: [
+              TabOfTabableCard(
+                tabName: 'Notifications',
+                tabColor: themeProvider.isDarkMode
+                    ? darkThirdColorPrimary
+                    : thirdColorPrimary,
+                bodyOfTheTab: InsidePersonalNotificationWidget(
+                  notesList: widget.personalNotes,
                 ),
+              ),
+            ],
+            fullCardWidth: width * (474 / 1920),
+            fullCardHeight: width * (widget.wwidth / 1920),
+          ),
         ),
         Positioned(
           right: width * (30 / 1920),

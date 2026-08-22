@@ -16,7 +16,9 @@ class NotificationModel {
       id: json["id"],
       title: json["title"],
       body: json["body"],
-      createdAt: json["createdAt"],
+      createdAt: json["createdAt"].substring(0, 10),
+      // .replaceAll('-', ' ')
+      // .replaceFirst('T', ' '),
     );
   }
 }

@@ -9,8 +9,13 @@ import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/notification/modules/notification_model.dart';
 
 class SideNotificationWidget extends StatefulWidget {
-  const SideNotificationWidget({super.key, required this.userAuthInfo});
+  const SideNotificationWidget({
+    super.key,
+    required this.userAuthInfo,
+    required this.wwidth,
+  });
   final UserAuthInfo userAuthInfo;
+  final double wwidth;
 
   @override
   State<SideNotificationWidget> createState() => _SideNotificationWidgetState();
@@ -43,11 +48,6 @@ class _SideNotificationWidgetState extends State<SideNotificationWidget> {
           ),
         );
       }
-      // if (employeeCardsInfoList.isNotEmpty) {
-      //   _falsingcardIsClicked();
-      //   _cardIsClicked[0] = true;
-      //   _employeeId = _employeeCardInfoList[0].employeeId;
-      // } else {}
     });
   }
 
@@ -59,6 +59,9 @@ class _SideNotificationWidgetState extends State<SideNotificationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationWidget(personalNotes: _notificationCards);
+    return NotificationWidget(
+      personalNotes: _notificationCards,
+      wwidth: widget.wwidth,
+    );
   }
 }
