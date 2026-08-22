@@ -46,7 +46,7 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
             height: width * (129 / 1920),
             child: Image.asset('assets/images/Estate_hub.png'),
           ),
-          ContactSupportButton(),
+          ContactSupportButton(userAuthInfo: widget.userAuthInfo),
           AppBarWidget(
             appBarComponents: [
               AppBarComponentInfo(
