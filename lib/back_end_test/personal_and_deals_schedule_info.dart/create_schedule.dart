@@ -9,26 +9,25 @@ Future<String> createSchedule({
   required String title,
   required String description,
   CancelToken? cancelToken,
-  String? dealId,
-  String? requestId,
+  String? saleLeaseDealId,
+  String? buyRentDealId,
 }) async {
-  print(dealId);
   Map<String, dynamic> data;
-  if (dealId != null) {
+  if (saleLeaseDealId != null) {
     data = {
       "type": type,
       "date": date,
       "title": title,
       "description": description,
-      "dealId": dealId,
+      "saleLeaseDealId": saleLeaseDealId,
     };
-  } else if (requestId != null) {
+  } else if (buyRentDealId != null) {
     data = {
       "type": type,
       "date": date,
       "title": title,
       "description": description,
-      "requestId": requestId,
+      "buyRentDealId": buyRentDealId,
     };
   } else {
     data = {

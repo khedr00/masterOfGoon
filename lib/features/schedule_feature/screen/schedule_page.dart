@@ -25,8 +25,9 @@ class _SchedulePageState extends State<SchedulePage> {
   String date = '';
   String title = '';
   String description = '';
-  String? dealId;
-  String? requestId;
+  String? saleLeaseDealId;
+  String? buyRentDealId;
+
   bool _isCompletedSchedule = false;
   final CancelToken _cancelToken = CancelToken();
 
@@ -35,8 +36,8 @@ class _SchedulePageState extends State<SchedulePage> {
     String date,
     String title,
     String description,
-    String? dealId,
-    String? requestId,
+    String? saleLeaseDealId,
+    String? buyRentDealId,
   ) async {
     String isCompletedOrRejectedSchedule = await createSchedule(
       cancelToken: _cancelToken,
@@ -45,6 +46,8 @@ class _SchedulePageState extends State<SchedulePage> {
       date: date,
       title: title,
       description: description,
+      saleLeaseDealId: saleLeaseDealId,
+      buyRentDealId: buyRentDealId,
     );
     setState(() {
       isCompletedOrRejectedSchedule == 'success'
@@ -167,7 +170,10 @@ class _SchedulePageState extends State<SchedulePage> {
                                 ? darkThirdColorSecondary
                                 : thirdColorSecondary,
                             onChanged: (value) {
-                              dealId = value.trim();
+                              widget.userAuthInfo.role == 'PURCHASING' ||
+                                      widget.userAuthInfo.role == 'RENTAL'
+                                  ? buyRentDealId = value.trim()
+                                  : saleLeaseDealId = value.trim();
                             },
                             hintText: 'ID',
                             widthOfTextField: debugWidth / 3,
@@ -195,14 +201,17 @@ class _SchedulePageState extends State<SchedulePage> {
                               text: 'confirm',
                               buttonAction: () async {
                                 await doCreateSchedule(
-                                  dealId != null && dealId != ''
-                                      ? 'DEAL'
+                                  buyRentDealId != null && buyRentDealId != ''
+                                      ? 'BUY_RENT_DEAL'
+                                      : saleLeaseDealId != null &&
+                                            saleLeaseDealId != ''
+                                      ? 'SALE_LEASE_DEAL'
                                       : 'PERSONAL',
                                   _dateTime.toUtc().toIso8601String(),
                                   title,
                                   description,
-                                  dealId,
-                                  requestId,
+                                  buyRentDealId,
+                                  saleLeaseDealId,
                                 );
                                 if (_isCompletedSchedule) {
                                   if (context.mounted) {

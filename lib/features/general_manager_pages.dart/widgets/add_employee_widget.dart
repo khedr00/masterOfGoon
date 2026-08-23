@@ -31,7 +31,7 @@ class _AddEmployeeWidgetState extends State<AddEmployeeWidget> {
 
   final List<String> _roles = [
     'SALES',
-    'PURCHASE',
+    'PURCHASING',
     'RENTAL',
     'LEASE',
     'SUPPORT',
