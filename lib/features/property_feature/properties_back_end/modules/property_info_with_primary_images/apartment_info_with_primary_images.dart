@@ -1,4 +1,4 @@
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
 
 class ApartmentInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
   ApartmentInfoWithPrimaryImages({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/widgets/property_card/property_card_lower_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/property_card_lower_section.dart';
 
 class PaintingLowerSection extends StatelessWidget {
   const PaintingLowerSection({super.key});

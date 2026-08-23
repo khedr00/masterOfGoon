@@ -1,18 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/properties/get_prop_info_with_prim_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/hall_info_with_primary_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/house_info_with_primary_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/get_prop_info_with_prim_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/hall_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/house_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/core/widgets/property_card/apartment_card_upper_section.dart';
-import 'package:untitled1/core/widgets/property_card/hall_card_upper_section.dart';
-import 'package:untitled1/core/widgets/property_card/house_card_upper_section.dart';
-import 'package:untitled1/core/widgets/property_card/property_card_lower_section.dart';
-import 'package:untitled1/core/widgets/property_card/store_card_upper_section.dart';
-import 'package:untitled1/core/widgets/property_card/villa_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/apartment_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/hall_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/house_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/property_card_lower_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/store_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/villa_card_upper_section.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyCard extends StatefulWidget {

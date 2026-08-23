@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/core/widgets/property_card/tabable_property_icon.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/tabable_property_icon.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyCardUpperSection extends StatelessWidget {
@@ -40,7 +40,9 @@ class PropertyCardUpperSection extends StatelessWidget {
               height: width * (618 / 1920),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(width * (5 / 1920)),
-                color: themeProvider.isDarkMode ? darkFourthColorSecondaryLightBrown : fourthColorSecondaryLightBrown,
+                color: themeProvider.isDarkMode
+                    ? darkFourthColorSecondaryLightBrown
+                    : fourthColorSecondaryLightBrown,
               ),
               child: Column(
                 children: [
@@ -67,7 +69,9 @@ class PropertyCardUpperSection extends StatelessWidget {
                               'for Sale',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                color: getPrimaryTextColor(
+                                  themeProvider.isDarkMode,
+                                ),
                                 fontFamily: 'NunitoSans-ExtraBold',
                                 fontSize: width * (32 / 1920),
                               ),
@@ -93,7 +97,9 @@ class PropertyCardUpperSection extends StatelessWidget {
                               propertyInfo.fullPropertyDescription,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                color: getPrimaryTextColor(
+                                  themeProvider.isDarkMode,
+                                ),
                                 fontFamily: 'NunitoSans-Medium',
                                 fontSize: width * (28 / 1920),
                               ),

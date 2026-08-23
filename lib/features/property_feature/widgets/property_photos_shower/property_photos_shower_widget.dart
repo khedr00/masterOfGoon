@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/core/widgets/property_photos_shower/not_primary_property_photos_shower_widget.dart';
-import 'package:untitled1/core/widgets/property_photos_shower/primary_property_photos_shower_widget.dart';
+import 'package:untitled1/features/property_feature/widgets/property_photos_shower/not_primary_property_photos_shower_widget.dart';
+import 'package:untitled1/features/property_feature/widgets/property_photos_shower/primary_property_photos_shower_widget.dart';
 
 /// هاد الكلاس هو جنب او تحت كرت العقارات البني
 /// اللي بكونو ضمن الاكباندد  اوالشرنكد

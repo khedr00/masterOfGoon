@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/core/widgets/property_card/property_card.dart';
-import 'package:untitled1/core/widgets/property_photos_shower/property_photos_shower_widget.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/property_card.dart';
+import 'package:untitled1/features/property_feature/widgets/property_photos_shower/property_photos_shower_widget.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class ExpandedPropertyCardWithPhotos extends StatelessWidget {

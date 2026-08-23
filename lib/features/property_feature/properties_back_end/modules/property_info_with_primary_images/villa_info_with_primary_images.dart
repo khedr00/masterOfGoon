@@ -1,7 +1,7 @@
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
 
-class StoreInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
-  StoreInfoWithPrimaryImages({
+class VillaInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
+  VillaInfoWithPrimaryImages({
     required super.nameCode,
     required super.simplePropertyDescription,
     required super.fullPropertyDescription,
@@ -16,11 +16,11 @@ class StoreInfoWithPrimaryImages extends PropertyInfoWithPrimaryImages {
     required super.outsidePainting,
     required super.furnitureState,
     required super.nearByPlaces,
+    required this.numberOfFloors,
+    required this.outDoorPlace,
     required super.avaliableInternet,
-    required this.floorNumber,
-    required this.storeFront,
     required super.propertyType,
   });
-  final int floorNumber;
-  final String storeFront;
+  final int numberOfFloors;
+  final List<String> outDoorPlace;
 }

@@ -9,7 +9,7 @@ import 'package:untitled1/core/widgets/general_tabable_card/tab_of_tabable_card.
 import 'package:untitled1/core/widgets/liked_and_avoidances_body/avoidances_only_body.dart';
 import 'package:untitled1/core/widgets/liked_and_avoidances_body/liked_only_body.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
-import 'package:untitled1/core/widgets/property_card/property_card.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/property_card.dart';
 import 'package:untitled1/core/widgets/simple_deal_info_card/simple_deal_info_card.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 

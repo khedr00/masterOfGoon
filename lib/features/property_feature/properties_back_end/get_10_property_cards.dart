@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/appartment_card_module_info.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/hall_card_module_info.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/house_card_module_info.dart';
-import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_model.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/prpoperty_card_info/property_card_model.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/store_card_module_info.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/villa_card_module_info.dart';

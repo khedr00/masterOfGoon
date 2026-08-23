@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/hall_info_with_primary_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/house_info_with_primary_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/store_info_with_primary_images.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/hall_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/house_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/store_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
 import 'package:untitled1/core/modules/property-modules/nearby_place.dart';
 
 Future<dynamic> getPropertyInfoWithPrimaryImages({

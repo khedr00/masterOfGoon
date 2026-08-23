@@ -1,7 +1,7 @@
-import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/prpoperty_card_info/property_card_module_info.dart';
 
-class HouseCardModuleInfo extends PropertyCardModuleInfo {
-  HouseCardModuleInfo({
+class StoreCardModuleInfo extends PropertyCardModuleInfo {
+  StoreCardModuleInfo({
     required super.photoUrl,
     required super.propertyType,
     required super.nameCode,
@@ -10,10 +10,10 @@ class HouseCardModuleInfo extends PropertyCardModuleInfo {
     required super.leastSellPrice,
     required super.simplePropertyDescription,
     required super.address,
-    required this.numberOfFloors,
+    required this.interface,
     required super.avaliableInternet,
     required super.isAvalable,
     required super.id,
   });
-  final int numberOfFloors;
+  final String interface;
 }

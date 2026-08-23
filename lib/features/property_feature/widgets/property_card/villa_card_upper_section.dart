@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/back_end_test/properties/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
-import 'package:untitled1/core/widgets/property_card/property_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/property_card_upper_section.dart';
 
 class VillaCardUpperSection extends StatelessWidget {
   const VillaCardUpperSection({
