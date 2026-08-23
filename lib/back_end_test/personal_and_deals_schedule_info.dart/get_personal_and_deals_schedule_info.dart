@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_deal_note.dart';
 import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_note.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/deal_note_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/personal_note_widget.dart';
 
 Future<dynamic> getPersonalAndDealsScheduleInfo({
@@ -35,7 +37,7 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
       throw Exception(e.response?.data['message'] ?? 'Server Error');
     }
 
-    throw Exception('Connection Error getMe');
+    throw Exception('Connection Error get personal and Deals schedule');
   } catch (e) {
     throw Exception(e);
   }
@@ -113,21 +115,22 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
 
   List<dynamic> scheduleNote = [];
   for (int i = 0; i < temp.length; i++) {
-    // if (temp[i].containsKey('dealId')) {
-    //   scheduleNote.add(
-    //     DealNoteWidget(
-    //       scheduleDealNote: ScheduleDealNote(
-    //         employeeId: 1,
-    //         time: temp[i]['time'],
-    //         title: temp[i]['title'],
-    //         description: temp[i]['description'],
-    //         dealId: temp[i]['dealId'],
-    //         propertyNameCode: temp[i]['propertyNameCode'],
-    //         dealName: temp[i]['dealName'],
-    //       ),
-    //     ),
-    //   );
-    // }
+    if (temp[i]['type'] == 'DEAL') {
+      scheduleNote.add(
+        DealNoteWidget(
+          scheduleDealNote: ScheduleDealNote(
+            employeeId: 1,
+            time:
+                '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
+            title: temp[i]['title'],
+            description: temp[i]['description'],
+            dealId: temp[i]['deal']['id'],
+            propertyNameCode: 'k',
+            dealName: 'k',
+          ),
+        ),
+      );
+    }
 
     scheduleNote.add(
       PersonalNoteWidget(

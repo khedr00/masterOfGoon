@@ -262,6 +262,7 @@ class _SchedulePageState extends State<SchedulePage> {
               ),
             ),
             PersonalAndDealsScheduleWidget(
+              key: ValueKey(description),
               fullHeight: width * (820 / 1920),
 
               userAuthInfo: widget.userAuthInfo,

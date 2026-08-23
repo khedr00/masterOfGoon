@@ -12,6 +12,7 @@ Future<String> createSchedule({
   String? dealId,
   String? requestId,
 }) async {
+  print(dealId);
   Map<String, dynamic> data;
   if (dealId != null) {
     data = {
