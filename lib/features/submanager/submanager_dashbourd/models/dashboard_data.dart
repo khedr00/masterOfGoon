@@ -128,7 +128,7 @@ class DashboardBreakdown {
 
   factory DashboardBreakdown.fromJson(Map<String, dynamic> json) =>
       DashboardBreakdown(
-        type: json['type']?.toString(),
+        type: (json['type'] ?? json['propertyType'])?.toString(),
         city: json['city']?.toString(),
         dealType: json['dealType']?.toString(),
         count: _asInt(json['count']),

@@ -47,9 +47,7 @@ class _SubmanagerDashbourdState extends State<SubmanagerDashbourd> {
   Future<void> _selectDate({required bool isFrom}) async {
     final selected = await showDatePicker(
       context: context,
-      initialDate: isFrom
-          ? (_from ?? _to ?? DateTime.now())
-          : (_to ?? _from ?? DateTime.now()),
+      initialDate: isFrom ? (_from ?? _to ?? DateTime.now()) : (_to ?? _from ?? DateTime.now()),
       firstDate: isFrom ? DateTime(2000) : (_from ?? DateTime(2000)),
       lastDate: isFrom ? (_to ?? DateTime.now()) : DateTime.now(),
     );
@@ -80,19 +78,9 @@ class _SubmanagerDashbourdState extends State<SubmanagerDashbourd> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _dateField(
-                  width,
-                  label: 'FROM',
-                  value: _from,
-                  onTap: () => _selectDate(isFrom: true),
-                ),
+                _dateField(width, label: 'FROM', value: _from, onTap: () => _selectDate(isFrom: true)),
                 SizedBox(width: width * (16 / 1920)),
-                _dateField(
-                  width,
-                  label: 'TO',
-                  value: _to,
-                  onTap: () => _selectDate(isFrom: false),
-                ),
+                _dateField(width, label: 'TO', value: _to, onTap: () => _selectDate(isFrom: false)),
               ],
             ),
           ),
@@ -118,34 +106,31 @@ class _SubmanagerDashbourdState extends State<SubmanagerDashbourd> {
     required String label,
     required DateTime? value,
     required VoidCallback onTap,
-  }) => Padding(
-    padding: EdgeInsets.all(width * (20 / 1920)),
-    child: InkWell(
-      onTap: _isLoading ? null : onTap,
-      child: Container(
-        width: width * (200 / 1920),
-        padding: EdgeInsets.symmetric(
-          horizontal: width * (14 / 1920),
-          vertical: width * (10 / 1920),
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(width * (8 / 1920)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('$label: ${_dateLabel(value)}'),
-            if (_isLoading) ...[
-              SizedBox(width: width * (8 / 1920)),
-              SizedBox(
-                width: width * (12 / 1920),
-                height: width * (12 / 1920),
-                child: const CircularProgressIndicator(strokeWidth: 2),
-              ),
-            ],
+  }) => InkWell(
+    onTap: _isLoading ? null : onTap,
+    child: Container(
+      width: width * (190 / 1920),
+      padding: EdgeInsets.symmetric(
+        horizontal: width * (14 / 1920),
+        vertical: width * (10 / 1920),
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(width * (8 / 1920)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('$label: ${_dateLabel(value)}'),
+          if (_isLoading) ...[
+            SizedBox(width: width * (8 / 1920)),
+            SizedBox(
+              width: width * (12 / 1920),
+              height: width * (12 / 1920),
+              child: const CircularProgressIndicator(strokeWidth: 2),
+            ),
           ],
-        ),
+        ],
       ),
     ),
   );

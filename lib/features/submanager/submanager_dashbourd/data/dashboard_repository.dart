@@ -15,11 +15,12 @@ class DashboardRepository {
         if (to != null) 'to': _endOfDay(to),
       },
     );
-    return DashboardData.fromJson(Map<String, dynamic>.from(response.data as Map));
+    return DashboardData.fromJson(
+      Map<String, dynamic>.from(response.data as Map),
+    );
   }
 
-  static String _startOfDay(DateTime date) =>
-      '${_datePart(date)}T00:00:00Z';
+  static String _startOfDay(DateTime date) => '${_datePart(date)}T00:00:00Z';
   static String _endOfDay(DateTime date) => '${_datePart(date)}T23:59:59Z';
   static String _datePart(DateTime date) =>
       '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';

@@ -15,30 +15,32 @@ class PropertiesDashboardWidget extends StatefulWidget {
 }
 
 class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
-  static const List<String> _regions = [
-    'All',
-    'Damascus',
-    'Aleppo',
-    'Homs',
-    'Tartous',
+  static const _pieColors = [
+    Colors.redAccent,
+    Colors.lightBlue,
+    Colors.green,
+    Colors.purple,
+    Colors.orange,
   ];
-
-  static const Map<String, List<double>> _propertyChartData = {
-    'All': [32, 24, 17, 12, 8],
-    'Damascus': [14, 11, 8, 6, 4],
-    'Aleppo': [7, 5, 4, 3, 2],
-    'Homs': [5, 4, 3, 2, 1],
-    'Tartous': [6, 4, 2, 1, 1],
-  };
-
   bool _expanded = false;
   String _selectedRegion = 'All';
+
+  List<String> get _regions => [
+    'All',
+    ..._uniqueCities(widget.data?.byCity ?? const []),
+  ];
+
+  @override
+  void didUpdateWidget(covariant PropertiesDashboardWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!_regions.contains(_selectedRegion)) _selectedRegion = 'All';
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    double width = MediaQuery.of(context).size.width;
-
+    final width = MediaQuery.of(context).size.width;
+    final data = widget.data;
     return AnimatedSize(
       duration: const Duration(milliseconds: 280),
       curve: Curves.easeInOut,
@@ -47,7 +49,9 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
       child: Container(
         width: width * (835 / 1920),
         decoration: BoxDecoration(
-          color: themeProvider.isDarkMode ? darkSecondaryColor : const Color(0xFF8FB2E3),
+          color: themeProvider.isDarkMode
+              ? darkSecondaryColor
+              : const Color(0xFF8FB2E3),
           borderRadius: BorderRadius.circular(width * (22 / 1920)),
         ),
         child: Padding(
@@ -61,25 +65,33 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
                   _topCard(
                     width,
                     'Total Properties',
-                    '${widget.data?.total ?? 124}',
+                    '${data?.total ?? 0}',
                     Icons.home_work_rounded,
-                    themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF1C769B),
+                    themeProvider.isDarkMode
+                        ? darkPrimaryColor
+                        : const Color(0xFF1C769B),
                   ),
                   _topCard(
                     width,
                     'Available',
-                    '${widget.data?.available ?? 88}',
+                    '${data?.available ?? 0}',
                     Icons.check_circle,
                     Colors.green,
                   ),
                   _topCard(
                     width,
                     'For Sale',
-                    '${widget.data?.forSale ?? 21}',
+                    '${data?.forSale ?? 0}',
                     Icons.sell,
                     Colors.redAccent,
                   ),
-                  _topCard(width, 'For Rent', '${widget.data?.forLease ?? 15}', Icons.key, Colors.orange),
+                  _topCard(
+                    width,
+                    'For Rent',
+                    '${data?.forLease ?? 0}',
+                    Icons.key,
+                    Colors.orange,
+                  ),
                 ],
               ),
               SizedBox(height: width * (18 / 1920)),
@@ -97,6 +109,9 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
 
   Widget _expandedContent(double width) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final cities = _groupByCity(
+      widget.data?.byCity ?? const <DashboardBreakdown>[],
+    );
     return Column(
       key: const ValueKey('properties-expanded'),
       children: [
@@ -106,26 +121,12 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
           width: double.infinity,
           height: width * (300 / 1920),
           padding: EdgeInsets.all(width * (18 / 1920)),
-          decoration: BoxDecoration(
-            color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
-            borderRadius: BorderRadius.circular(width * (18 / 1920)),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: width * (8 / 1920),
-                color: themeProvider.isDarkMode ? Colors.black54 : Colors.black12,
-                offset: Offset(0, width * (3 / 1920)),
-              ),
-            ],
-          ),
+          decoration: _cardDecoration(width, themeProvider),
           child: Column(
             children: [
               Text(
                 'Properties Types',
-                style: TextStyle(
-                  fontFamily: 'NunitoSans-Bold',
-                  fontSize: width * (22 / 1920),
-                  color: getPrimaryTextColor(themeProvider.isDarkMode),
-                ),
+                style: _titleStyle(width, themeProvider),
               ),
               Expanded(child: _propertyBarChart(width)),
             ],
@@ -135,28 +136,11 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
         Container(
           width: double.infinity,
           height: width * (300 / 1920),
-          decoration: BoxDecoration(
-            color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
-            borderRadius: BorderRadius.circular(width * (18 / 1920)),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: width * (8 / 1920),
-                color: themeProvider.isDarkMode ? Colors.black54 : Colors.black12,
-                offset: Offset(0, width * (3 / 1920)),
-              ),
-            ],
-          ),
+          decoration: _cardDecoration(width, themeProvider),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                'Regions',
-                style: TextStyle(
-                  fontFamily: 'NunitoSans-Bold',
-                  fontSize: width * (22 / 1920),
-                  color: getPrimaryTextColor(themeProvider.isDarkMode),
-                ),
-              ),
+              Text('Regions', style: _titleStyle(width, themeProvider)),
               SizedBox(
                 width: width * (210 / 1920),
                 height: width * (210 / 1920),
@@ -164,12 +148,7 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
                   PieChartData(
                     centerSpaceRadius: width * (52 / 1920),
                     sectionsSpace: 0,
-                    sections: [
-                      _section(width, Colors.redAccent, 35, '35'),
-                      _section(width, Colors.lightBlue, 25, '25'),
-                      _section(width, Colors.green, 18, '18'),
-                      _section(width, Colors.purple, 12, '12'),
-                    ],
+                    sections: _pieSections(width, cities),
                   ),
                 ),
               ),
@@ -178,10 +157,12 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
                 spacing: width * (14 / 1920),
                 runSpacing: width * (8 / 1920),
                 children: [
-                  _region(width, Colors.redAccent, 'Damascus'),
-                  _region(width, Colors.lightBlue, 'Aleppo'),
-                  _region(width, Colors.green, 'Homs'),
-                  _region(width, Colors.purple, 'Tartous'),
+                  for (var i = 0; i < cities.length; i++)
+                    _region(
+                      width,
+                      _pieColors[i % _pieColors.length],
+                      cities[i].city ?? '',
+                    ),
                 ],
               ),
             ],
@@ -191,34 +172,47 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
     );
   }
 
+  List<DashboardBreakdown> get _barData {
+    final data = widget.data;
+    if (data == null) return const [];
+    final source = _selectedRegion == 'All'
+        ? data.byType
+        : data.byTypeAndCity
+              .where((item) => item.city == _selectedRegion)
+              .toList();
+    return _groupByType(source);
+  }
+
   Widget _propertyBarChart(double width) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final values =
-        _propertyChartData[_selectedRegion] ?? _propertyChartData['All']!;
-
+    final data = _barData;
+    final maxY = _maxY(data.map((item) => item.count));
     return BarChart(
       BarChartData(
-        maxY: 40,
+        minY: 0,
+        maxY: maxY,
         gridData: FlGridData(show: false),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
-          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
               reservedSize: width * (28 / 1920),
-              interval: 10,
-              getTitlesWidget: (value, meta) {
-                return Text(
-                  value.toInt().toString(),
-                  style: TextStyle(
-                    fontFamily: 'NunitoSans-Regular',
-                    fontSize: width * (12 / 1920),
-                    color: getPrimaryTextColor(themeProvider.isDarkMode),
-                  ),
-                );
-              },
+              interval: maxY / 4,
+              getTitlesWidget: (value, meta) => Text(
+                value.toInt().toString(),
+                style: TextStyle(
+                  fontFamily: 'NunitoSans-Regular',
+                  fontSize: width * (12 / 1920),
+                  color: getPrimaryTextColor(themeProvider.isDarkMode),
+                ),
+              ),
             ),
           ),
           bottomTitles: AxisTitles(
@@ -226,22 +220,14 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
               showTitles: true,
               reservedSize: width * (34 / 1920),
               getTitlesWidget: (value, meta) {
-                final labels = [
-                  'Apartment',
-                  'House',
-                  'Villa',
-                  'Office',
-                  'Hall',
-                ];
                 final index = value.toInt();
-                final text = index >= 0 && index < labels.length
-                    ? labels[index]
+                final label = index >= 0 && index < data.length
+                    ? data[index].type ?? ''
                     : '';
-
                 return Padding(
                   padding: EdgeInsets.only(top: width * (8 / 1920)),
                   child: Text(
-                    text,
+                    label,
                     style: TextStyle(
                       fontFamily: 'NunitoSans-Bold',
                       fontSize: width * (12 / 1920),
@@ -253,10 +239,10 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
             ),
           ),
         ),
-        barGroups: List.generate(
-          values.length,
-          (index) => _bar(width, index, values[index]),
-        ),
+        barGroups: [
+          for (var i = 0; i < data.length; i++)
+            _bar(width, i, data[i].count.toDouble()),
+        ],
       ),
     );
   }
@@ -267,7 +253,9 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
       alignment: Alignment.centerRight,
       child: TextButton(
         style: TextButton.styleFrom(
-          backgroundColor: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
+          backgroundColor: themeProvider.isDarkMode
+              ? darkBackGroundColor
+              : const Color(0xFFDCE7F8),
           padding: EdgeInsets.symmetric(
             horizontal: width * (18 / 1920),
             vertical: width * (8 / 1920),
@@ -282,7 +270,9 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
           style: TextStyle(
             fontFamily: 'NunitoSans-Bold',
             fontSize: width * (14 / 1920),
-            color: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF1C769B),
+            color: themeProvider.isDarkMode
+                ? darkPrimaryColor
+                : const Color(0xFF1C769B),
           ),
         ),
       ),
@@ -291,22 +281,23 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
 
   Widget _regionFilter(double width) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final regions = _regions;
     return SizedBox(
       width: double.infinity,
       height: width * (30 / 1920),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: _regions.length,
-        separatorBuilder: (context, index) =>
-            SizedBox(width: width * (8 / 1920)),
+        itemCount: regions.length,
+        separatorBuilder: (_, _) => SizedBox(width: width * (8 / 1920)),
         itemBuilder: (context, index) {
-          final region = _regions[index];
-          final isSelected = region == _selectedRegion;
-
+          final region = regions[index];
+          final selected = region == _selectedRegion;
           return TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: isSelected
-                  ? themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8)
+              backgroundColor: selected
+                  ? themeProvider.isDarkMode
+                        ? darkBackGroundColor
+                        : const Color(0xFFDCE7F8)
                   : Colors.white.withValues(alpha: 0.28),
               padding: EdgeInsets.symmetric(horizontal: width * (12 / 1920)),
               minimumSize: Size(0, width * (30 / 1920)),
@@ -318,9 +309,7 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
             child: Text(
               region,
               style: TextStyle(
-                fontFamily: isSelected
-                    ? 'NunitoSans-Bold'
-                    : 'NunitoSans-Regular',
+                fontFamily: selected ? 'NunitoSans-Bold' : 'NunitoSans-Regular',
                 fontSize: width * (13 / 1920),
                 color: getPrimaryTextColor(themeProvider.isDarkMode),
               ),
@@ -338,17 +327,17 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
     IconData icon,
     Color color,
   ) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context);
     return Container(
       width: width * (180 / 1920),
       height: width * (110 / 1920),
       decoration: BoxDecoration(
-        color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
+        color: theme.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
         borderRadius: BorderRadius.circular(width * (16 / 1920)),
         boxShadow: [
           BoxShadow(
             blurRadius: width * (6 / 1920),
-            color: themeProvider.isDarkMode ? Colors.black54 : Colors.black12,
+            color: theme.isDarkMode ? Colors.black54 : Colors.black12,
             offset: Offset(0, width * (3 / 1920)),
           ),
         ],
@@ -369,7 +358,7 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
                     style: TextStyle(
                       fontFamily: 'NunitoSans-Regular',
                       fontSize: width * (18 / 1920),
-                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      color: getPrimaryTextColor(theme.isDarkMode),
                     ),
                   ),
                 ),
@@ -391,7 +380,7 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
   }
 
   BarChartGroupData _bar(double width, int x, double y) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context);
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -399,56 +388,111 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
           toY: y,
           width: width * (24 / 1920),
           borderRadius: BorderRadius.circular(8),
-          color: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF1C769B),
+          color: theme.isDarkMode ? darkPrimaryColor : const Color(0xFF1C769B),
         ),
       ],
     );
   }
 
-  PieChartSectionData _section(
+  List<PieChartSectionData> _pieSections(
     double width,
-    Color color,
-    double value,
-    String title,
+    List<DashboardBreakdown> data,
   ) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    return PieChartSectionData(
-      color: color,
-      value: value,
-      title: title,
-      radius: width * (48 / 1920),
-      titleStyle: TextStyle(
-        color: getTextColor(themeProvider.isDarkMode),
-        fontFamily: 'NunitoSans-Bold',
-        fontSize: width * (16 / 1920),
-      ),
-    );
+    final theme = Provider.of<ThemeProvider>(context);
+    return [
+      for (var i = 0; i < data.length; i++)
+        PieChartSectionData(
+          color: _pieColors[i % _pieColors.length],
+          value: data[i].count.toDouble(),
+          title: '${data[i].count}',
+          radius: width * (48 / 1920),
+          titleStyle: TextStyle(
+            color: getTextColor(theme.isDarkMode),
+            fontFamily: 'NunitoSans-Bold',
+            fontSize: width * (16 / 1920),
+          ),
+        ),
+    ];
   }
 
   Widget _region(double width, Color color, String text) {
-    return Builder(
-      builder: (context) {
-        final themeProvider = Provider.of<ThemeProvider>(context);
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: width * (10 / 1920),
-              height: width * (10 / 1920),
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            ),
-            SizedBox(width: width * (5 / 1920)),
-            Text(
-              text,
-              style: TextStyle(
-                fontFamily: 'NunitoSans-Regular',
-                fontSize: width * (13 / 1920),
-                color: getPrimaryTextColor(themeProvider.isDarkMode),
-              ),
-            ),
-          ],
-        );
-      },
+    final theme = Provider.of<ThemeProvider>(context);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: width * (10 / 1920),
+          height: width * (10 / 1920),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        SizedBox(width: width * (5 / 1920)),
+        Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'NunitoSans-Regular',
+            fontSize: width * (13 / 1920),
+            color: getPrimaryTextColor(theme.isDarkMode),
+          ),
+        ),
+      ],
     );
   }
+
+  BoxDecoration _cardDecoration(double width, ThemeProvider theme) =>
+      BoxDecoration(
+        color: theme.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
+        borderRadius: BorderRadius.circular(width * (18 / 1920)),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: width * (8 / 1920),
+            color: theme.isDarkMode ? Colors.black54 : Colors.black12,
+            offset: Offset(0, width * (3 / 1920)),
+          ),
+        ],
+      );
+  TextStyle _titleStyle(double width, ThemeProvider theme) => TextStyle(
+    fontFamily: 'NunitoSans-Bold',
+    fontSize: width * (22 / 1920),
+    color: getPrimaryTextColor(theme.isDarkMode),
+  );
+}
+
+List<String> _uniqueCities(List<DashboardBreakdown> data) => {
+  for (final item in data)
+    if (item.city != null && item.city!.isNotEmpty) item.city!,
+}.toList();
+List<DashboardBreakdown> _groupByCity(List<DashboardBreakdown> data) {
+  final counts = <String, int>{};
+  for (final item in data) {
+    final city = item.city;
+    if (city != null && city.isNotEmpty) {
+      counts[city] = (counts[city] ?? 0) + item.count;
+    }
+  }
+  return [
+    for (final entry in counts.entries)
+      DashboardBreakdown(city: entry.key, count: entry.value),
+  ];
+}
+
+List<DashboardBreakdown> _groupByType(List<DashboardBreakdown> data) {
+  final counts = <String, int>{};
+  for (final item in data) {
+    final type = item.type;
+    if (type != null && type.isNotEmpty) {
+      counts[type] = (counts[type] ?? 0) + item.count;
+    }
+  }
+  return [
+    for (final entry in counts.entries)
+      DashboardBreakdown(type: entry.key, count: entry.value),
+  ];
+}
+
+double _maxY(Iterable<int> values) {
+  final maximum = values.fold<int>(
+    0,
+    (current, value) => value > current ? value : current,
+  );
+  return maximum == 0 ? 1 : maximum.toDouble();
 }

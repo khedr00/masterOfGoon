@@ -14,68 +14,33 @@ class FirstSection extends StatefulWidget {
 }
 
 class _FirstSectionState extends State<FirstSection> {
-  static const List<String> _regions = [
-    'All',
-    'Damascus',
-    'Aleppo',
-    'Homs',
-    'Hama',
-    'Tartous',
+  static const _pieColors = [
+    Colors.redAccent,
+    Colors.pinkAccent,
+    Colors.green,
+    Colors.lightBlue,
+    Colors.purple,
+    Colors.orange,
   ];
-
-  static const Map<String, List<List<double>>> _dealChartData = {
-    'All': [
-      [36, 29, 23],
-      [24, 30, 10],
-      [24, 11, 15],
-      [37, 26, 15],
-      [19, 13, 8],
-    ],
-    'Damascus': [
-      [18, 15, 8],
-      [12, 14, 4],
-      [10, 6, 5],
-      [17, 13, 6],
-      [8, 5, 3],
-    ],
-    'Aleppo': [
-      [8, 6, 5],
-      [5, 7, 2],
-      [6, 2, 4],
-      [8, 5, 4],
-      [4, 3, 2],
-    ],
-    'Homs': [
-      [5, 4, 4],
-      [4, 4, 2],
-      [3, 1, 2],
-      [5, 3, 2],
-      [3, 2, 1],
-    ],
-    'Hama': [
-      [3, 2, 3],
-      [2, 3, 1],
-      [3, 1, 2],
-      [4, 3, 2],
-      [2, 1, 1],
-    ],
-    'Tartous': [
-      [2, 2, 3],
-      [1, 2, 1],
-      [2, 1, 2],
-      [3, 2, 1],
-      [2, 2, 1],
-    ],
-  };
-
   bool _expanded = false;
   String _selectedRegion = 'All';
 
+  List<String> get _regions => [
+    'All',
+    ..._cities(widget.data?.byCity ?? const []),
+  ];
+
+  @override
+  void didUpdateWidget(covariant FirstSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!_regions.contains(_selectedRegion)) _selectedRegion = 'All';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    double width = MediaQuery.of(context).size.width;
-
+    final theme = Provider.of<ThemeProvider>(context);
+    final width = MediaQuery.of(context).size.width;
+    final data = widget.data;
     return AnimatedSize(
       duration: const Duration(milliseconds: 280),
       curve: Curves.easeInOut,
@@ -85,7 +50,9 @@ class _FirstSectionState extends State<FirstSection> {
         width: width * (1032 / 1920),
         padding: EdgeInsets.all(width * (18 / 1920)),
         decoration: BoxDecoration(
-          color: themeProvider.isDarkMode ? darkSecondaryColor : const Color(0xFF8FB0E0),
+          color: theme.isDarkMode
+              ? darkSecondaryColor
+              : const Color(0xFF8FB0E0),
           borderRadius: BorderRadius.circular(width * (18 / 1920)),
         ),
         child: Column(
@@ -97,26 +64,30 @@ class _FirstSectionState extends State<FirstSection> {
                 _topCard(
                   width,
                   title: 'Open Deals',
-                  value: '${widget.data?.open ?? 25}',
-                  valueColor: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF136B8A),
+                  value: '${data?.open ?? 0}',
+                  valueColor: theme.isDarkMode
+                      ? darkPrimaryColor
+                      : const Color(0xFF136B8A),
                 ),
                 _topCard(
                   width,
                   title: 'Successful Deals:',
-                  value: '${widget.data?.successful ?? 10}',
+                  value: '${data?.successful ?? 0}',
                   valueColor: Colors.green,
                 ),
                 _topCard(
                   width,
                   title: 'Lost Deals:',
-                  value: '${widget.data?.failed ?? 7}',
+                  value: '${data?.failed ?? 0}',
                   valueColor: Colors.red.shade900,
                 ),
                 _topCard(
                   width,
                   title: 'Deal Success Rate',
-                  value: '${widget.data?.successRate.toStringAsFixed(0) ?? '70'}%',
-                  valueColor: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF136B8A),
+                  value: '${data?.successRate.toStringAsFixed(0) ?? '0'}%',
+                  valueColor: theme.isDarkMode
+                      ? darkPrimaryColor
+                      : const Color(0xFF136B8A),
                 ),
               ],
             ),
@@ -133,7 +104,11 @@ class _FirstSectionState extends State<FirstSection> {
   }
 
   Widget _expandedContent(double width) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context);
+    final cities = _groupByCity(
+      widget.data?.byCity ?? const <DashboardBreakdown>[],
+    );
+    final deals = widget.data;
     return Column(
       key: const ValueKey('deals-expanded'),
       children: [
@@ -149,17 +124,7 @@ class _FirstSectionState extends State<FirstSection> {
                   width: width * (560 / 1920),
                   height: width * (270 / 1920),
                   padding: EdgeInsets.all(width * (18 / 1920)),
-                  decoration: BoxDecoration(
-                    color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
-                    borderRadius: BorderRadius.circular(width * (18 / 1920)),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: width * (8 / 1920),
-                        color: themeProvider.isDarkMode ? Colors.black54 : Colors.black12,
-                        offset: Offset(0, width * (3 / 1920)),
-                      ),
-                    ],
-                  ),
+                  decoration: _cardDecoration(width, theme),
                   child: _dealsBarChart(width),
                 ),
               ],
@@ -168,17 +133,7 @@ class _FirstSectionState extends State<FirstSection> {
             Container(
               width: width * (360 / 1920),
               height: width * (320 / 1920),
-              decoration: BoxDecoration(
-                color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
-                borderRadius: BorderRadius.circular(width * (18 / 1920)),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: width * (8 / 1920),
-                    color: themeProvider.isDarkMode ? Colors.black54 : Colors.black12,
-                    offset: Offset(0, width * (3 / 1920)),
-                  ),
-                ],
-              ),
+              decoration: _cardDecoration(width, theme),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -189,13 +144,7 @@ class _FirstSectionState extends State<FirstSection> {
                       PieChartData(
                         centerSpaceRadius: width * (55 / 1920),
                         sectionsSpace: 0,
-                        sections: [
-                          _pieSection(width, Colors.redAccent, 14, '14'),
-                          _pieSection(width, Colors.pinkAccent, 5, '5'),
-                          _pieSection(width, Colors.green, 3, '3'),
-                          _pieSection(width, Colors.lightBlue, 7, '7'),
-                          _pieSection(width, Colors.purple, 6, '6'),
-                        ],
+                        sections: _pieSections(width, cities),
                       ),
                     ),
                   ),
@@ -204,11 +153,12 @@ class _FirstSectionState extends State<FirstSection> {
                     spacing: width * (14 / 1920),
                     runSpacing: width * (10 / 1920),
                     children: [
-                      _buildRegion(width, Colors.redAccent, 'Damascus'),
-                      _buildRegion(width, Colors.pinkAccent, 'Tartous'),
-                      _buildRegion(width, Colors.green, 'Homs'),
-                      _buildRegion(width, Colors.lightBlue, 'Aleppo'),
-                      _buildRegion(width, Colors.purple, 'Hama'),
+                      for (var i = 0; i < cities.length; i++)
+                        _legend(
+                          width,
+                          _pieColors[i % _pieColors.length],
+                          cities[i].city ?? '',
+                        ),
                     ],
                   ),
                 ],
@@ -217,51 +167,85 @@ class _FirstSectionState extends State<FirstSection> {
           ],
         ),
         SizedBox(height: width * (18 / 1920)),
-        Divider(thickness: width * (1 / 1920), color: getDividerColor(themeProvider.isDarkMode)),
+        Divider(
+          thickness: width * (1 / 1920),
+          color: getDividerColor(theme.isDarkMode),
+        ),
         SizedBox(height: width * (12 / 1920)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _smallPie(width, title: 'Open Deals:', value: '25'),
-            _smallPie(width, title: 'Successful Deals:', value: '10'),
-            _smallPie(width, title: 'Lost Deals:', value: '7'),
+            _statusPie(
+              width,
+              title: 'Open Deals:',
+              value: deals?.open ?? 0,
+              color: theme.isDarkMode
+                  ? darkPrimaryColor
+                  : const Color(0xFF136B8A),
+            ),
+            _statusPie(
+              width,
+              title: 'Successful Deals:',
+              value: deals?.successful ?? 0,
+              color: Colors.green,
+            ),
+            _statusPie(
+              width,
+              title: 'Lost Deals:',
+              value: deals?.failed ?? 0,
+              color: Colors.red.shade700,
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _dealsBarChart(double width) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final data = _dealChartData[_selectedRegion] ?? _dealChartData['All']!;
+  List<DashboardBreakdown> get _barData {
+    final data = widget.data;
+    if (data == null) return const [];
+    final source = _selectedRegion == 'All'
+        ? data.byPropertyType
+        : data.byCityAndPropertyType
+              .where((item) => item.city == _selectedRegion)
+              .toList();
+    return _types(source);
+  }
 
+  Widget _dealsBarChart(double width) {
+    final theme = Provider.of<ThemeProvider>(context);
+    final data = _barData;
+    final maxY = _chartMax(data.map((item) => item.count));
     return BarChart(
       BarChartData(
-        maxY: 45,
+        minY: 0,
+        maxY: maxY,
         alignment: BarChartAlignment.spaceAround,
         gridData: FlGridData(show: false),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
-          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
               reservedSize: width * (32 / 1920),
-              interval: 10,
-              getTitlesWidget: (value, meta) {
-                return Padding(
-                  padding: EdgeInsets.only(right: width * (8 / 1920)),
-                  child: Text(
-                    value.toInt().toString(),
-                    style: TextStyle(
-                      fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (13 / 1920),
-                      color: getPrimaryTextColor(themeProvider.isDarkMode),
-                    ),
+              interval: maxY / 4,
+              getTitlesWidget: (value, meta) => Padding(
+                padding: EdgeInsets.only(right: width * (8 / 1920)),
+                child: Text(
+                  value.toInt().toString(),
+                  style: TextStyle(
+                    fontFamily: 'NunitoSans-Bold',
+                    fontSize: width * (13 / 1920),
+                    color: getPrimaryTextColor(theme.isDarkMode),
                   ),
-                );
-              },
+                ),
+              ),
             ),
           ),
           bottomTitles: AxisTitles(
@@ -269,26 +253,18 @@ class _FirstSectionState extends State<FirstSection> {
               showTitles: true,
               reservedSize: width * (40 / 1920),
               getTitlesWidget: (value, meta) {
-                final labels = [
-                  'Apartment',
-                  'House',
-                  'Villa',
-                  'Office',
-                  'Hall',
-                ];
                 final index = value.toInt();
-                final text = index >= 0 && index < labels.length
-                    ? labels[index]
+                final label = index >= 0 && index < data.length
+                    ? data[index].type ?? ''
                     : '';
-
                 return Padding(
                   padding: EdgeInsets.only(top: width * (10 / 1920)),
                   child: Text(
-                    text,
+                    label,
                     style: TextStyle(
                       fontFamily: 'NunitoSans-Bold',
                       fontSize: width * (14 / 1920),
-                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      color: getPrimaryTextColor(theme.isDarkMode),
                     ),
                   ),
                 );
@@ -296,44 +272,35 @@ class _FirstSectionState extends State<FirstSection> {
             ),
           ),
         ),
-        barGroups: List.generate(data.length, (index) {
-          final values = data[index];
-          return BarChartGroupData(
-            x: index,
-            barsSpace: width * (4 / 1920),
-            barRods: [
-              BarChartRodData(
-                toY: values[0],
-                width: width * (14 / 1920),
-                borderRadius: BorderRadius.circular(8),
-                color: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF17769E),
-              ),
-              BarChartRodData(
-                toY: values[1],
-                width: width * (14 / 1920),
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.green,
-              ),
-              BarChartRodData(
-                toY: values[2],
-                width: width * (14 / 1920),
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.red.shade700,
-              ),
-            ],
-          );
-        }),
+        barGroups: [
+          for (var i = 0; i < data.length; i++)
+            BarChartGroupData(
+              x: i,
+              barRods: [
+                BarChartRodData(
+                  toY: data[i].count.toDouble(),
+                  width: width * (14 / 1920),
+                  borderRadius: BorderRadius.circular(8),
+                  color: theme.isDarkMode
+                      ? darkPrimaryColor
+                      : const Color(0xFF17769E),
+                ),
+              ],
+            ),
+        ],
       ),
     );
   }
 
   Widget _toggleButton(double width) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context);
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
         style: TextButton.styleFrom(
-          backgroundColor: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
+          backgroundColor: theme.isDarkMode
+              ? darkBackGroundColor
+              : const Color(0xFFDCE7F8),
           padding: EdgeInsets.symmetric(
             horizontal: width * (18 / 1920),
             vertical: width * (8 / 1920),
@@ -348,7 +315,9 @@ class _FirstSectionState extends State<FirstSection> {
           style: TextStyle(
             fontFamily: 'NunitoSans-Bold',
             fontSize: width * (14 / 1920),
-            color: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF136B8A),
+            color: theme.isDarkMode
+                ? darkPrimaryColor
+                : const Color(0xFF136B8A),
           ),
         ),
       ),
@@ -356,23 +325,24 @@ class _FirstSectionState extends State<FirstSection> {
   }
 
   Widget _regionFilter(double width) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context);
+    final regions = _regions;
     return SizedBox(
       width: width * (560 / 1920),
       height: width * (30 / 1920),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: _regions.length,
-        separatorBuilder: (context, index) =>
-            SizedBox(width: width * (8 / 1920)),
+        itemCount: regions.length,
+        separatorBuilder: (_, _) => SizedBox(width: width * (8 / 1920)),
         itemBuilder: (context, index) {
-          final region = _regions[index];
-          final isSelected = region == _selectedRegion;
-
+          final region = regions[index];
+          final selected = region == _selectedRegion;
           return TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: isSelected
-                  ? themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8)
+              backgroundColor: selected
+                  ? theme.isDarkMode
+                        ? darkBackGroundColor
+                        : const Color(0xFFDCE7F8)
                   : Colors.white.withValues(alpha: 0.28),
               padding: EdgeInsets.symmetric(horizontal: width * (12 / 1920)),
               minimumSize: Size(0, width * (30 / 1920)),
@@ -384,11 +354,9 @@ class _FirstSectionState extends State<FirstSection> {
             child: Text(
               region,
               style: TextStyle(
-                fontFamily: isSelected
-                    ? 'NunitoSans-Bold'
-                    : 'NunitoSans-Regular',
+                fontFamily: selected ? 'NunitoSans-Bold' : 'NunitoSans-Regular',
                 fontSize: width * (13 / 1920),
-                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                color: getPrimaryTextColor(theme.isDarkMode),
               ),
             ),
           );
@@ -403,17 +371,17 @@ class _FirstSectionState extends State<FirstSection> {
     required String value,
     required Color valueColor,
   }) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context);
     return Container(
       width: width * (190 / 1920),
       height: width * (98 / 1920),
       decoration: BoxDecoration(
-        color: themeProvider.isDarkMode ? darkBackGroundColor : const Color(0xFFD9E4F7),
+        color: theme.isDarkMode ? darkBackGroundColor : const Color(0xFFD9E4F7),
         borderRadius: BorderRadius.circular(width * (10 / 1920)),
         boxShadow: [
           BoxShadow(
             blurRadius: width * (8 / 1920),
-            color: themeProvider.isDarkMode ? Colors.black54 : Colors.black12,
+            color: theme.isDarkMode ? Colors.black54 : Colors.black12,
             offset: Offset(0, width * (4 / 1920)),
           ),
         ],
@@ -428,7 +396,7 @@ class _FirstSectionState extends State<FirstSection> {
             style: TextStyle(
               fontFamily: 'NunitoSans-Regular',
               fontSize: width * (16 / 1920),
-              color: getPrimaryTextColor(themeProvider.isDarkMode),
+              color: getPrimaryTextColor(theme.isDarkMode),
             ),
           ),
           Text(
@@ -444,12 +412,13 @@ class _FirstSectionState extends State<FirstSection> {
     );
   }
 
-  Widget _smallPie(
+  Widget _statusPie(
     double width, {
     required String title,
-    required String value,
+    required int value,
+    required Color color,
   }) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context);
     return Column(
       children: [
         Text(
@@ -457,7 +426,7 @@ class _FirstSectionState extends State<FirstSection> {
           style: TextStyle(
             fontFamily: 'NunitoSans-Regular',
             fontSize: width * (20 / 1920),
-            color: getPrimaryTextColor(themeProvider.isDarkMode),
+            color: getPrimaryTextColor(theme.isDarkMode),
           ),
         ),
         SizedBox(height: width * (8 / 1920)),
@@ -471,43 +440,27 @@ class _FirstSectionState extends State<FirstSection> {
                 PieChartData(
                   centerSpaceRadius: width * (45 / 1920),
                   sectionsSpace: 2,
-                  sections: [
-                    PieChartSectionData(
-                      value: 8,
-                      color: Colors.green,
-                      radius: width * (42 / 1920),
-                      title: '',
-                    ),
-                    PieChartSectionData(
-                      value: 7,
-                      color: Colors.lightBlue,
-                      radius: width * (42 / 1920),
-                      title: '',
-                    ),
-                    PieChartSectionData(
-                      value: 5,
-                      color: Colors.orange,
-                      radius: width * (42 / 1920),
-                      title: '',
-                    ),
-                    PieChartSectionData(
-                      value: 5,
-                      color: Colors.purple,
-                      radius: width * (42 / 1920),
-                      title: '',
-                    ),
-                  ],
+                  sections: value == 0
+                      ? const []
+                      : [
+                          PieChartSectionData(
+                            value: value.toDouble(),
+                            color: color,
+                            radius: width * (42 / 1920),
+                            title: '',
+                          ),
+                        ],
                 ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    value,
+                    '$value',
                     style: TextStyle(
                       fontFamily: 'NunitoSans-Bold',
                       fontSize: width * (34 / 1920),
-                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      color: getPrimaryTextColor(theme.isDarkMode),
                     ),
                   ),
                   Text(
@@ -515,7 +468,7 @@ class _FirstSectionState extends State<FirstSection> {
                     style: TextStyle(
                       fontFamily: 'NunitoSans-Regular',
                       fontSize: width * (14 / 1920),
-                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      color: getPrimaryTextColor(theme.isDarkMode),
                     ),
                   ),
                 ],
@@ -523,66 +476,104 @@ class _FirstSectionState extends State<FirstSection> {
             ],
           ),
         ),
-        SizedBox(height: width * (6 / 1920)),
-        Wrap(
-          alignment: WrapAlignment.center,
-          spacing: width * (10 / 1920),
-          runSpacing: width * (4 / 1920),
-          children: [
-            _buildRegion(width, Colors.green, 'Rent'),
-            _buildRegion(width, Colors.lightBlue, 'Sold'),
-            _buildRegion(width, Colors.orange, 'Purchase'),
-            _buildRegion(width, Colors.purple, 'Lease'),
-          ],
+      ],
+    );
+  }
+
+  List<PieChartSectionData> _pieSections(
+    double width,
+    List<DashboardBreakdown> data,
+  ) {
+    final theme = Provider.of<ThemeProvider>(context);
+    return [
+      for (var i = 0; i < data.length; i++)
+        PieChartSectionData(
+          color: _pieColors[i % _pieColors.length],
+          value: data[i].count.toDouble(),
+          title: '${data[i].count}',
+          radius: width * (48 / 1920),
+          titleStyle: TextStyle(
+            color: getTextColor(theme.isDarkMode),
+            fontFamily: 'NunitoSans-Bold',
+            fontSize: width * (18 / 1920),
+          ),
+        ),
+    ];
+  }
+
+  Widget _legend(double width, Color color, String text) {
+    final theme = Provider.of<ThemeProvider>(context);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: width * (10 / 1920),
+          height: width * (10 / 1920),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        SizedBox(width: width * (5 / 1920)),
+        Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'NunitoSans-Regular',
+            fontSize: width * (14 / 1920),
+            color: getPrimaryTextColor(theme.isDarkMode),
+          ),
         ),
       ],
     );
   }
 
-  PieChartSectionData _pieSection(
-    double width,
-    Color color,
-    double value,
-    String title,
-  ) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    return PieChartSectionData(
-      color: color,
-      value: value,
-      title: title,
-      radius: width * (48 / 1920),
-      titleStyle: TextStyle(
-        color: getTextColor(themeProvider.isDarkMode),
-        fontFamily: 'NunitoSans-Bold',
-        fontSize: width * (18 / 1920),
-      ),
-    );
-  }
-}
-
-Widget _buildRegion(double width, Color color, String text) {
-  return Builder(
-    builder: (context) {
-      final themeProvider = Provider.of<ThemeProvider>(context);
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: width * (10 / 1920),
-            height: width * (10 / 1920),
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-          SizedBox(width: width * (5 / 1920)),
-          Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'NunitoSans-Regular',
-              fontSize: width * (14 / 1920),
-              color: getPrimaryTextColor(themeProvider.isDarkMode),
-            ),
+  BoxDecoration _cardDecoration(double width, ThemeProvider theme) =>
+      BoxDecoration(
+        color: theme.isDarkMode ? darkBackGroundColor : const Color(0xFFDCE7F8),
+        borderRadius: BorderRadius.circular(width * (18 / 1920)),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: width * (8 / 1920),
+            color: theme.isDarkMode ? Colors.black54 : Colors.black12,
+            offset: Offset(0, width * (3 / 1920)),
           ),
         ],
       );
-    },
+}
+
+List<String> _cities(List<DashboardBreakdown> data) => {
+  for (final item in data)
+    if (item.city != null && item.city!.isNotEmpty) item.city!,
+}.toList();
+List<DashboardBreakdown> _groupByCity(List<DashboardBreakdown> data) {
+  final counts = <String, int>{};
+  for (final item in data) {
+    final city = item.city;
+    if (city != null && city.isNotEmpty) {
+      counts[city] = (counts[city] ?? 0) + item.count;
+    }
+  }
+  return [
+    for (final entry in counts.entries)
+      DashboardBreakdown(city: entry.key, count: entry.value),
+  ];
+}
+
+List<DashboardBreakdown> _types(List<DashboardBreakdown> data) {
+  final counts = <String, int>{};
+  for (final item in data) {
+    final type = item.type;
+    if (type != null && type.isNotEmpty) {
+      counts[type] = (counts[type] ?? 0) + item.count;
+    }
+  }
+  return [
+    for (final entry in counts.entries)
+      DashboardBreakdown(type: entry.key, count: entry.value),
+  ];
+}
+
+double _chartMax(Iterable<int> values) {
+  final maximum = values.fold<int>(
+    0,
+    (current, value) => value > current ? value : current,
   );
+  return maximum == 0 ? 1 : maximum.toDouble();
 }
