@@ -126,7 +126,7 @@ class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
                 appBarCopmonentName: 'Dashbrd',
                 onTap: () {
                   generalmanagerPageSelectorProvider.selectPage(
-                    SubmanagerDashbourd(),
+                    SubmanagerDashbourd(userAuthInfo: widget.userAuthInfo),
                   );
                 },
               ),

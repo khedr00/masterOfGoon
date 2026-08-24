@@ -2,10 +2,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/submanager/submanager_dashbourd/models/dashboard_data.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertiesDashboardWidget extends StatefulWidget {
-  const PropertiesDashboardWidget({super.key});
+  const PropertiesDashboardWidget({super.key, this.data});
+  final PropertyDashboardData? data;
 
   @override
   State<PropertiesDashboardWidget> createState() =>
@@ -59,25 +61,25 @@ class _PropertiesDashboardWidgetState extends State<PropertiesDashboardWidget> {
                   _topCard(
                     width,
                     'Total Properties',
-                    '124',
+                    '${widget.data?.total ?? 124}',
                     Icons.home_work_rounded,
                     themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF1C769B),
                   ),
                   _topCard(
                     width,
                     'Available',
-                    '88',
+                    '${widget.data?.available ?? 88}',
                     Icons.check_circle,
                     Colors.green,
                   ),
                   _topCard(
                     width,
                     'For Sale',
-                    '21',
+                    '${widget.data?.forSale ?? 21}',
                     Icons.sell,
                     Colors.redAccent,
                   ),
-                  _topCard(width, 'For Rent', '15', Icons.key, Colors.orange),
+                  _topCard(width, 'For Rent', '${widget.data?.forLease ?? 15}', Icons.key, Colors.orange),
                 ],
               ),
               SizedBox(height: width * (18 / 1920)),

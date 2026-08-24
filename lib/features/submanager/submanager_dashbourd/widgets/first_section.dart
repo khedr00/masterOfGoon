@@ -2,10 +2,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/submanager/submanager_dashbourd/models/dashboard_data.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class FirstSection extends StatefulWidget {
-  const FirstSection({super.key});
+  const FirstSection({super.key, this.data});
+  final DealDashboardData? data;
 
   @override
   State<FirstSection> createState() => _FirstSectionState();
@@ -95,25 +97,25 @@ class _FirstSectionState extends State<FirstSection> {
                 _topCard(
                   width,
                   title: 'Open Deals',
-                  value: '25',
+                  value: '${widget.data?.open ?? 25}',
                   valueColor: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF136B8A),
                 ),
                 _topCard(
                   width,
                   title: 'Successful Deals:',
-                  value: '10',
+                  value: '${widget.data?.successful ?? 10}',
                   valueColor: Colors.green,
                 ),
                 _topCard(
                   width,
                   title: 'Lost Deals:',
-                  value: '7',
+                  value: '${widget.data?.failed ?? 7}',
                   valueColor: Colors.red.shade900,
                 ),
                 _topCard(
                   width,
                   title: 'Deal Success Rate',
-                  value: '70%',
+                  value: '${widget.data?.successRate.toStringAsFixed(0) ?? '70'}%',
                   valueColor: themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF136B8A),
                 ),
               ],

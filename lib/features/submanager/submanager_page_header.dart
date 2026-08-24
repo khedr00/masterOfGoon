@@ -99,7 +99,7 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
                 appBarCopmonentName: 'Dashbrd',
                 onTap: () {
                   submanagerpageSelectorProvider.selectPage(
-                    SubmanagerDashbourd(),
+                    SubmanagerDashbourd(userAuthInfo: widget.userAuthInfo),
                   );
                 },
               ),

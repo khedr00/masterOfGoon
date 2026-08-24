@@ -3,10 +3,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/submanager/submanager_dashbourd/models/dashboard_data.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class EmployeesDashboardWidget extends StatefulWidget {
-  const EmployeesDashboardWidget({super.key});
+  const EmployeesDashboardWidget({super.key, this.data});
+  final EmployeeDashboardData? data;
 
   @override
   State<EmployeesDashboardWidget> createState() =>
@@ -52,35 +54,35 @@ class _EmployeesDashboardWidgetState extends State<EmployeesDashboardWidget> {
                 _topCard(
                   width,
                   'Total Employees',
-                  '48',
+                  '${widget.data?.total ?? 48}',
                   Icons.groups_rounded,
                   themeProvider.isDarkMode ? darkPrimaryColor : const Color(0xFF1C769B),
                 ),
                 _topCard(
                   width,
                   'Purchasing',
-                  '14',
+                  '${widget.data?.buy ?? 14}',
                   Icons.shopping_cart_checkout_rounded,
                   Colors.green,
                 ),
                 _topCard(
                   width,
                   'Sales',
-                  '12',
+                  '${widget.data?.sales ?? 12}',
                   Icons.sell_rounded,
                   Colors.orange,
                 ),
                 _topCard(
                   width,
                   'Rent / Leasing',
-                  '15',
+                  '${widget.data?.rentLease ?? 15}',
                   Icons.key_rounded,
                   Colors.purple,
                 ),
                 _topCard(
                   width,
                   'Inspectors',
-                  '7',
+                  '${widget.data?.inspectors ?? 7}',
                   Icons.fact_check_rounded,
                   Colors.redAccent,
                 ),
