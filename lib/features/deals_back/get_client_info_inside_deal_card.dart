@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:untitled1/back_end_test/deals/deal_card_info/client_info_inside_deal_card.dart';
+import 'package:untitled1/features/deals_back/deal_card_info/client_info_inside_deal_card.dart';
 
 Future<ClientInfoInsideDealCard> getClientInfoInsideDealCard({
   required int dealId,

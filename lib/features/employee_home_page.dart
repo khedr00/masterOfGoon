@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
+import 'package:untitled1/features/deals_back/get_deal_cards_info.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/buttons/double_button/all_and_deals_only_button.dart';
@@ -31,8 +32,8 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
     List<dynamic> dealList = await getDealCardsInfo(
-      role: widget.userAuthInfo.role,
-      id: widget.userAuthInfo.id,
+      dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
+
       cancelToken: _cancelToken,
       dealStage: Provider.of<EmployeeDealsFilterProvider>(
         context,
@@ -351,7 +352,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                   ? SizedBox()
                   : DealsOnlyScheduleWidget(
                       key: ValueKey(_dealId!),
-                      dealId: '4af006b7-e48c-429d-9220-15d8c263e42e',
+                      dealId: _dealId!,
                       //  _dealId!,
                       forDealPage: false,
                       userAuthInfo: widget.userAuthInfo,

@@ -1,4 +1,4 @@
-import 'package:untitled1/back_end_test/deals/deal_card_info/deal_card_info.dart';
+import 'package:untitled1/features/deals_back/deal_card_info/deal_card_info.dart';
 
 class RentAndLeaseDealCardInfo extends DealCardInfo {
   RentAndLeaseDealCardInfo({

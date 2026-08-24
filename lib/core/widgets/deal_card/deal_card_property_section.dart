@@ -47,7 +47,9 @@ class DealCardPropertySection extends StatelessWidget {
               width: width * (413 / 1920),
               height: width * (79 / 1920),
               decoration: BoxDecoration(
-                color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                color: themeProvider.isDarkMode
+                    ? darkSecondaryColor
+                    : secondaryColor,
                 borderRadius: BorderRadius.circular(width * (10 / 1920)),
               ),
             ),
@@ -63,15 +65,15 @@ class DealCardPropertySection extends StatelessWidget {
                     style: TextStyle(
                       color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-MediumItalic',
-                      fontSize: width * (16 / 1920),
+                      fontSize: width * (12 / 1920),
                     ),
                   ),
                   Text(
-                    'ID : $dealId',
+                    'ID :${dealId.substring(0, 8)}',
                     style: TextStyle(
                       color: getPrimaryTextColor(themeProvider.isDarkMode),
                       fontFamily: 'NunitoSans-MediumItalic',
-                      fontSize: width * (16 / 1920),
+                      fontSize: width * (10 / 1920),
                     ),
                   ),
                 ],
@@ -97,99 +99,109 @@ class DealCardPropertySection extends StatelessWidget {
                     children: rentalPeriod == null
                         ? [
                             SizedBox(
-                              width: width * (40 / 1920),
-                              height: width * (40 / 1920),
+                              width: width * (30 / 1920),
+                              height: width * (30 / 1920),
                               child: Image.asset(
                                 'assets/images/House With a Garden.png',
                               ),
                             ),
                             Text(
-                              propertyType,
+                              propertyType.toLowerCase(),
                               style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                color: getPrimaryTextColor(
+                                  themeProvider.isDarkMode,
+                                ),
                                 fontFamily: 'NunitoSans-SemiBold',
-                                fontSize: width * (22 / 1920),
+                                fontSize: width * (18 / 1920),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                left: width * (35 / 1920),
+                                left: width * (30 / 1920),
                               ),
                               child: SizedBox(
-                                width: width * (40 / 1920),
-                                height: width * (40 / 1920),
+                                width: width * (30 / 1920),
+                                height: width * (30 / 1920),
                                 child: Image.asset(
                                   'assets/images/Price Tag USD.png',
                                 ),
                               ),
                             ),
                             Text(
-                              '${propertyPrice.toString()} \$',
+                              '${propertyPrice.toString()}\$',
                               style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                color: getPrimaryTextColor(
+                                  themeProvider.isDarkMode,
+                                ),
                                 fontFamily: 'NunitoSans-SemiBold',
-                                fontSize: width * (22 / 1920),
+                                fontSize: width * (18 / 1920),
                               ),
                             ),
                           ]
-                        : [
-                            SizedBox(
-                              width: width * (25 / 1920),
-                              height: width * (25 / 1920),
-                              child: Image.asset(
-                                'assets/images/House With a Garden.png',
-                              ),
-                            ),
-                            Text(
-                              propertyType,
-                              style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
-                                fontFamily: 'NunitoSans-SemiBold',
-                                fontSize: width * (16 / 1920),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: width * (15 / 1920),
-                              ),
-                              child: SizedBox(
-                                width: width * (25 / 1920),
-                                height: width * (25 / 1920),
-                                child: Image.asset(
-                                  'assets/images/Price Tag USD.png',
-                                ),
-                              ),
-                            ),
-                            Text(
-                              '${propertyPrice.toString()} \$',
-                              style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
-                                fontFamily: 'NunitoSans-SemiBold',
-                                fontSize: width * (16 / 1920),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: width * (15 / 1920),
-                              ),
-                              child: SizedBox(
-                                width: width * (25 / 1920),
-                                height: width * (25 / 1920),
+                        : [],
+                    //           SizedBox(
+                    //             width: width * (25 / 1920),
+                    //             height: width * (25 / 1920),
+                    //             child: Image.asset(
+                    //               'assets/images/House With a Garden.png',
+                    //             ),
+                    //           ),
+                    //           Text(
+                    //             propertyType,
+                    //             style: TextStyle(
+                    //               color: getPrimaryTextColor(
+                    //                 themeProvider.isDarkMode,
+                    //               ),
+                    //               fontFamily: 'NunitoSans-SemiBold',
+                    //               fontSize: width * (16 / 1920),
+                    //             ),
+                    //           ),
+                    //           Padding(
+                    //             padding: EdgeInsets.only(
+                    //               left: width * (15 / 1920),
+                    //             ),
+                    //             child: SizedBox(
+                    //               width: width * (25 / 1920),
+                    //               height: width * (25 / 1920),
+                    //               child: Image.asset(
+                    //                 'assets/images/Price Tag USD.png',
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           Text(
+                    //             '${propertyPrice.toString()} \$',
+                    //             style: TextStyle(
+                    //               color: getPrimaryTextColor(
+                    //                 themeProvider.isDarkMode,
+                    //               ),
+                    //               fontFamily: 'NunitoSans-SemiBold',
+                    //               fontSize: width * (16 / 1920),
+                    //             ),
+                    //           ),
+                    //           Padding(
+                    //             padding: EdgeInsets.only(
+                    //               left: width * (15 / 1920),
+                    //             ),
+                    //             child: SizedBox(
+                    //               width: width * (25 / 1920),
+                    //               height: width * (25 / 1920),
 
-                                child: Image.asset(
-                                  'assets/images/Date Span.png',
-                                ),
-                              ),
-                            ),
-                            Text(
-                              '${rentalPeriod.toString()} Months',
-                              style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
-                                fontFamily: 'NunitoSans-SemiBold',
-                                fontSize: width * (16 / 1920),
-                              ),
-                            ),
-                          ],
+                    //               child: Image.asset(
+                    //                 'assets/images/Date Span.png',
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           Text(
+                    //             '${rentalPeriod.toString()} Months',
+                    //             style: TextStyle(
+                    //               color: getPrimaryTextColor(
+                    //                 themeProvider.isDarkMode,
+                    //               ),
+                    //               fontFamily: 'NunitoSans-SemiBold',
+                    //               fontSize: width * (16 / 1920),
+                    //             ),
+                    //           ),
+                    //         ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -203,9 +215,13 @@ class DealCardPropertySection extends StatelessWidget {
                         width: width * (256 / 1902),
                         height: width * (60 / 1920),
                         child: Text(
-                          propertySimpleDescription,
+                          propertySimpleDescription.length > 50
+                              ? propertySimpleDescription.substring(0, 51)
+                              : propertySimpleDescription,
                           style: TextStyle(
-                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
                             fontFamily: 'NunitoSans-Medium',
                             fontSize: width * (18 / 1920),
                           ),

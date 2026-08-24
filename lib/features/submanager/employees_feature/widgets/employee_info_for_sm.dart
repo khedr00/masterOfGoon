@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/deals/get_deal_cards_info.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
+import 'package:untitled1/features/deals_back/get_deal_cards_info.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
@@ -29,7 +30,7 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
   final CancelToken _cancelToken = CancelToken();
   void getDealList() async {
     List<dynamic> dealList = await getDealCardsInfo(
-      role: '',
+      dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
       id: '1',
       cancelToken: _cancelToken,
     );

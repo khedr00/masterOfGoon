@@ -12,7 +12,7 @@ Future<EmployeeInfo> getEmployeeInfo({
   final dynamic response;
   if (employeeId == null) {
     response = await dioClient.dio.get('${base}api/v1/auth/getMe');
-    // print('ghghg${response.data['data']['fullName']}');
+    // print('${response.data['data']['id']}');
 
     return EmployeeInfo(
       employeeName: response.data['data']['employee']['fullName'],

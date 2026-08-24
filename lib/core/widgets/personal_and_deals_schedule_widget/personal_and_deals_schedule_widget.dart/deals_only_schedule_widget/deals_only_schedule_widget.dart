@@ -63,9 +63,9 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
-    if (_apoitmentsNotes.isEmpty) {
-      return Center(child: CircularProgressIndicator());
-    }
+    // if (_apoitmentsNotes.isEmpty) {
+    //   return Center(child: CircularProgressIndicator());
+    // }
     List<Widget> dealsNotes = [];
     List<Widget> apoitmentsNotesWithPaddings = [];
     for (int i = 0; i < _dealTNotes.length; i++) {
@@ -118,28 +118,39 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
                 width: width * (4 / 1920),
               ),
             ),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: width * (895 / 1920),
-              // height: width * (177 / 1920),
-              decoration: BoxDecoration(
-                color: themeProvider.isDarkMode
-                    ? darkThirdColorPrimary
-                    : thirdColorPrimary,
-                borderRadius: widget.forDealPage
-                    ? BorderRadius.only(
-                        topRight: Radius.circular(width * (30 / 1920)),
-                      )
-                    : BorderRadius.circular(1),
+      child: _apoitmentsNotes.isEmpty
+          ? Center(
+              child: Text(
+                'there is no notes for this deal',
+                style: TextStyle(
+                  color: getPrimaryTextColor(themeProvider.isDarkMode),
+                  fontFamily: 'NunitoSans-Bold',
+                  fontSize: width * (32 / 1920),
+                ),
               ),
-              child: Column(children: dealsNotes),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    width: width * (895 / 1920),
+                    // height: width * (177 / 1920),
+                    decoration: BoxDecoration(
+                      color: themeProvider.isDarkMode
+                          ? darkThirdColorPrimary
+                          : thirdColorPrimary,
+                      borderRadius: widget.forDealPage
+                          ? BorderRadius.only(
+                              topRight: Radius.circular(width * (30 / 1920)),
+                            )
+                          : BorderRadius.circular(1),
+                    ),
+                    child: Column(children: dealsNotes),
+                  ),
+                  Column(children: apoitmentsNotesWithPaddings),
+                ],
+              ),
             ),
-            Column(children: apoitmentsNotesWithPaddings),
-          ],
-        ),
-      ),
     );
   }
 }

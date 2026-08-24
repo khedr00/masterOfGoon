@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/deals/deal_card_info/rent_and_lease_deal_card_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_deal_satge_section.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card_client_section.dart';
@@ -21,7 +20,9 @@ class DealCard extends StatelessWidget {
           width: width * (939 / 1920),
           height: width * (246 / 1920),
           decoration: BoxDecoration(
-            color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+            color: themeProvider.isDarkMode
+                ? darkSecondaryColor
+                : secondaryColor,
             borderRadius: BorderRadius.circular(width * (10 / 1920)),
           ),
           child: Row(
@@ -44,14 +45,14 @@ class DealCard extends StatelessWidget {
                 dealDate: dealCardInfo.startingDate,
                 dealId: dealCardInfo.id.toString(),
                 propertyPrimaryImage: dealCardInfo.propertyPrimaryImage,
-                propertyType: 'villa',
-                propertyPrice: 30000,
+                propertyType: dealCardInfo.propertyType,
+                propertyPrice: dealCardInfo.propertyPrice,
                 propertySimpleDescription:
-                    'Furnished Apartment with pool and 2 balconies ',
-                propertyAddress: 'homs_shien',
-                rentalPeriod: (dealCardInfo is RentAndLeaseDealCardInfo)
-                    ? dealCardInfo.rentalPeriod
-                    : null,
+                    dealCardInfo.propertySimpleDescription,
+                propertyAddress: dealCardInfo.propertyAddress,
+                // rentalPeriod: (dealCardInfo is RentAndLeaseDealCardInfo)
+                //     ? dealCardInfo.rentalPeriod
+                //     : null,
               ),
             ],
           ),
@@ -68,7 +69,9 @@ class DealCard extends StatelessWidget {
                 bottomLeft: Radius.circular(width * (10 / 1920)),
                 bottomRight: Radius.circular(width * (10 / 1920)),
               ),
-              color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+              color: themeProvider.isDarkMode
+                  ? darkBackGroundColor
+                  : backGroundColor,
             ),
             child: Row(
               children: [
@@ -82,12 +85,14 @@ class DealCard extends StatelessWidget {
                     width: width * (452 / 1920),
                     height: width * (62 / 1920),
                     decoration: BoxDecoration(
-                      color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                      color: themeProvider.isDarkMode
+                          ? darkSecondaryColor
+                          : secondaryColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
                       child: Text(
-                        dealCardInfo.title,
+                        'request from ${dealCardInfo.clientName.substring(0, 6)}',
                         style: TextStyle(
                           color: getPrimaryTextColor(themeProvider.isDarkMode),
                           fontFamily: 'NunitoSans-ExtraBold',
@@ -107,7 +112,9 @@ class DealCard extends StatelessWidget {
                     width: width * (129 / 1920),
                     height: width * (71 / 1920),
                     decoration: BoxDecoration(
-                      color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
+                      color: themeProvider.isDarkMode
+                          ? darkPrimaryColor
+                          : primaryColor,
                       borderRadius: BorderRadius.vertical(
                         bottom: Radius.circular(width * (10 / 1920)),
                       ),
