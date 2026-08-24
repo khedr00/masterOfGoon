@@ -32,125 +32,6 @@ Future<List<DealsNotesWidget>> getSingleDealScheduleInfo({
   } catch (e) {
     throw Exception(e);
   }
-  // List<Map<String, dynamic>> temp = [
-  //   {
-  //     'date': 'Sunday 2/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 2/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 2/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 2/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 2/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 3/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 3/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 3/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 3/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 3/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 4/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 4/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  //   {
-  //     'date': 'Sunday 4/7/2025',
-  //     'time': '2:00',
-  //     'title': '2',
-  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
-  //     'dealId': dealId,
-  //     'dealName': 'Request to Buy Property Homs City2',
-  //     'propertyNameCode': 'V_234',
-  //   },
-  // ];
 
   List<DealsNotesWidget> result = [];
 
@@ -160,20 +41,21 @@ Future<List<DealsNotesWidget>> getSingleDealScheduleInfo({
   for (int i = 0; i < temp.length; i++) {
     final item = temp[i];
 
-    if (item['date'] != currentDate) {
+    if (item['date'].toString().substring(0, 10) != currentDate) {
       if (currentNotes.isNotEmpty) {
         result.add(
           DealsNotesWidget(dealApoitmentNotes: List.from(currentNotes)),
         );
       }
 
-      currentDate = item['date'];
+      currentDate = item['date'].toString().substring(0, 10);
       currentNotes = [];
     }
     currentNotes.add(
       DealNoteWidget(
         scheduleDealNote: ScheduleDealNote(
           employeeId: 1,
+          date: temp[i]['date'].toString().substring(0, 10),
           time:
               '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
           title: temp[i]['title'],
