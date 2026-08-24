@@ -115,7 +115,8 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
 
   List<dynamic> scheduleNote = [];
   for (int i = 0; i < temp.length; i++) {
-    if (temp[i]['type'] == 'DEAL') {
+    if (temp[i]['type'] == 'BUY_RENT_DEAL' ||
+        temp[i]['type'] == 'SALE_LEASE_DEAL') {
       scheduleNote.add(
         DealNoteWidget(
           scheduleDealNote: ScheduleDealNote(
@@ -124,9 +125,11 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
                 '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
             title: temp[i]['title'],
             description: temp[i]['description'],
-            dealId: temp[i]['deal']['id'],
-            propertyNameCode: 'k',
-            dealName: 'k',
+            dealId: temp[i]['type'] == 'BUY_RENT_DEAL'
+                ? temp[i]['buyRentDeal']['id']
+                : temp[i]['saleLeaseDeal']['id'],
+            propertyNameCode: '',
+            dealName: '',
           ),
         ),
       );

@@ -1,5 +1,5 @@
 class DealCardInfo {
-  final int id;
+  final String id;
   final String propertyPrimaryImage;
   final String propertyType;
   final int propertyPrice;

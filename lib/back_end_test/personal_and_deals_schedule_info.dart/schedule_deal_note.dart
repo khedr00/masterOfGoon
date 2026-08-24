@@ -12,7 +12,7 @@ class ScheduleDealNote extends ScheduleNote {
     required this.propertyNameCode,
     required this.dealName,
   });
-  final int dealId;
+  final String dealId;
   final String propertyNameCode;
   final String dealName;
 }

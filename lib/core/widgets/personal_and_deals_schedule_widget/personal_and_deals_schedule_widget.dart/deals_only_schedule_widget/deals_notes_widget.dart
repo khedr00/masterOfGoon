@@ -18,7 +18,7 @@ class DealsNotesWidget extends StatelessWidget {
       child: GeneralTabableCard(
         tabs: [
           TabOfTabableCard(
-            tabName: dealApoitmentNotes[0].scheduleDealNote.date!,
+            tabName: dealApoitmentNotes[0].scheduleDealNote.time!,
             tabColor: thirdColorPrimary,
             bodyOfTheTab: InsideTabPersonalAndDealScheduleWidget(
               personalAndDealsNotes: dealApoitmentNotes,

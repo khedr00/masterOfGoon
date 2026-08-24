@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_deal_t_notes_info.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+// import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_deal_t_notes_info.dart';
 import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_single_deal_schedule_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_notes_widget.dart';
@@ -12,9 +13,11 @@ class DealsOnlyScheduleWidget extends StatefulWidget {
     super.key,
     required this.forDealPage,
     required this.dealId,
+    required this.userAuthInfo,
   });
-  final int dealId;
+  final String dealId;
   final bool forDealPage;
+  final UserAuthInfo userAuthInfo;
 
   @override
   State<DealsOnlyScheduleWidget> createState() =>
@@ -29,17 +32,18 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
     List<DealsNotesWidget> apoitmentsNotes = await getSingleDealScheduleInfo(
       dealId: widget.dealId,
       cancelToken: _cancelToken,
+      userAuthInfo: widget.userAuthInfo,
     );
-    List<String> dealTNotes = await getDealTNotesInfo(
-      dealId: widget.dealId,
-      cancelToken: _cancelToken,
-    );
+    // List<String> dealTNotes = await getDealTNotesInfo(
+    //   dealId: 1,
+    //   cancelToken: _cancelToken,
+    // );
     if (!mounted) {
       return;
     }
     setState(() {
       _apoitmentsNotes.addAll(apoitmentsNotes);
-      _dealTNotes.addAll(dealTNotes);
+      // _dealTNotes.addAll(dealTNotes);
     });
   }
 

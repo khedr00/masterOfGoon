@@ -20,6 +20,7 @@ Future<List<EmployeeCardInfo>> getEmployeeCardsInfo({
         temp.add(EmployeeCardInfo.fromJson(data[i]));
       }
     }
+
     return temp;
   } on DioException catch (e) {
     if (CancelToken.isCancel(e)) {

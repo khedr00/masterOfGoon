@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/client_chat/client_chat_widget.dart';
 import 'package:untitled1/core/widgets/constants.dart';
@@ -14,7 +15,8 @@ import 'package:untitled1/core/widgets/simple_deal_info_card/simple_deal_info_ca
 import 'package:untitled1/providers/theme_provider.dart';
 
 class DealPage extends StatefulWidget {
-  const DealPage({super.key});
+  const DealPage({super.key, required this.userAuthInfo});
+  final UserAuthInfo userAuthInfo;
   @override
   State<DealPage> createState() => _DealPageState();
 }
@@ -91,8 +93,9 @@ class _DealPageState extends State<DealPage> {
                           ? darkThirdColorPrimary
                           : thirdColorPrimary,
                       bodyOfTheTab: DealsOnlyScheduleWidget(
-                        dealId: 1,
+                        dealId: '4af006b7-e48c-429d-9220-15d8c263e42e',
                         forDealPage: true,
+                        userAuthInfo: widget.userAuthInfo,
                       ),
                     ),
                     TabOfTabableCard(

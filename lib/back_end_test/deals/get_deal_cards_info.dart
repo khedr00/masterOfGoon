@@ -20,7 +20,7 @@ Future<List<dynamic>> getDealCardsInfo({
 
   List<Map<String, dynamic>> temp = [
     {
-      'id': 1,
+      'id': '1',
       'propertyId': 1,
       'clientId': 1,
       'title': 'Request to Buy Property – Homs City',
@@ -29,7 +29,7 @@ Future<List<dynamic>> getDealCardsInfo({
       'startingDate': '2/7/2025',
     },
     {
-      'id': 2,
+      'id': '2',
       'propertyId': 2,
       'clientId': 2,
       'title': 'Request to Buy Property – Homs City 2',
@@ -39,7 +39,7 @@ Future<List<dynamic>> getDealCardsInfo({
       'rentalPeriod': 2,
     },
     {
-      'id': 3,
+      'id': '3',
       'propertyId': 3,
       'clientId': 3,
       'title': 'Request to Buy Property – Homs City 3',
@@ -48,7 +48,7 @@ Future<List<dynamic>> getDealCardsInfo({
       'startingDate': '4/7/2025',
     },
     {
-      'id': 4,
+      'id': '4',
       'propertyId': 4,
       'clientId': 4,
       'title': 'Request to Buy Property – Homs City 4',
@@ -58,7 +58,7 @@ Future<List<dynamic>> getDealCardsInfo({
       'rentalPeriod': 3,
     },
     {
-      'id': 5,
+      'id': '5',
       'propertyId': 5,
       'clientId': 5,
       'title': 'Request to Buy Property – Homs City 5',
@@ -67,7 +67,7 @@ Future<List<dynamic>> getDealCardsInfo({
       'startingDate': '6/7/2025',
     },
     {
-      'id': 6,
+      'id': '6',
       'propertyId': 6,
       'clientId': 6,
       'title': 'Request to Buy Property – Homs City 6',

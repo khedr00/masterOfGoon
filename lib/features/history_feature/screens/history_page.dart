@@ -14,7 +14,7 @@ class _HistoryPageState extends State<HistoryPage> {
   List<Widget> dealList = [
     DealCard(
       dealCardInfo: DealCardInfo(
-        id: 1,
+        id: '1',
         propertyId: 2,
         clientId: 3,
         title: 'the mountain vella deal',
@@ -33,7 +33,7 @@ class _HistoryPageState extends State<HistoryPage> {
     ),
     DealCard(
       dealCardInfo: DealCardInfo(
-        id: 1,
+        id: ' 1',
         propertyId: 2,
         clientId: 3,
         title: 'the mountain vella deal',
@@ -52,7 +52,7 @@ class _HistoryPageState extends State<HistoryPage> {
     ),
     DealCard(
       dealCardInfo: DealCardInfo(
-        id: 1,
+        id: '1',
         propertyId: 2,
         clientId: 3,
         title: 'the mountain vella deal',

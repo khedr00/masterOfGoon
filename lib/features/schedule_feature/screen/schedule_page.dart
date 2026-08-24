@@ -77,7 +77,7 @@ class _SchedulePageState extends State<SchedulePage> {
             date.day,
             time.hour,
             time.minute,
-          );
+          ).add(const Duration(hours: 3));
           _dayName = getDayNameFromDateTime(_dateTime);
           _isClicked = true;
         }
@@ -210,8 +210,8 @@ class _SchedulePageState extends State<SchedulePage> {
                                   _dateTime.toUtc().toIso8601String(),
                                   title,
                                   description,
-                                  buyRentDealId,
                                   saleLeaseDealId,
+                                  buyRentDealId,
                                 );
                                 if (_isCompletedSchedule) {
                                   if (context.mounted) {

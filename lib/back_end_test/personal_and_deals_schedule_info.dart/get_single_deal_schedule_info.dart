@@ -1,133 +1,156 @@
 import 'package:dio/dio.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_deal_note.dart';
+import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/notes_variations/deal_note_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_notes_widget.dart';
 
 Future<List<DealsNotesWidget>> getSingleDealScheduleInfo({
-  required int dealId,
+  required String dealId,
   CancelToken? cancelToken,
+  required UserAuthInfo userAuthInfo,
 }) async {
-  await Future.delayed(const Duration(seconds: 3));
+  DioClient dioClient = DioClient(userAuthInfo: userAuthInfo);
 
-  List<Map<String, dynamic>> temp = [
-    {
-      'date': 'Sunday 2/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 2/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 2/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 2/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 2/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 3/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 3/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 3/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 3/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 3/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 4/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 4/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-    {
-      'date': 'Sunday 4/7/2025',
-      'time': '2:00',
-      'title': '2',
-      'description': 'akucasdfasdfasdfasdfasdfdgl',
-      'dealId': dealId,
-      'dealName': 'Request to Buy Property Homs City2',
-      'propertyNameCode': 'V_234',
-    },
-  ];
+  List<dynamic> temp = [];
+
+  try {
+    final dynamic response;
+    response = await dioClient.dio.get('${base}api/v1/deals/$dealId/schedules');
+    temp = response.data['data'];
+  } on DioException catch (e) {
+    if (CancelToken.isCancel(e)) {
+      throw Exception('Request cancelled');
+    }
+
+    if (e.response != null) {
+      throw Exception(e.response?.data['message'] ?? 'Server Error');
+    }
+
+    throw Exception('Connection Error get Deals schedule only');
+  } catch (e) {
+    throw Exception(e);
+  }
+  // List<Map<String, dynamic>> temp = [
+  //   {
+  //     'date': 'Sunday 2/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 2/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 2/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 2/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 2/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 3/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 3/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 3/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 3/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 3/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 4/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 4/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  //   {
+  //     'date': 'Sunday 4/7/2025',
+  //     'time': '2:00',
+  //     'title': '2',
+  //     'description': 'akucasdfasdfasdfasdfasdfdgl',
+  //     'dealId': dealId,
+  //     'dealName': 'Request to Buy Property Homs City2',
+  //     'propertyNameCode': 'V_234',
+  //   },
+  // ];
 
   List<DealsNotesWidget> result = [];
 
@@ -150,13 +173,14 @@ Future<List<DealsNotesWidget>> getSingleDealScheduleInfo({
     currentNotes.add(
       DealNoteWidget(
         scheduleDealNote: ScheduleDealNote(
-          date: item['date'],
-          time: item['time'],
-          title: item['title'],
-          description: item['description'],
-          dealId: item['dealId'],
-          propertyNameCode: item['propertyNameCode'],
-          dealName: item['dealName'],
+          employeeId: 1,
+          time:
+              '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
+          title: temp[i]['title'],
+          description: temp[i]['description'],
+          dealId: dealId,
+          propertyNameCode: '',
+          dealName: '',
         ),
       ),
     );

@@ -85,7 +85,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
   }
 
   List<bool> _cardIsClicked = [];
-  int? _dealId;
+  String? _dealId;
 
   void _falsingcardIsClicked() {
     _cardIsClicked = List.filled(_dealList.length, false);
@@ -298,7 +298,9 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => DealPage(),
+                                          builder: (context) => DealPage(
+                                            userAuthInfo: widget.userAuthInfo,
+                                          ),
                                         ),
                                       );
                                     },
@@ -349,8 +351,10 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                   ? SizedBox()
                   : DealsOnlyScheduleWidget(
                       key: ValueKey(_dealId!),
-                      dealId: _dealId!,
+                      dealId: '4af006b7-e48c-429d-9220-15d8c263e42e',
+                      //  _dealId!,
                       forDealPage: false,
+                      userAuthInfo: widget.userAuthInfo,
                     ),
             ],
           ),

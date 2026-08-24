@@ -153,7 +153,10 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (_) {
-                                                  return DealPage();
+                                                  return DealPage(
+                                                    userAuthInfo:
+                                                        widget.userAuthInfo,
+                                                  );
                                                 },
                                               ),
                                             );
