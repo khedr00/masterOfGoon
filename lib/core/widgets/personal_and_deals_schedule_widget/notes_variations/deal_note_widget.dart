@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/schedule_deal_note.dart';
 import 'package:untitled1/core/widgets/constants.dart';
@@ -7,6 +8,7 @@ import 'package:untitled1/providers/theme_provider.dart';
 
 class DealNoteWidget extends StatefulWidget {
   const DealNoteWidget({super.key, required this.scheduleDealNote});
+
   final ScheduleDealNote scheduleDealNote;
 
   @override
@@ -15,35 +17,60 @@ class DealNoteWidget extends StatefulWidget {
 
 class _NoteWidgetState extends State<DealNoteWidget> {
   bool isHoverd = false;
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
+
     return NoteWidget(
       scheduleNote: widget.scheduleDealNote,
+
       clockColor: widget.scheduleDealNote.title == "MEETING"
           ? Colors.red
           : (themeProvider.isDarkMode
                 ? darkThirdColorSecondary
                 : thirdColorSecondary),
+
       handsIcon: MouseRegion(
         onEnter: (event) {
           setState(() {
             isHoverd = true;
           });
         },
+
         onExit: (event) {
           setState(() {
             isHoverd = false;
           });
         },
-        child: SizedBox(
-          width: width * (35 / 1920),
-          height: width * (30 / 1920),
-          child: Image.asset('assets/images/Handshake.png'),
+
+        child: GestureDetector(
+          onTap: () async {
+            await Clipboard.setData(
+              ClipboardData(text: widget.scheduleDealNote.dealId.toString()),
+            );
+
+            if (!context.mounted) return;
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('ID copied to clipboard'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          },
+
+          child: SizedBox(
+            width: width * (35 / 1920),
+            height: width * (30 / 1920),
+            child: Image.asset('assets/images/Handshake.png'),
+          ),
         ),
       ),
+
       isHoverd: isHoverd,
+
       handIconHoverWidget: isHoverd
           ? Positioned(
               left: width * (135 / 1920),
@@ -54,31 +81,18 @@ class _NoteWidgetState extends State<DealNoteWidget> {
                     height: width * (100 / 1920),
                     decoration: BoxDecoration(
                       color: themeProvider.isDarkMode
-                          ? Color(0xff757575)
-                          : Color(0xff545454),
+                          ? const Color(0xff757575)
+                          : const Color(0xff545454),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(width * (10 / 1920)),
                         bottomLeft: Radius.circular(width * (10 / 1920)),
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: width * (2 / 1920),
-                            vertical: width * (5 / 1920),
-                          ),
-                          child: Text(
-                            widget.scheduleDealNote.dealName,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'NunitoSans-Light',
-                              fontSize: width * (12 / 1920),
-                            ),
-                          ),
-                        ),
-                        Spacer(flex: 1),
-                        Text(
+
+                    child: Padding(
+                      padding: EdgeInsets.all(width * (5 / 1920)),
+                      child: Center(
+                        child: Text(
                           'ID: ${widget.scheduleDealNote.dealId.toString()}',
                           style: TextStyle(
                             color: Colors.white,
@@ -86,24 +100,17 @@ class _NoteWidgetState extends State<DealNoteWidget> {
                             fontSize: width * (14 / 1920),
                           ),
                         ),
-                        Text(
-                          widget.scheduleDealNote.propertyNameCode,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'NunitoSans-SemiBold',
-                            fontSize: width * (14 / 1920),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
+
                   Container(
                     width: width * (23 / 1920),
                     height: width * (100 / 1920),
                     decoration: BoxDecoration(
                       color: themeProvider.isDarkMode
-                          ? Color(0xff757575)
-                          : Color(0xff545454),
+                          ? const Color(0xff757575)
+                          : const Color(0xff545454),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.elliptical(
                           width * (23 / 1920),
@@ -119,7 +126,7 @@ class _NoteWidgetState extends State<DealNoteWidget> {
                 ],
               ),
             )
-          : SizedBox(),
+          : const SizedBox(),
     );
   }
 }
