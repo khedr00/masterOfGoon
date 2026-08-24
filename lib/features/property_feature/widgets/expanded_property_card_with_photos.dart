@@ -22,7 +22,7 @@ class ExpandedPropertyCardWithPhotos extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          PropertyCard(propertyId: '1'),
+          PropertyCard(),
           PropertyPhotosShowerWidget(isPrimaryPropertyPhotos: true),
         ],
       ),

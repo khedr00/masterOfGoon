@@ -119,7 +119,11 @@ class _DealPageState extends State<DealPage> {
                             bottomRight: Radius.circular(width * (30 / 1920)),
                           ),
                         ),
-                        child: Center(child: PropertyCard(propertyId: '1')),
+                        child: Center(
+                          child: PropertyCard(
+                            propertyId: 'bbae6c38-d791-48b7-84b1-225fd5f96f38',
+                          ),
+                        ),
                       ),
                     ),
                   ],

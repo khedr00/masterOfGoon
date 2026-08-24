@@ -6,7 +6,8 @@ import 'package:untitled1/features/property_feature/properties_back_end/modules/
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/property_card_module_info.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/store_card_module_info.dart';
 // import 'package:untitled1/back_end_test/properties/modules/prpoperty_card_info/villa_card_module_info.dart';
-import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/property_feature/data/property_cards_api_service.dart';
+import 'package:untitled1/features/property_feature/data/property_cards_query.dart';
 
 // Future<List<PropertyCardModuleInfo>> fillPropertyCardModulesInfo(
 //   List<Map<String, dynamic>> temp,
@@ -112,14 +113,11 @@ import 'package:untitled1/core/widgets/constants.dart';
 Future<List<PropertyCardModel>> getTenPropertyCards({
   CancelToken? cancelToken,
 }) async {
-  Dio dio = Dio();
-  final response = await dio.get('${base}api/v1/properties');
-  final data = response.data['data'];
-  List<PropertyCardModel> temp = [];
-
-  for (int i = 0; i < data.length; i++) {
-    temp.add(PropertyCardModel.fromJson(data[i]));
-  }
+  final page = await PropertyCardsApiService().getProperties(
+    const PropertyCardsQuery(limit: 10),
+    cancelToken: cancelToken,
+  );
+  final temp = page.items;
   // for (int i = 0; i < 2; i++) {
   //   temp.add({
   //     'imageUrl': 'assets/images/test_photos/2.png',

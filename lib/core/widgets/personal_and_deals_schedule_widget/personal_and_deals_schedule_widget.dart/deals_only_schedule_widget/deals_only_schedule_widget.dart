@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 // import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/get_deal_t_notes_info.dart';
@@ -118,39 +119,82 @@ class _DealsOnlyScheduleWidgetState extends State<DealsOnlyScheduleWidget> {
                 width: width * (4 / 1920),
               ),
             ),
-      child: _apoitmentsNotes.isEmpty
-          ? Center(
-              child: Text(
-                'there is no notes for this deal',
-                style: TextStyle(
-                  color: getPrimaryTextColor(themeProvider.isDarkMode),
-                  fontFamily: 'NunitoSans-Bold',
-                  fontSize: width * (32 / 1920),
+      child: ListView(
+        children: [
+          GestureDetector(
+            onTap: () async {
+              await Clipboard.setData(
+                ClipboardData(text: widget.dealId.toString()),
+              );
+
+              if (!context.mounted) return;
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('ID copied to clipboard'),
+                  duration: Duration(seconds: 2),
                 ),
-              ),
-            )
-          : SingleChildScrollView(
-              child: Column(
+              );
+            },
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    width: width * (895 / 1920),
-                    // height: width * (177 / 1920),
-                    decoration: BoxDecoration(
-                      color: themeProvider.isDarkMode
-                          ? darkThirdColorPrimary
-                          : thirdColorPrimary,
-                      borderRadius: widget.forDealPage
-                          ? BorderRadius.only(
-                              topRight: Radius.circular(width * (30 / 1920)),
-                            )
-                          : BorderRadius.circular(1),
+                  Text(
+                    widget.dealId.toString(),
+                    style: TextStyle(
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      fontFamily: 'NunitoSans-Bold',
+                      fontSize: width * (20 / 1920),
                     ),
-                    child: Column(children: dealsNotes),
                   ),
-                  Column(children: apoitmentsNotesWithPaddings),
+                  SizedBox(width: width * (8 / 1920)),
+                  Icon(
+                    Icons.copy_rounded,
+                    size: width * (20 / 1920),
+                    color: getPrimaryTextColor(themeProvider.isDarkMode),
+                  ),
                 ],
               ),
             ),
+          ),
+          _apoitmentsNotes.isEmpty
+              ? Center(
+                  child: Text(
+                    'there is no notes for this deal',
+                    style: TextStyle(
+                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      fontFamily: 'NunitoSans-Bold',
+                      fontSize: width * (32 / 1920),
+                    ),
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: width * (895 / 1920),
+                        // height: width * (177 / 1920),
+                        decoration: BoxDecoration(
+                          color: themeProvider.isDarkMode
+                              ? darkThirdColorPrimary
+                              : thirdColorPrimary,
+                          borderRadius: widget.forDealPage
+                              ? BorderRadius.only(
+                                  topRight: Radius.circular(
+                                    width * (30 / 1920),
+                                  ),
+                                )
+                              : BorderRadius.circular(1),
+                        ),
+                        child: Column(children: dealsNotes),
+                      ),
+                      Column(children: apoitmentsNotesWithPaddings),
+                    ],
+                  ),
+                ),
+        ],
+      ),
     );
   }
 }

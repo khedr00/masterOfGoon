@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled1/features/property_feature/properties_back_end/modules/prpoperty_card_info/property_card_model.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/providers/theme_provider.dart';
+import 'package:untitled1/features/property_feature/data/property_image_source.dart';
 
 class PropertyMiniCard extends StatelessWidget {
   const PropertyMiniCard({
@@ -56,11 +57,15 @@ class PropertyMiniCard extends StatelessWidget {
                     topLeft: Radius.circular(width * (30 / 1920)),
                     topRight: Radius.circular(width * (30 / 1920)),
                   ),
-                  child: Image.asset(
+                  child: PropertyImageSource.image(
+                    PropertyImageSource.normalize(
+                      propertyCardModuleInfo.primaryPhoto,
+                      PropertyImageSource.propertyFallback,
+                    ),
+                    PropertyImageSource.propertyFallback,
                     width: double.infinity,
                     height: double.infinity,
                     fit: BoxFit.cover,
-                    'assets/images/test_photos/property_primary_photo.png',
                   ),
                 ),
               ),
@@ -173,7 +178,7 @@ class PropertyMiniCard extends StatelessWidget {
                     ),
                     Spacer(flex: 1),
                     Text(
-                      '${propertyCardModuleInfo.numOfRooms.toString()} Rooms',
+                      'Rooms',
                       style: TextStyle(
                         color: getPrimaryTextColor(themeProvider.isDarkMode),
                         fontFamily: 'NunitoSans-Regular',

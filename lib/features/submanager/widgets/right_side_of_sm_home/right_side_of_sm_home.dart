@@ -273,7 +273,7 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
                     ? SizedBox()
                     : PropertyCard(
                         // key: ValueKey(propertyId),
-                        propertyId: '1',
+                        propertyId: 'bbae6c38-d791-48b7-84b1-225fd5f96f38',
                       ),
                 PropertyPhotosShowerWidget(isPrimaryPropertyPhotos: true),
               ],

@@ -26,7 +26,12 @@ class _InsideTabPersonalAndDealScheduleWidgetState
     List<Widget> personalAndDealsNotes = [];
     if (widget.personalAndDealsNotes.length % 2 != 0) {
       widget.personalAndDealsNotes.add(
-        Container(width: width * (322 / 1920), color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor),
+        Container(
+          width: width * (322 / 1920),
+          color: themeProvider.isDarkMode
+              ? darkBackGroundColor
+              : backGroundColor,
+        ),
       );
     }
     for (int i = 0; i < widget.personalAndDealsNotes.length; i = i + 2) {

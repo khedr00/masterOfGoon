@@ -33,8 +33,31 @@ class PropertyCardModel {
       city: json['city'] ?? '',
       listedPrice: json['listedPrice']?.toString() ?? '',
       sqft: json['sqft']?.toString() ?? '',
-      numOfRooms: json['numOfRooms'] ?? 0,
+      numOfRooms: _roomCount(json),
       primaryPhoto: json['primaryPhoto'] ?? '',
     );
   }
+}
+
+int _roomCount(Map<String, dynamic> json) {
+  final values = [
+    json['numOfRooms'],
+    json['numberOfRooms'],
+    json['roomsCount'],
+    json['roomCount'],
+    json['numberOfRoom'],
+    json['number_of_rooms'],
+    json['rooms'],
+  ];
+  for (final value in values) {
+    final count = _int(value);
+    if (count > 0) return count;
+  }
+  final roomItems = json['roomItems'];
+  return roomItems is List ? roomItems.length : 0;
+}
+
+int _int(Object? value) {
+  if (value is num) return value.toInt();
+  return int.tryParse(value?.toString().trim() ?? '') ?? 0;
 }

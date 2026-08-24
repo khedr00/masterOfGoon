@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/login_page.dart';
+import 'package:untitled1/features/property_feature/providers/property_data_provider.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 import 'package:untitled1/providers/auth_provider.dart';
 import 'package:untitled1/providers/employee_deals_filter_provider.dart';
@@ -64,6 +65,7 @@ void main() {
             return IconSelectorProvider();
           },
         ),
+        ChangeNotifierProvider(create: (_) => PropertyDataProvider()),
         // ChangeNotifierProvider(
         //   create: (context) {
         //     return ChatProvider(SocketService());

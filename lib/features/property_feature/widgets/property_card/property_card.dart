@@ -1,66 +1,46 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/features/property_feature/properties_back_end/get_prop_info_with_prim_images.dart';
-import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/apartment_info_with_primary_images.dart';
-import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/hall_info_with_primary_images.dart';
-import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/house_info_with_primary_images.dart';
-import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/villa_info_with_primary_images.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/features/property_feature/widgets/property_card/apartment_card_upper_section.dart';
-import 'package:untitled1/features/property_feature/widgets/property_card/hall_card_upper_section.dart';
-import 'package:untitled1/features/property_feature/widgets/property_card/house_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/data/models/property_api_model.dart';
 import 'package:untitled1/features/property_feature/widgets/property_card/property_card_lower_section.dart';
-import 'package:untitled1/features/property_feature/widgets/property_card/store_card_upper_section.dart';
-import 'package:untitled1/features/property_feature/widgets/property_card/villa_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/widgets/property_card/property_card_upper_section.dart';
+import 'package:untitled1/features/property_feature/providers/property_data_provider.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyCard extends StatefulWidget {
-  const PropertyCard({super.key, required this.propertyId});
-  final String propertyId;
+  const PropertyCard({super.key, this.propertyId});
+  final String? propertyId;
 
   @override
   State<PropertyCard> createState() => _PropertyCardState();
 }
 
 class _PropertyCardState extends State<PropertyCard> {
-  dynamic _propertyInfo;
-  final CancelToken _cancelToken = CancelToken();
-  void _getPropertyInfo() async {
-    dynamic propertyInfo = await getPropertyInfoWithPrimaryImages(
-      id: 1,
-      cancelToken: _cancelToken,
-    );
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _propertyInfo = propertyInfo;
-    });
-  }
-
   @override
   void initState() {
-    _getPropertyInfo();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _cancelToken.cancel();
-    super.dispose();
+    if (widget.propertyId != null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => context.read<PropertyDataProvider>().selectProperty(
+          widget.propertyId,
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
-    if (_propertyInfo == null) {
+    final propertyData = context.watch<PropertyDataProvider>();
+    final property = propertyData.property;
+    if (property == null) {
       return Container(
         color: getCardColor(themeProvider.isDarkMode),
         child: Center(child: CircularProgressIndicator()),
       );
     }
+    final lowerStackInfo = _lowerStackInfo(propertyData, property);
     return Stack(
       children: [
         Container(
@@ -72,27 +52,9 @@ class _PropertyCardState extends State<PropertyCard> {
           child: Column(
             children: [
               // اول قسم اساسي من فوق
-              _propertyInfo is HouseInfoWithPrimaryImages
-                  ? HouseCardUpperSection(
-                      houseInfoWithPrimaryImages: _propertyInfo!,
-                    )
-                  : _propertyInfo is HallInfoWithPrimaryImages
-                  ? HallCardUpperSection(
-                      hallInfoWithPrimaryImages: _propertyInfo!,
-                    )
-                  : _propertyInfo is VillaInfoWithPrimaryImages
-                  ? VillaCardUpperSection(
-                      villaInfoWithPrimaryImages: _propertyInfo!,
-                    )
-                  : _propertyInfo is ApartmentInfoWithPrimaryImages
-                  ? ApartmentCardUpperSection(
-                      apartmentInfoWithPrimaryImages: _propertyInfo!,
-                    )
-                  : StoreCardUpperSection(
-                      storeInfoWithPrimaryImages: _propertyInfo,
-                    ),
+              PropertyCardUpperSection(property: property),
               // تاني قسم رئيسي من تحت
-              PropertyCardLowerSection(),
+              const PropertyCardLowerSection(),
             ],
           ),
         ),
@@ -111,9 +73,87 @@ class _PropertyCardState extends State<PropertyCard> {
                 topRight: Radius.circular(width * (10 / 1920)),
               ),
             ),
+            child: lowerStackInfo == null
+                ? null
+                : _LowerStackInfoContent(
+                    info: lowerStackInfo,
+                    isDarkMode: themeProvider.isDarkMode,
+                    width: width,
+                  ),
           ),
         ),
       ],
+    );
+  }
+}
+
+_LowerStackInfo? _lowerStackInfo(
+  PropertyDataProvider propertyData,
+  PropertyApiModel property,
+) {
+  switch (propertyData.imageContext) {
+    case PropertyImageContext.room:
+      return _LowerStackInfo(image: 'assets/images/Room.png', label: 'Rooms');
+    case PropertyImageContext.outdoor:
+      return _LowerStackInfo(
+        image: 'assets/images/Garden.png',
+        count: property.outdoorItems.length,
+        label: property.outdoorItems.length == 1 ? 'Outdoor' : 'Outdoors',
+      );
+    case PropertyImageContext.painting:
+      return null;
+    case PropertyImageContext.property:
+      return null;
+  }
+}
+
+class _LowerStackInfo {
+  const _LowerStackInfo({required this.image, required this.label, this.count});
+
+  final String image;
+  final int? count;
+  final String label;
+}
+
+class _LowerStackInfoContent extends StatelessWidget {
+  const _LowerStackInfoContent({
+    required this.info,
+    required this.isDarkMode,
+    required this.width,
+  });
+
+  final _LowerStackInfo info;
+  final bool isDarkMode;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: width * (10 / 1920)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: width * (46 / 1920),
+            height: width * (46 / 1920),
+            child: Image.asset(info.image),
+          ),
+          SizedBox(height: width * (6 / 1920)),
+
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              info.label,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: getTextColor(isDarkMode),
+                fontFamily: 'NunitoSans-SemiBold',
+                fontSize: width * (20 / 1920),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

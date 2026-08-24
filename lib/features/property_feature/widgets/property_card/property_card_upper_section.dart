@@ -1,32 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/features/property_feature/properties_back_end/modules/property_info_with_primary_images/property_info_with_primary_images.dart';
+import 'package:untitled1/features/property_feature/data/models/property_api_model.dart';
+import 'package:untitled1/features/property_feature/providers/property_data_provider.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/property_feature/widgets/property_card/tabable_property_icon.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class PropertyCardUpperSection extends StatelessWidget {
-  const PropertyCardUpperSection({
-    super.key,
-    required this.propertyInfo,
-    required this.outDoorPlaces,
-    required this.hasMoreThanOneFloor,
-    required this.floor,
-    required this.elevator,
-    required this.buildingBarking,
-    required this.storeFront,
-  });
-  final PropertyInfoWithPrimaryImages propertyInfo;
-  final List<String> outDoorPlaces;
-  final bool hasMoreThanOneFloor;
-  final int floor;
-  final bool elevator;
-  final bool buildingBarking;
-  final Widget storeFront;
+  const PropertyCardUpperSection({super.key, required this.property});
+  final PropertyApiModel property;
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final propertyData = context.watch<PropertyDataProvider>();
+    final outDoorPlaces = property.outdoorItems;
+    final hasMoreThanOneFloor = property.numOfFloors > 1;
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -66,7 +55,9 @@ class PropertyCardUpperSection extends StatelessWidget {
                           height: width * (85 / 1920),
                           child: Center(
                             child: Text(
-                              'for Sale',
+                              property.listingType.isNotEmpty
+                                  ? _enumLabel(property.listingType)
+                                  : 'for Sale',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: getPrimaryTextColor(
@@ -94,7 +85,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                           width: width * (709 / 1920),
                           child: Center(
                             child: Text(
-                              propertyInfo.fullPropertyDescription,
+                              property.fullDescription,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: getPrimaryTextColor(
@@ -128,45 +119,43 @@ class PropertyCardUpperSection extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                              _UpperFeatureRow(
+                                width: width,
                                 children: [
                                   TabablePropertyIcon(
                                     image: 'assets/images/Room.png',
-                                    text:
-                                        '${propertyInfo.numberOfRooms.toString()} Rooms',
+                                    text: 'Rooms',
+                                    showClickableState: true,
+                                    onTap: () => propertyData.selectRoom(null),
                                   ),
-                                  outDoorPlaces.isEmpty
-                                      ? SizedBox()
-                                      : TabablePropertyIcon(
-                                          image: 'assets/images/Garden.png',
-                                          text: 'out doors',
-                                        ),
-                                  TabablePropertyIcon(
-                                    image: 'assets/images/Paint Roller.png',
-                                    text: 'Painting',
-                                  ),
+                                  if (outDoorPlaces.isNotEmpty)
+                                    TabablePropertyIcon(
+                                      image: 'assets/images/Garden.png',
+                                      text: 'Outdoors',
+                                      showClickableState: true,
+                                      onTap: () =>
+                                          propertyData.selectOutdoorItem(null),
+                                    ),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                              _UpperFeatureRow(
+                                width: width,
                                 children: [
-                                  elevator
-                                      ? TabablePropertyIcon(
-                                          image:
-                                              'assets/images/Elevator Doors.png',
-                                          text: 'Elevator',
-                                        )
-                                      : SizedBox(),
-                                  buildingBarking
-                                      ? TabablePropertyIcon(
-                                          image: 'assets/images/Parking.png',
-                                          text: 'Building parking',
-                                        )
-                                      : SizedBox(),
-                                  GestureDetector(child: storeFront),
+                                  if (property.elevator)
+                                    TabablePropertyIcon(
+                                      image: 'assets/images/Elevator Doors.png',
+                                      text: 'Elevator',
+                                    ),
+                                  if (property.parking)
+                                    TabablePropertyIcon(
+                                      image: 'assets/images/Parking.png',
+                                      text: 'Building parking',
+                                    ),
+                                  if (property.type.toUpperCase() == 'STORE')
+                                    TabablePropertyIcon(
+                                      image: 'assets/images/Closed Sign.png',
+                                      text: 'Store front',
+                                    ),
                                 ],
                               ),
                             ],
@@ -218,11 +207,11 @@ class PropertyCardUpperSection extends StatelessWidget {
                                 children: [
                                   TabablePropertyIcon(
                                     image: 'assets/images/Square Border.png',
-                                    text: '${propertyInfo.sqft.toString()}M',
+                                    text: '${property.sqft}M',
                                   ),
                                   TabablePropertyIcon(
                                     image: 'assets/images/Closet.png',
-                                    text: propertyInfo.furnitureState,
+                                    text: property.furnishing,
                                   ),
                                 ],
                               ),
@@ -231,20 +220,16 @@ class PropertyCardUpperSection extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   TabablePropertyIcon(
-                                    image: propertyInfo.avaliableInternet
-                                        ? 'assets/images/Wi-Fi.png'
-                                        : 'assets/images/Wi-Fi.png',
-                                    text: propertyInfo.avaliableInternet
-                                        ? 'Wi-Fi'
-                                        : 'no Wi-Fi',
+                                    image: 'assets/images/Parking.png',
+                                    text: _carsLabel(property.garageCars),
                                   ),
                                   TabablePropertyIcon(
                                     image: hasMoreThanOneFloor
                                         ? 'assets/images/Stairs Up.png'
                                         : 'assets/images/floor.png',
                                     text: hasMoreThanOneFloor
-                                        ? '$floor floors'
-                                        : '${floor}d floor',
+                                        ? '${property.numOfFloors} floors'
+                                        : '${property.floorNumber}d floor',
                                   ),
                                 ],
                               ),
@@ -281,12 +266,10 @@ class PropertyCardUpperSection extends StatelessWidget {
                 SizedBox(
                   width: width * (50 / 1920),
                   height: width * (50 / 1920),
-                  child: Image.asset(
-                    propertyInfo.getpropertyIcon(propertyInfo.propertyType),
-                  ),
+                  child: Image.asset(_propertyIcon(property.type)),
                 ),
                 Text(
-                  propertyInfo.propertyType,
+                  _enumLabel(property.type),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: getTextColor(themeProvider.isDarkMode),
@@ -319,7 +302,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  propertyInfo.address,
+                  property.address,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: getPrimaryTextColor(themeProvider.isDarkMode),
@@ -356,7 +339,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                       child: Image.asset('assets/images/Price Tag USD.png'),
                     ),
                     Text(
-                      '${propertyInfo.leastSellPrice} \$',
+                      '${property.listedPrice} \$',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: getTextColor(themeProvider.isDarkMode),
@@ -366,48 +349,30 @@ class PropertyCardUpperSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset('assets/images/Split Money.png'),
-                    ),
-                    Text(
-                      '${propertyInfo.fakePrice} \$',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: getTextColor(themeProvider.isDarkMode),
-                        fontFamily: 'NunitoSans-LightItalic',
-                        fontSize: width * (20 / 1920),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: width * (30 / 1920),
-                      height: width * (30 / 1920),
-                      child: Image.asset(
-                        propertyInfo.isAvaliable
-                            ? 'assets/images/Check Mark.png'
-                            : 'assets/images/Cancel.png',
-                      ),
-                    ),
-                    Text(
-                      propertyInfo.isAvaliable ? 'avaliable' : 'not avaliable',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: getTextColor(themeProvider.isDarkMode),
-                        fontFamily: 'NunitoSans-Medium',
-                        fontSize: width * (20 / 1920),
-                      ),
-                    ),
-                  ],
-                ),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     SizedBox(
+                //       width: width * (30 / 1920),
+                //       height: width * (30 / 1920),
+                //       child: Image.asset(
+                //         property.isAvailable == true
+                //             ? 'assets/images/Check Mark.png'
+                //             : 'assets/images/Cancel.png',
+                //       ),
+                //     ),
+                //     Text(
+                //       'Available',
+                //       textAlign: TextAlign.center,
+                //       style: TextStyle(
+                //         color: getTextColor(themeProvider.isDarkMode),
+                //         fontFamily: 'NunitoSans-Medium',
+                //         fontSize: width * (20 / 1920),
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -446,13 +411,13 @@ class PropertyCardUpperSection extends StatelessWidget {
                         childAspectRatio: 3,
                         crossAxisCount: 2,
                       ),
-                      itemCount: propertyInfo.nearByPlaces.length,
+                      itemCount: property.nearbyPlaces.length,
                       itemBuilder: (context, index) {
                         return SizedBox(
                           width: width * (150 / 1920),
                           child: Center(
                             child: Text(
-                              '${propertyInfo.nearByPlaces[index].nearbyPlace} ${propertyInfo.nearByPlaces[index].destance.toString()}M',
+                              '${property.nearbyPlaces[index].name} ${property.nearbyPlaces[index].distance}M',
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               style: TextStyle(
@@ -483,7 +448,7 @@ class PropertyCardUpperSection extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                propertyInfo.simplePropertyDescription,
+                property.simpleDescription,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: getPrimaryTextColor(themeProvider.isDarkMode),
@@ -509,7 +474,7 @@ class PropertyCardUpperSection extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                propertyInfo.nameCode,
+                property.referenceCode,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -524,3 +489,60 @@ class PropertyCardUpperSection extends StatelessWidget {
     );
   }
 }
+
+class _UpperFeatureRow extends StatelessWidget {
+  const _UpperFeatureRow({required this.width, required this.children});
+
+  final double width;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    if (children.isEmpty) return SizedBox(height: width * (60 / 1920));
+
+    return SizedBox(
+      width: width * (611 / 1920),
+      height: width * (60 / 1920),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            for (final child in children) ...[
+              child,
+              SizedBox(width: width * (14 / 1920)),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+String _propertyIcon(String type) {
+  switch (type.toUpperCase()) {
+    case 'VILLA':
+      return 'assets/images/Mansion.png';
+    case 'STORE':
+      return 'assets/images/Shop-kind.png';
+    case 'HALL':
+      return 'assets/images/City Hall.png';
+    case 'APARTMENT':
+      return 'assets/images/apartment-kind.png';
+    default:
+      return 'assets/images/house_kind.png';
+  }
+}
+
+String _carsLabel(int? cars) {
+  final count = cars ?? 0;
+  return '$count ${count == 1 ? 'Car' : 'Cars'}';
+}
+
+String _enumLabel(String value) => value
+    .split('_')
+    .map(
+      (part) => part.isEmpty
+          ? part
+          : '${part[0].toUpperCase()}${part.substring(1).toLowerCase()}',
+    )
+    .join(' ');
