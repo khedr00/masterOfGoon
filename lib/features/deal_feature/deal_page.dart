@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/client_chat/client_chat_widget.dart';
@@ -10,22 +12,56 @@ import 'package:untitled1/core/widgets/general_tabable_card/tab_of_tabable_card.
 import 'package:untitled1/core/widgets/liked_and_avoidances_body/avoidances_only_body.dart';
 import 'package:untitled1/core/widgets/liked_and_avoidances_body/liked_only_body.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
+import 'package:untitled1/features/deal_feature/datasources/get_deal_by_id.dart';
+import 'package:untitled1/features/deal_feature/models/deal_model.dart';
 import 'package:untitled1/features/property_feature/widgets/property_card/property_card.dart';
 import 'package:untitled1/core/widgets/simple_deal_info_card/simple_deal_info_card.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class DealPage extends StatefulWidget {
-  const DealPage({super.key, required this.userAuthInfo});
+  const DealPage({super.key, required this.userAuthInfo, required this.dealId});
   final UserAuthInfo userAuthInfo;
+  final String dealId;
   @override
   State<DealPage> createState() => _DealPageState();
 }
 
 class _DealPageState extends State<DealPage> {
+  final CancelToken _cancelToken = CancelToken();
+  DealModel? _dealModel;
+  Future<void> _getDealById() async {
+    DealModel dealModel = await getDealById(
+      dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
+      cancelToken: _cancelToken,
+      dealId: widget.dealId,
+    );
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _dealModel = dealModel;
+    });
+  }
+
+  @override
+  void initState() {
+    _getDealById();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
+    if (_dealModel == null) {
+      return Center(child: CircularProgressIndicator());
+    }
     return Scaffold(
       backgroundColor: themeProvider.isDarkMode
           ? darkBackGroundColor
@@ -57,12 +93,24 @@ class _DealPageState extends State<DealPage> {
                       ),
                       SizedBox(height: width * (30 / 1920)),
                       SimpleDealInfoCard(
-                        dealStage: 'Negotiation',
-                        dealTitle: 'Mountain Villa Deal',
-                        dealId: '53462',
-                        dealDate: '2/2/2026',
-                        priceRange: '2000,000 - 2500,000',
-                        successRate: '55%',
+                        dealStage: _dealModel!.dealStatus!,
+                        dealTitle: '',
+                        dealId: _dealModel!.id!,
+                        dealDate: _dealModel!.createdAt!,
+                        priceRange:
+                            _dealModel!.dealType == 'BUY' ||
+                                _dealModel!.dealType == 'RENT'
+                            ? 'price range\n${_dealModel!.actualPrice!}\$ - ${_dealModel!.listedPrice!}\$ '
+                            : 'listing range\n${_dealModel!.minListingPrice!}% - ${_dealModel!.maxListingPrice}%',
+                        successRate:
+                            _dealModel!.dealType != 'BUY' ||
+                                _dealModel!.dealType != 'RENT'
+                            ? 'price: ${_dealModel!.maxPhasedPrice!}\$ \npropfit: ${_dealModel!.profitMargin}%'
+                            : '',
+                        rentalPeriod: _dealModel!.rentalPeriod,
+                        isBUYRENT:
+                            _dealModel!.dealType == 'BUY' ||
+                            _dealModel!.dealType == 'RENT',
                       ),
                       SizedBox(height: width * (30 / 1920)),
                       GeneralTabableCard(
@@ -93,7 +141,7 @@ class _DealPageState extends State<DealPage> {
                           ? darkThirdColorPrimary
                           : thirdColorPrimary,
                       bodyOfTheTab: DealsOnlyScheduleWidget(
-                        dealId: '4af006b7-e48c-429d-9220-15d8c263e42e',
+                        dealId: widget.dealId,
                         forDealPage: true,
                         userAuthInfo: widget.userAuthInfo,
                       ),
@@ -103,7 +151,12 @@ class _DealPageState extends State<DealPage> {
                       tabColor: themeProvider.isDarkMode
                           ? darkPrimaryColor
                           : primaryColor,
-                      bodyOfTheTab: DealActionsWidget(),
+                      bodyOfTheTab: DealActionsWidget(
+                        dealId: widget.dealId,
+                        isForBUYRENT:
+                            _dealModel!.dealType == 'BUY' ||
+                            _dealModel!.dealType == 'Rent',
+                      ),
                     ),
                     TabOfTabableCard(
                       tabName: 'Property',
@@ -121,7 +174,7 @@ class _DealPageState extends State<DealPage> {
                         ),
                         child: Center(
                           child: PropertyCard(
-                            propertyId: 'bbae6c38-d791-48b7-84b1-225fd5f96f38',
+                            propertyId: _dealModel!.propertyId,
                           ),
                         ),
                       ),

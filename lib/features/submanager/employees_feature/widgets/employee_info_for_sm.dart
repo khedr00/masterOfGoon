@@ -6,7 +6,7 @@ import 'package:untitled1/features/deals_back/get_deal_cards_info.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
-import 'package:untitled1/features/deal_page.dart';
+import 'package:untitled1/features/deal_feature/deal_page.dart';
 import 'package:untitled1/core/profile_feature/widgets/profile_card.dart';
 import 'package:untitled1/core/profile_feature/widgets/stats_widget.dart/stats_widget.dart';
 import 'package:untitled1/providers/theme_provider.dart';
@@ -157,6 +157,9 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                                                   return DealPage(
                                                     userAuthInfo:
                                                         widget.userAuthInfo,
+                                                    dealId: _dealList[i]
+                                                        .dealCardInfo
+                                                        .id,
                                                   );
                                                 },
                                               ),

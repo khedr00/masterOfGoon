@@ -12,6 +12,8 @@ class SimpleDealInfoCard extends StatelessWidget {
     required this.dealDate,
     required this.priceRange,
     required this.successRate,
+    this.rentalPeriod,
+    required this.isBUYRENT,
   });
   final String dealStage;
   final String dealTitle;
@@ -19,6 +21,8 @@ class SimpleDealInfoCard extends StatelessWidget {
   final String dealDate;
   final String priceRange;
   final String successRate;
+  final int? rentalPeriod;
+  final bool isBUYRENT;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +33,20 @@ class SimpleDealInfoCard extends StatelessWidget {
         Container(
           width: width * (407 / 1920),
           height: width * (220 / 1920),
-          decoration: BoxDecoration(color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor),
+          decoration: BoxDecoration(
+            color: themeProvider.isDarkMode
+                ? darkBackGroundColor
+                : backGroundColor,
+          ),
           child: Center(
             child: Container(
               width: width * (387 / 1920),
               height: width * (200 / 1920),
-              decoration: BoxDecoration(color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor),
+              decoration: BoxDecoration(
+                color: themeProvider.isDarkMode
+                    ? darkSecondaryColor
+                    : secondaryColor,
+              ),
               child: Column(
                 children: [
                   // هون موجود اول قسم فوقاني فيه التاريخ و الآي دي و الفلر لأول ستاك
@@ -54,7 +66,9 @@ class SimpleDealInfoCard extends StatelessWidget {
                                     width * (10 / 1920),
                                   ),
                                 ),
-                                color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
+                                color: themeProvider.isDarkMode
+                                    ? darkBackGroundColor
+                                    : backGroundColor,
                               ),
                             ),
                             SizedBox(
@@ -67,15 +81,9 @@ class SimpleDealInfoCard extends StatelessWidget {
                                   Text(
                                     dealDate,
                                     style: TextStyle(
-                                      color: getPrimaryTextColor(themeProvider.isDarkMode),
-                                      fontFamily: 'NunitoSans-MediumItalic',
-                                      fontSize: width * (18 / 1920),
-                                    ),
-                                  ),
-                                  Text(
-                                    'ID : $dealId',
-                                    style: TextStyle(
-                                      color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                      color: getPrimaryTextColor(
+                                        themeProvider.isDarkMode,
+                                      ),
                                       fontFamily: 'NunitoSans-MediumItalic',
                                       fontSize: width * (18 / 1920),
                                     ),
@@ -90,11 +98,15 @@ class SimpleDealInfoCard extends StatelessWidget {
                           height: width * (54 / 1920),
                           child: Center(
                             child: Text(
-                              '$priceRange \$',
+                              rentalPeriod != null
+                                  ? '$priceRange-$rentalPeriod month'
+                                  : priceRange,
                               style: TextStyle(
-                                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                                color: getPrimaryTextColor(
+                                  themeProvider.isDarkMode,
+                                ),
                                 fontFamily: 'NunitoSans-ExtraBold',
-                                fontSize: width * (24 / 1920),
+                                fontSize: width * (20 / 1920),
                               ),
                             ),
                           ),
@@ -104,34 +116,46 @@ class SimpleDealInfoCard extends StatelessWidget {
                   ),
                   // هون موجود عنوان الديل و الفيلر لتاني ستاك
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: isBUYRENT
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.end,
                     children: [
                       Container(
                         width: width * (255 / 1920),
                         height: width * (89 / 1920),
-                        color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+                        color: themeProvider.isDarkMode
+                            ? darkSecondaryColor
+                            : secondaryColor,
                         child: Center(
                           child: Text(
-                            dealTitle,
+                            'ID : $dealId',
                             style: TextStyle(
-                              color: getPrimaryTextColor(themeProvider.isDarkMode),
+                              color: getPrimaryTextColor(
+                                themeProvider.isDarkMode,
+                              ),
                               fontFamily: 'NunitoSans-Bold',
-                              fontSize: width * (24 / 1920),
+                              fontSize: width * (18 / 1920),
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        width: width * (129 / 1920),
-                        height: width * (89 / 1920),
-                        decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(width * (10 / 1920)),
-                            bottomLeft: Radius.circular(width * (10 / 1920)),
-                          ),
-                        ),
-                      ),
+                      isBUYRENT
+                          ? SizedBox()
+                          : Container(
+                              width: width * (129 / 1920),
+                              height: width * (89 / 1920),
+                              decoration: BoxDecoration(
+                                color: themeProvider.isDarkMode
+                                    ? darkBackGroundColor
+                                    : backGroundColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(width * (10 / 1920)),
+                                  bottomLeft: Radius.circular(
+                                    width * (10 / 1920),
+                                  ),
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                 ],
@@ -139,6 +163,7 @@ class SimpleDealInfoCard extends StatelessWidget {
             ),
           ),
         ),
+
         Positioned(
           top: 0,
           left: 0,
@@ -164,31 +189,35 @@ class SimpleDealInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          top: width * (114 / 1920),
-          right: 0,
-          child: Container(
-            width: width * (129 / 1920),
-            height: width * (71 / 1920),
-            decoration: BoxDecoration(
-              color: themeProvider.isDarkMode ? darkPrimaryColor : primaryColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(width * (10 / 1920)),
-                bottomLeft: Radius.circular(width * (10 / 1920)),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                'Success Rate : \n $successRate',
-                style: TextStyle(
-                  color: getTextColor(themeProvider.isDarkMode),
-                  fontFamily: 'NunitoSans-Bold',
-                  fontSize: width * (14 / 1920),
+        isBUYRENT
+            ? SizedBox()
+            : Positioned(
+                top: width * (114 / 1920),
+                right: 0,
+                child: Container(
+                  width: width * (129 / 1920),
+                  height: width * (71 / 1920),
+                  decoration: BoxDecoration(
+                    color: themeProvider.isDarkMode
+                        ? darkPrimaryColor
+                        : primaryColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(width * (10 / 1920)),
+                      bottomLeft: Radius.circular(width * (10 / 1920)),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      successRate,
+                      style: TextStyle(
+                        color: getTextColor(themeProvider.isDarkMode),
+                        fontFamily: 'NunitoSans-Bold',
+                        fontSize: width * (14 / 1920),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
       ],
     );
   }

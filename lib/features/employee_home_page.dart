@@ -13,7 +13,7 @@ import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 import 'package:untitled1/core/widgets/filter_widgets/deals_filter_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/deals_only_schedule_widget/deals_only_schedule_widget.dart';
 import 'package:untitled1/core/widgets/personal_and_deals_schedule_widget/personal_and_deals_schedule_widget.dart/personal_and_deals_schedule_widget.dart';
-import 'package:untitled1/features/deal_page.dart';
+import 'package:untitled1/features/deal_feature/deal_page.dart';
 import 'package:untitled1/providers/all_and_deals_only_provider.dart';
 import 'package:untitled1/providers/employee_deals_filter_provider.dart';
 import 'package:untitled1/providers/new_and_ongoing_deals_db_provider.dart';
@@ -301,6 +301,8 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                                         MaterialPageRoute(
                                           builder: (context) => DealPage(
                                             userAuthInfo: widget.userAuthInfo,
+                                            dealId:
+                                                _dealList[i].dealCardInfo.id,
                                           ),
                                         ),
                                       );
