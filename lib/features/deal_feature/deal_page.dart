@@ -6,7 +6,7 @@ import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/client_chat/client_chat_widget.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/core/widgets/deal_actions/deal_actions_widget.dart';
+import 'package:untitled1/features/deal_feature/widgets/deal_actions_widget.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/general_tabable_card.dart';
 import 'package:untitled1/core/widgets/general_tabable_card/tab_of_tabable_card.dart';
 import 'package:untitled1/core/widgets/liked_and_avoidances_body/avoidances_only_body.dart';
@@ -156,6 +156,7 @@ class _DealPageState extends State<DealPage> {
                         isForBUYRENT:
                             _dealModel!.dealType == 'BUY' ||
                             _dealModel!.dealType == 'Rent',
+                        userAuthInfo: widget.userAuthInfo,
                       ),
                     ),
                     TabOfTabableCard(

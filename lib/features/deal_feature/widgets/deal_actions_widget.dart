@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/back_end_test/personal_and_deals_schedule_info.dart/create_schedule.dart';
 import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
@@ -10,9 +13,11 @@ class DealActionsWidget extends StatefulWidget {
     super.key,
     required this.dealId,
     required this.isForBUYRENT,
+    required this.userAuthInfo,
   });
   final String dealId;
   final bool isForBUYRENT;
+  final UserAuthInfo userAuthInfo;
 
   @override
   State<DealActionsWidget> createState() => _DealActionsWidgetState();
@@ -117,7 +122,19 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                                   widthOfButton: width * (139 / 1920),
                                   heightOfButton: width * (84 / 1920),
                                   text: 'cancel',
-                                  buttonAction: () {
+                                  buttonAction: () async {
+                                    await createSchedule(
+                                      dioClient: DioClient(
+                                        userAuthInfo: widget.userAuthInfo,
+                                      ),
+                                      type: widget.isForBUYRENT
+                                          ? 'BUY_RENT_DEAL'
+                                          : 'SALE_LEASE_DEAL',
+                                      date: _dateTime.toUtc().toIso8601String(),
+                                      title: 'MEETING',
+                                      description: "you have a meeting ",
+                                      buyRentDealId: widget.dealId,
+                                    );
                                     setState(() {
                                       isClicked = 0;
                                     });
@@ -127,7 +144,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                                   widthOfButton: width * (139 / 1920),
                                   heightOfButton: width * (84 / 1920),
                                   text: 'confirm',
-                                  buttonAction: () {
+                                  buttonAction: () async {
                                     setState(() {
                                       isClicked = 0;
                                     });
