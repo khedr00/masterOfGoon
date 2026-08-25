@@ -7,6 +7,7 @@ import 'package:untitled1/core/widgets/buttons/button_with_text.dart';
 import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
 import 'package:untitled1/features/deal_feature/datasources/get_last_meeting.dart';
+import 'package:untitled1/features/deal_feature/datasources/change_deal_property.dart';
 import 'package:untitled1/features/deal_feature/datasources/update_deal_status.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
@@ -35,6 +36,8 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
   String _dayName = '';
 
   int isClicked = 0;
+  String _meetingStatus = 'rejected';
+  bool _isLoadingMeetingStatus = true;
 
   Future<void> _showFailureDialog() async {
     final confirmed = await _showConfirmationDialog(
@@ -144,9 +147,35 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
   }
 
   Future<void> g() async {
-    await getLastMeeting(
-      dealId: widget.dealId,
-      userAuthInfo: widget.userAuthInfo,
+    try {
+      final status = await getLastMeeting(
+        dealId: widget.dealId,
+        userAuthInfo: widget.userAuthInfo,
+      );
+      if (mounted) {
+        setState(() {
+          _meetingStatus = status;
+          _isLoadingMeetingStatus = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) setState(() => _isLoadingMeetingStatus = false);
+    }
+  }
+
+  Future<void> _showChangePropertyDialog() async {
+    final propertyId = await showDialog<String>(
+      context: context,
+      builder: (_) => const _ChangePropertyDialog(),
+    );
+    if (propertyId == null || propertyId.trim().isEmpty || !mounted) return;
+
+    await _runDealUpdate(
+      () => changeDealProperty(
+        dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
+        dealId: widget.dealId,
+        propertyId: propertyId,
+      ),
     );
   }
 
@@ -176,7 +205,13 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           widget.isForBUYRENT
-              ? isClicked == 1
+              ? _isLoadingMeetingStatus
+                    ? const Center(child: CircularProgressIndicator())
+                    : _meetingStatus == 'accepted'
+                    ? const _MeetingStatusLabel(status: 'accepted')
+                    : _meetingStatus == 'pending'
+                    ? const _MeetingStatusLabel(status: 'pending')
+                    : isClicked == 1
                     ? Container(
                         width: width * (_debugWidth / 1920),
                         height: width * (((_debugHeight / 4) * 2) / 1920),
@@ -241,6 +276,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                                     );
                                     setState(() {
                                       isClicked = 0;
+                                      _meetingStatus = 'pending';
                                     });
                                   },
                                 ),
@@ -343,7 +379,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
           //       ),
           //     ),
           //   ),
-          widget.isForBUYRENT
+          widget.isForBUYRENT && _meetingStatus != 'accepted'
               ? Container(
                   width: width * (_debugWidth / 1920),
                   color: getCardColor(themeProvider.isDarkMode),
@@ -352,6 +388,7 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                       widthOfButton: width * (261 / 1920),
                       heightOfButton: width * (84 / 1920),
                       text: 'change the property',
+                      buttonAction: _showChangePropertyDialog,
                     ),
                   ),
                 )
@@ -402,6 +439,116 @@ class _DealActionsWidgetState extends State<DealActionsWidget> {
                   ),
                 ),
         ],
+      ),
+    );
+  }
+}
+
+class _MeetingStatusLabel extends StatelessWidget {
+  const _MeetingStatusLabel({required this.status});
+
+  final String status;
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final width = MediaQuery.of(context).size.width;
+    return Container(
+      width: width * (881 / 1920),
+      color: getCardColor(themeProvider.isDarkMode),
+      alignment: Alignment.center,
+      child: Text(
+        status,
+        style: TextStyle(
+          color: getPrimaryTextColor(themeProvider.isDarkMode),
+          fontFamily: 'NunitoSans-Bold',
+          fontSize: width * (24 / 1920),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChangePropertyDialog extends StatefulWidget {
+  const _ChangePropertyDialog();
+
+  @override
+  State<_ChangePropertyDialog> createState() => _ChangePropertyDialogState();
+}
+
+class _ChangePropertyDialogState extends State<_ChangePropertyDialog> {
+  final _propertyIdController = TextEditingController();
+
+  @override
+  void dispose() {
+    _propertyIdController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final width = MediaQuery.of(context).size.width;
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: width * (560 / 1920),
+        padding: EdgeInsets.all(width * (25 / 1920)),
+        decoration: BoxDecoration(
+          color: themeProvider.isDarkMode ? darkSecondaryColor : secondaryColor,
+          borderRadius: BorderRadius.circular(width * (15 / 1920)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Change the property',
+              style: TextStyle(
+                color: getPrimaryTextColor(themeProvider.isDarkMode),
+                fontFamily: 'NunitoSans-Bold',
+                fontSize: width * (24 / 1920),
+              ),
+            ),
+            SizedBox(height: width * (20 / 1920)),
+            CustomTextField(
+              onChanged: (_) {},
+              hintText: 'Enter property ID',
+              widthOfTextField: 510,
+              fillColor: getInputBackgroundColor(themeProvider.isDarkMode),
+              fontSize: 18,
+              fontFamily: FontFamily.light,
+              controller: _propertyIdController,
+              maxLines: 1,
+            ),
+            SizedBox(height: width * (28 / 1920)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ButtonWithText(
+                  widthOfButton: width * (130 / 1920),
+                  heightOfButton: width * (45 / 1920),
+                  text: 'Cancel',
+                  buttonAction: () => Navigator.pop(context),
+                ),
+                ButtonWithText(
+                  widthOfButton: width * (130 / 1920),
+                  heightOfButton: width * (45 / 1920),
+                  text: 'Confirm',
+                  buttonAction: () {
+                    final propertyId = _propertyIdController.text.trim();
+                    if (propertyId.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please enter a property ID')),
+                      );
+                      return;
+                    }
+                    Navigator.pop(context, propertyId);
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

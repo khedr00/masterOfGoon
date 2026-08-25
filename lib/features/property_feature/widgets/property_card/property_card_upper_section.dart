@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/features/property_feature/data/models/property_api_model.dart';
 import 'package:untitled1/features/property_feature/providers/property_data_provider.dart';
@@ -480,6 +481,58 @@ class PropertyCardUpperSection extends StatelessWidget {
                   color: Colors.white,
                   fontFamily: 'NunitoSans-BlackItalic',
                   fontSize: width * (28 / 1920),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: width * (95 / 1920),
+          left: width * (547 / 1920),
+          child: Tooltip(
+            message: 'Copy property ID',
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(width * (10 / 1920)),
+                onTap: () async {
+                  await Clipboard.setData(ClipboardData(text: property.id));
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Property ID copied')),
+                    );
+                  }
+                },
+                child: Container(
+                  width: width * (289 / 1920),
+                  height: width * (48 / 1920),
+                  padding: EdgeInsets.symmetric(horizontal: width * (12 / 1920)),
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(width * (10 / 1920)),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'ID: ${property.id}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            fontFamily: 'NunitoSans-Medium',
+                            fontSize: width * (18 / 1920),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: width * (8 / 1920)),
+                      Icon(
+                        Icons.copy_outlined,
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
+                        size: width * (22 / 1920),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

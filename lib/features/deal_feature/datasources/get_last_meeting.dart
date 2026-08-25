@@ -25,7 +25,7 @@ Future<String> getLastMeeting({
 
     // ما في Meetings
     if (meetings.isEmpty) {
-      return 'pending';
+      return 'rejected';
     }
 
     // 2. ترتيب حسب createdAt من الأحدث للأقدم
