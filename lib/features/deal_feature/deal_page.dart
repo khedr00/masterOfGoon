@@ -35,6 +35,7 @@ class _DealPageState extends State<DealPage> {
       cancelToken: _cancelToken,
       dealId: widget.dealId,
     );
+
     if (!mounted) {
       return;
     }
@@ -43,9 +44,15 @@ class _DealPageState extends State<DealPage> {
     });
   }
 
+  bool get _isClosedDeal {
+    final status = _dealModel?.dealStatus?.toUpperCase();
+    return status == 'COMPLETED' || status == 'FAILED';
+  }
+
   @override
   void initState() {
     _getDealById();
+
     super.initState();
   }
 
@@ -134,6 +141,7 @@ class _DealPageState extends State<DealPage> {
                 ),
                 ClientChatWidget(),
                 GeneralTabableCard(
+                  key: ValueKey(_isClosedDeal),
                   tabs: [
                     TabOfTabableCard(
                       tabName: 'schedule',
@@ -146,19 +154,21 @@ class _DealPageState extends State<DealPage> {
                         userAuthInfo: widget.userAuthInfo,
                       ),
                     ),
-                    TabOfTabableCard(
-                      tabName: 'Actions',
-                      tabColor: themeProvider.isDarkMode
-                          ? darkPrimaryColor
-                          : primaryColor,
-                      bodyOfTheTab: DealActionsWidget(
-                        dealId: widget.dealId,
-                        isForBUYRENT:
-                            _dealModel!.dealType == 'BUY' ||
-                            _dealModel!.dealType == 'Rent',
-                        userAuthInfo: widget.userAuthInfo,
+                    if (!_isClosedDeal)
+                      TabOfTabableCard(
+                        tabName: 'Actions',
+                        tabColor: themeProvider.isDarkMode
+                            ? darkPrimaryColor
+                            : primaryColor,
+                        bodyOfTheTab: DealActionsWidget(
+                          dealId: widget.dealId,
+                          isForBUYRENT:
+                              _dealModel!.dealType == 'BUY' ||
+                              _dealModel!.dealType == 'RENT',
+                          userAuthInfo: widget.userAuthInfo,
+                          onDealUpdated: _getDealById,
+                        ),
                       ),
-                    ),
                     TabOfTabableCard(
                       tabName: 'Property',
                       tabColor: fourthColorPrimaryBrown,

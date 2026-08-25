@@ -133,18 +133,18 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
           ),
         ),
       );
-    }
-
-    scheduleNote.add(
-      PersonalNoteWidget(
-        scheduleNote: ScheduleNote(
-          time:
-              '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
-          title: temp[i]['title'],
-          description: temp[i]['description'],
+    } else {
+      scheduleNote.add(
+        PersonalNoteWidget(
+          scheduleNote: ScheduleNote(
+            time:
+                '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
+            title: temp[i]['title'],
+            description: temp[i]['description'],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   return scheduleNote;

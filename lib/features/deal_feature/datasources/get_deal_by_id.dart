@@ -12,7 +12,8 @@ Future<DealModel> getDealById({
     final dynamic response;
 
     response = await dioClient.dio.get('${base}api/v1/deals/$dealId');
-    // print('${response.data['data']['id']}');
+    // print('${response.data}');
+    // print(response.data['data']);
 
     return DealModel.fromJson(response.data['data']);
   } on DioException catch (e) {

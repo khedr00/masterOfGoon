@@ -59,7 +59,8 @@ class DealCardInfo {
       clientName: client['name']?.toString() ?? '',
 
       clientPhoto:
-          client['photo']?.toString() ?? 'assets/images/profilePhoto-icon.png',
+          // client['photo']?.toString() ??
+          'assets/images/profilePhoto-icon.png',
 
       // Not available in API
       title: '',

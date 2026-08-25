@@ -35,10 +35,10 @@ class DealModel {
 
   DealModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    maxPhasedPrice = json['maxPhasedPrice'];
-    minListingPrice = json['minListingPrice'];
-    maxListingPrice = json['maxListingPrice'];
-    profitMargin = json['profitMargin'];
+    maxPhasedPrice = json['maxPhasedPrice'] ?? 0;
+    minListingPrice = json['minListingPrice'] ?? 0;
+    maxListingPrice = json['maxListingPrice'] ?? 0;
+    profitMargin = json['profitMargin'] ?? 0;
 
     dealType = json['dealType'];
     dealStatus = json['dealStatus'];
