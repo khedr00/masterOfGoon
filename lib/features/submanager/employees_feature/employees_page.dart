@@ -24,28 +24,40 @@ class _EmployeesPageState extends State<EmployeesPage> {
   List<EmployeeCardInfo> _employeeCardInfoList = [];
   final List<EmployeeMiniCardWidget> _employeeMiniCardWidget = [];
   final CancelToken _cancelToken = CancelToken();
-  void _getEmploeeCardsInfo() async {
-    DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
-    List<EmployeeCardInfo> employeeCardsInfoList = await getEmployeeCardsInfo(
-      dioClient: dioClient,
-      cancelToken: _cancelToken,
-    );
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _employeeCardInfoList = employeeCardsInfoList;
-      for (int i = 0; i < employeeCardsInfoList.length; i++) {
-        _employeeMiniCardWidget.add(
-          EmployeeMiniCardWidget(employeeCardInfo: employeeCardsInfoList[i]),
-        );
-      }
-      if (employeeCardsInfoList.isNotEmpty) {
+  bool _isLoadingEmployees = true;
+  String? _employeesError;
+
+  Future<void> _getEmploeeCardsInfo() async {
+    try {
+      final employeeCardsInfoList = await getEmployeeCardsInfo(
+        dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
+        cancelToken: _cancelToken,
+      );
+      if (!mounted) return;
+      setState(() {
+        _employeeCardInfoList = employeeCardsInfoList;
+        _employeeMiniCardWidget
+          ..clear()
+          ..addAll(
+            employeeCardsInfoList.map(
+              (employee) => EmployeeMiniCardWidget(employeeCardInfo: employee),
+            ),
+          );
         _falsingcardIsClicked();
-        _cardIsClicked[0] = true;
-        _employeeId = _employeeCardInfoList[0].employeeId;
-      } else {}
-    });
+        if (employeeCardsInfoList.isNotEmpty) {
+          _cardIsClicked[0] = true;
+          _employeeId = employeeCardsInfoList.first.employeeId;
+        }
+        _isLoadingEmployees = false;
+        _employeesError = null;
+      });
+    } catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _isLoadingEmployees = false;
+        _employeesError = error.toString().replaceFirst('Exception: ', '');
+      });
+    }
   }
 
   List<bool> _cardIsClicked = [];
@@ -135,11 +147,15 @@ class _EmployeesPageState extends State<EmployeesPage> {
                           horizontal: BorderSide(color: primaryColor),
                         ),
                       ),
-                      child: _employeeMiniCardWidget.isEmpty
+                      child: _isLoadingEmployees
                           ? Container(
                               color: backGroundColor,
                               child: Center(child: CircularProgressIndicator()),
                             )
+                          : _employeesError != null
+                          ? Center(child: Text(_employeesError!))
+                          : _employeeMiniCardWidget.isEmpty
+                          ? const Center(child: Text('No employees found'))
                           : ScrollConfiguration(
                               behavior: ScrollConfiguration.of(
                                 context,

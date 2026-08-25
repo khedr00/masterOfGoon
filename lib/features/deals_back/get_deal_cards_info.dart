@@ -4,7 +4,7 @@ import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/features/deals_back/deal_card_info/deal_card_info.dart';
 
 Future<List<dynamic>> getDealCardsInfo({
-  String? id,
+  String? employeeId,
   CancelToken? cancelToken,
   String? dealStage,
   List<String>? propertyType,
@@ -19,8 +19,11 @@ Future<List<dynamic>> getDealCardsInfo({
 }) async {
   List<dynamic> temp1 = [];
   try {
-    final response = await dioClient.dio.get('${base}api/v1/deals/myDeals');
-    temp1 = response.data['data'];
+    final path = employeeId == null
+        ? '${base}api/v1/deals/myDeals'
+        : '${base}api/v1/employees/$employeeId/deals';
+    final response = await dioClient.dio.get(path, cancelToken: cancelToken);
+    temp1 = List<dynamic>.from(response.data['data'] as List? ?? const []);
   } on DioException catch (e) {
     if (CancelToken.isCancel(e)) {
       throw Exception('Request cancelled');

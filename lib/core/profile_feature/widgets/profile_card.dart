@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/back_end_test/get_employee_info/employee_info.dart';
 import 'package:untitled1/back_end_test/get_employee_info/get_employee_info.dart';
@@ -22,20 +23,24 @@ class ProfileCard extends StatefulWidget {
 
 class _ProfileCardState extends State<ProfileCard> {
   dynamic _employeeInfo;
+  String? _loadError;
   final CancelToken _cancelToken = CancelToken();
 
   Future<void> _getMyInfo() async {
-    EmployeeInfo employeeInfo = await getEmployeeInfo(
-      dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
-      cancelToken: _cancelToken,
-      employeeId: widget.employeeId,
-    );
-    if (!mounted) {
-      return;
+    try {
+      final employeeInfo = await getEmployeeInfo(
+        dioClient: DioClient(userAuthInfo: widget.userAuthInfo),
+        cancelToken: _cancelToken,
+        employeeId: widget.employeeId,
+      );
+      if (!mounted) return;
+      setState(() => _employeeInfo = employeeInfo);
+    } catch (error) {
+      if (!mounted) return;
+      setState(
+        () => _loadError = error.toString().replaceFirst('Exception: ', ''),
+      );
     }
-    setState(() {
-      _employeeInfo = employeeInfo;
-    });
   }
 
   @override
@@ -60,12 +65,14 @@ class _ProfileCardState extends State<ProfileCard> {
         width: width * (411 / 1920),
         height: width * (950 / 1920),
         color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
-        child: CircularProgressIndicator(
-          padding: EdgeInsets.symmetric(
-            vertical: width * (428 / 1920),
-            horizontal: width * (180 / 1920),
-          ),
-        ),
+        child: _loadError == null
+            ? CircularProgressIndicator(
+                padding: EdgeInsets.symmetric(
+                  vertical: width * (428 / 1920),
+                  horizontal: width * (180 / 1920),
+                ),
+              )
+            : Center(child: Text(_loadError!)),
       );
     }
     return Stack(
@@ -268,6 +275,54 @@ class _ProfileCardState extends State<ProfileCard> {
             ),
           ),
         ),
+        if (widget.employeeId?.isNotEmpty == true)
+          Positioned(
+            top: width * (350 / 1920),
+            left: width * (16 / 1920),
+            child: Tooltip(
+              message: 'Copy employee ID',
+              child: InkWell(
+                borderRadius: BorderRadius.circular(width * (8 / 1920)),
+                onTap: () async {
+                  await Clipboard.setData(ClipboardData(text: widget.employeeId!));
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Employee ID copied')),
+                    );
+                  }
+                },
+                child: Container(
+                  width: width * (250 / 1920),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: width * (8 / 1920),
+                    vertical: width * (6 / 1920),
+                  ),
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'ID: ${widget.employeeId}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            fontFamily: 'NunitoSans-Medium',
+                            fontSize: width * (14 / 1920),
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.copy_outlined,
+                        size: width * (18 / 1920),
+                        color: getPrimaryTextColor(themeProvider.isDarkMode),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }

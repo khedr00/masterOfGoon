@@ -85,7 +85,9 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
                 appBarComponentImage: 'assets/images/history-icon.png',
                 appBarCopmonentName: 'History',
                 onTap: () {
-                  mainEmployesspageSelectorProvider.selectPage(HistoryPage());
+                  mainEmployesspageSelectorProvider.selectPage(
+                    HistoryPage(userAuthInfo: widget.userAuthInfo),
+                  );
                 },
               ),
               AppBarComponentInfo(

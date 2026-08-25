@@ -8,7 +8,10 @@ Future<List<EmployeeCardInfo>> getEmployeeCardsInfo({
   CancelToken? cancelToken,
 }) async {
   try {
-    final response = await dioClient.dio.get('${base}api/v1/employees');
+    final response = await dioClient.dio.get(
+      '${base}api/v1/employees',
+      cancelToken: cancelToken,
+    );
     final data = response.data['data'];
     List<EmployeeCardInfo> temp = [];
     for (int i = 0; i < data.length; i++) {

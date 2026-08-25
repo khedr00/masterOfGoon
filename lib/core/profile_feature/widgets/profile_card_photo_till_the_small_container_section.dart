@@ -58,11 +58,17 @@ class ProfileCardPhotoTillTheSmallContainerSection extends StatelessWidget {
                                   child: SizedBox(
                                     width: width * (190 / 1920),
                                     height: width * (190 / 1920),
-                                    child: employeePhoto == null
+                                    child: employeePhoto == null ||
+                                            employeePhoto!.trim().isEmpty
                                         ? Image.asset(
                                             'assets/images/profilePhoto-icon.png',
                                           )
-                                        : Image.network(employeePhoto!),
+                                        : Image.network(
+                                            employeePhoto!,
+                                            errorBuilder: (_, _, _) => Image.asset(
+                                              'assets/images/profilePhoto-icon.png',
+                                            ),
+                                          ),
                                   ),
                                 ),
                                 Container(
