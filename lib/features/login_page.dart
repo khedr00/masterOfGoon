@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   children: [
                     Image.asset(
-                      'assets/images/newl.png',
+                      'assets/images/Estate_hub.png',
                       width: width * (777 / 1920),
                       height: width * (777 / 1920),
                     ),
