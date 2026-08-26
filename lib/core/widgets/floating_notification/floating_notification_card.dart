@@ -9,17 +9,18 @@ class FloatingNotificationCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.all(width * (10 / 1920)),
-      width: width * (150 / 1920),
+      width: width * (200 / 1920),
       height: width * (70 / 1920),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(width * (20 / 1920)),
         color: secondaryColor,
       ),
       child: Text(
+        textAlign: TextAlign.center,
         'new notification recieved',
         style: TextStyle(
-          fontFamily: 'NunitoSans-Bold',
-          fontSize: width * (14 / 1920),
+          fontFamily: 'NunitoSans-Regular',
+          fontSize: width * (18 / 1920),
         ),
       ),
     );

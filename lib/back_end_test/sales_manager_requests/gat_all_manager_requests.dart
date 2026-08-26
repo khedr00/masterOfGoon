@@ -9,7 +9,7 @@ Future<List<DealRequestCardInfo>> getAllRequests({
 }) async {
   try {
     final response = await dioClient.dio.get('${base}api/v1/requests');
-    print(response);
+    // print(response);
     final data = response.data['data'];
     List<DealRequestCardInfo> temp = [];
     for (int i = 0; i < data.length; i++) {

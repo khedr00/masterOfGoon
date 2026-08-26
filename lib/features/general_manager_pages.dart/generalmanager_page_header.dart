@@ -45,7 +45,7 @@ class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
 
   @override
   void initState() {
-    socket.connect("0f5986a7-d426-4e98-a94e-2491580d3aa8");
+    socket.connect(widget.userAuthInfo.id);
 
     socket.onNotification = (notification) {
       setState(() {

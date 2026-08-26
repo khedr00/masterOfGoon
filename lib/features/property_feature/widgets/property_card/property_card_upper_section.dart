@@ -270,12 +270,12 @@ class PropertyCardUpperSection extends StatelessWidget {
                   child: Image.asset(_propertyIcon(property.type)),
                 ),
                 Text(
-                  _enumLabel(property.type),
+                  _enumLabel(property.type.substring(0, 4)),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: getTextColor(themeProvider.isDarkMode),
                     fontFamily: 'NunitoSans-Bold',
-                    fontSize: width * (24 / 1920),
+                    fontSize: width * (22 / 1920),
                   ),
                 ),
               ],
@@ -506,7 +506,9 @@ class PropertyCardUpperSection extends StatelessWidget {
                 child: Container(
                   width: width * (289 / 1920),
                   height: width * (48 / 1920),
-                  padding: EdgeInsets.symmetric(horizontal: width * (12 / 1920)),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: width * (12 / 1920),
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(width * (10 / 1920)),
@@ -519,7 +521,9 @@ class PropertyCardUpperSection extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: getPrimaryTextColor(themeProvider.isDarkMode),
+                            color: getPrimaryTextColor(
+                              themeProvider.isDarkMode,
+                            ),
                             fontFamily: 'NunitoSans-Medium',
                             fontSize: width * (18 / 1920),
                           ),
