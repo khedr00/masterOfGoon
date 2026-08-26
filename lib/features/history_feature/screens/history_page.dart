@@ -6,6 +6,7 @@ import 'package:untitled1/core/widgets/buttons/button_with_image.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 import 'package:untitled1/features/deals_back/deal_card_info/deal_card_info.dart';
 import 'package:untitled1/features/deals_back/get_deal_cards_info.dart';
+import 'package:untitled1/features/deal_feature/deal_page.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key, required this.userAuthInfo});
@@ -104,8 +105,18 @@ class _HistoryPageState extends State<HistoryPage> {
                             crossAxisCount: 2,
                           ),
                       itemCount: _deals.length,
-                      itemBuilder: (_, index) =>
-                          DealCard(dealCardInfo: _deals[index]),
+                      itemBuilder: (context, index) => GestureDetector(
+                        onDoubleTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DealPage(
+                              userAuthInfo: widget.userAuthInfo,
+                              dealId: _deals[index].id.toString(),
+                            ),
+                          ),
+                        ),
+                        child: DealCard(dealCardInfo: _deals[index]),
+                      ),
                     ),
             ),
           ],

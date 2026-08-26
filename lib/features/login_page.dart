@@ -141,14 +141,25 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Image.asset(
-                      'assets/images/Estate_hub.png',
-                      width: width * (777 / 1920),
-                      height: width * (777 / 1920),
+                SizedBox(
+                  width: width * (777 / 1920),
+                  child: Center(
+                    child: Container(
+                      width: width * (420 / 1920),
+                      height: width * (420 / 1920),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: themeProvider.isDarkMode
+                            ? darkCardColor
+                            : const Color(0xffF0F0F0),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: Image.asset(
+                        'assets/images/Estate_hub.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ],
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.all(width * (60 / 1920)),

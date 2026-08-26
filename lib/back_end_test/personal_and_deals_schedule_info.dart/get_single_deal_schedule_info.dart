@@ -33,13 +33,19 @@ Future<List<DealsNotesWidget>> getSingleDealScheduleInfo({
     throw Exception(e);
   }
 
+  // A meeting is duplicated for participants. Only the accepted copy belongs
+  // in the deal schedule; leave every non-meeting schedule unchanged.
+  final schedules = temp.where((item) {
+    return item['title'] != 'MEETING' || item['acceptOn'] != null;
+  }).toList();
+
   List<DealsNotesWidget> result = [];
 
   String? currentDate;
   List<DealNoteWidget> currentNotes = [];
 
-  for (int i = 0; i < temp.length; i++) {
-    final item = temp[i];
+  for (int i = 0; i < schedules.length; i++) {
+    final item = schedules[i];
 
     if (item['date'].toString().substring(0, 10) != currentDate) {
       if (currentNotes.isNotEmpty) {
@@ -55,11 +61,11 @@ Future<List<DealsNotesWidget>> getSingleDealScheduleInfo({
       DealNoteWidget(
         scheduleDealNote: ScheduleDealNote(
           employeeId: 1,
-          date: temp[i]['date'].toString().substring(0, 10),
+          date: item['date'].toString().substring(0, 10),
           time:
-              '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
-          title: temp[i]['title'],
-          description: temp[i]['description'],
+              '${DateTime.parse(item['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(item['date']).minute.toString().padLeft(2, '0')}',
+          title: item['title'],
+          description: item['description'],
           dealId: dealId,
           propertyNameCode: '',
           dealName: '',

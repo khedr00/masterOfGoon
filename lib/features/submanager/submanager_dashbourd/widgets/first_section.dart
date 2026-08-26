@@ -140,13 +140,15 @@ class _FirstSectionState extends State<FirstSection> {
                   SizedBox(
                     width: width * (210 / 1920),
                     height: width * (210 / 1920),
-                    child: PieChart(
-                      PieChartData(
-                        centerSpaceRadius: width * (55 / 1920),
-                        sectionsSpace: 0,
-                        sections: _pieSections(width, cities),
-                      ),
-                    ),
+                    child: cities.isEmpty
+                        ? _noChartData(width)
+                        : PieChart(
+                            PieChartData(
+                              centerSpaceRadius: width * (55 / 1920),
+                              sectionsSpace: 0,
+                              sections: _pieSections(width, cities),
+                            ),
+                          ),
                   ),
                   Wrap(
                     alignment: WrapAlignment.center,
@@ -205,17 +207,20 @@ class _FirstSectionState extends State<FirstSection> {
     final data = widget.data;
     if (data == null) return const [];
     final source = _selectedRegion == 'All'
-        ? data.byPropertyType
+        ? (data.byPropertyType.isNotEmpty
+              ? data.byPropertyType
+              : data.byDealType)
         : data.byCityAndPropertyType
               .where((item) => item.city == _selectedRegion)
               .toList();
-    return _types(source);
+    return _types(source, useDealType: source == data.byDealType);
   }
 
   Widget _dealsBarChart(double width) {
     final theme = Provider.of<ThemeProvider>(context);
     final data = _barData;
     final maxY = _chartMax(data.map((item) => item.count));
+    if (data.isEmpty) return _noChartData(width);
     return BarChart(
       BarChartData(
         minY: 0,
@@ -288,6 +293,20 @@ class _FirstSectionState extends State<FirstSection> {
               ],
             ),
         ],
+      ),
+    );
+  }
+
+  Widget _noChartData(double width) {
+    final theme = Provider.of<ThemeProvider>(context);
+    return Center(
+      child: Text(
+        'No chart data available',
+        style: TextStyle(
+          fontFamily: 'NunitoSans-Regular',
+          fontSize: width * (16 / 1920),
+          color: getPrimaryTextColor(theme.isDarkMode),
+        ),
       ),
     );
   }
@@ -556,10 +575,13 @@ List<DashboardBreakdown> _groupByCity(List<DashboardBreakdown> data) {
   ];
 }
 
-List<DashboardBreakdown> _types(List<DashboardBreakdown> data) {
+List<DashboardBreakdown> _types(
+  List<DashboardBreakdown> data, {
+  bool useDealType = false,
+}) {
   final counts = <String, int>{};
   for (final item in data) {
-    final type = item.type;
+    final type = useDealType ? item.dealType : item.type;
     if (type != null && type.isNotEmpty) {
       counts[type] = (counts[type] ?? 0) + item.count;
     }

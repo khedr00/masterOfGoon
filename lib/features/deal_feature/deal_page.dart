@@ -49,6 +49,10 @@ class _DealPageState extends State<DealPage> {
     return status == 'COMPLETED' || status == 'FAILED';
   }
 
+  bool get _isManagerView =>
+      widget.userAuthInfo.role == 'SALES_MANAGER' ||
+      widget.userAuthInfo.role == 'GENERAL_MANAGER';
+
   @override
   void initState() {
     _getDealById();
@@ -143,18 +147,19 @@ class _DealPageState extends State<DealPage> {
                 GeneralTabableCard(
                   key: ValueKey(_isClosedDeal),
                   tabs: [
-                    TabOfTabableCard(
-                      tabName: 'schedule',
-                      tabColor: themeProvider.isDarkMode
-                          ? darkThirdColorPrimary
-                          : thirdColorPrimary,
-                      bodyOfTheTab: DealsOnlyScheduleWidget(
-                        dealId: widget.dealId,
-                        forDealPage: true,
-                        userAuthInfo: widget.userAuthInfo,
+                    if (!_isManagerView)
+                      TabOfTabableCard(
+                        tabName: 'schedule',
+                        tabColor: themeProvider.isDarkMode
+                            ? darkThirdColorPrimary
+                            : thirdColorPrimary,
+                        bodyOfTheTab: DealsOnlyScheduleWidget(
+                          dealId: widget.dealId,
+                          forDealPage: true,
+                          userAuthInfo: widget.userAuthInfo,
+                        ),
                       ),
-                    ),
-                    if (!_isClosedDeal)
+                    if (!_isManagerView && !_isClosedDeal)
                       TabOfTabableCard(
                         tabName: 'Actions',
                         tabColor: themeProvider.isDarkMode

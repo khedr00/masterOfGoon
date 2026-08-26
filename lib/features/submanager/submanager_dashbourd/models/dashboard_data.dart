@@ -128,10 +128,10 @@ class DashboardBreakdown {
 
   factory DashboardBreakdown.fromJson(Map<String, dynamic> json) =>
       DashboardBreakdown(
-        type: (json['type'] ?? json['propertyType'])?.toString(),
-        city: json['city']?.toString(),
-        dealType: json['dealType']?.toString(),
-        count: _asInt(json['count']),
+        type: _label(json['type'] ?? json['propertyType']),
+        city: _label(json['city'] ?? json['cityName'] ?? json['region']),
+        dealType: _label(json['dealType'] ?? json['type']),
+        count: _asInt(json['count'] ?? json['_count'] ?? json['total']),
       );
 }
 
@@ -141,3 +141,13 @@ List<DashboardBreakdown> _breakdowns(dynamic value) => (value as List? ?? const 
     .whereType<Map>()
     .map((item) => DashboardBreakdown.fromJson(Map<String, dynamic>.from(item)))
     .toList();
+
+String? _label(dynamic value) {
+  if (value == null) return null;
+  if (value is Map) {
+    final map = Map<String, dynamic>.from(value);
+    return (map['name'] ?? map['title'] ?? map['city'] ?? map['type'])
+        ?.toString();
+  }
+  return value.toString();
+}

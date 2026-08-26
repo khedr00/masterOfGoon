@@ -67,10 +67,15 @@ class _MainEmployeesPageHeader extends State<MainEmployeesPageHeader> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(
-            width: width * (140 / 1920),
-            height: width * (129 / 1920),
-            child: Image.asset('assets/images/Estate_hub.png'),
+          Container(
+            width: width * (76 / 1920),
+            height: width * (76 / 1920),
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            child: Image.asset(
+              'assets/images/Estate_hub.png',
+              fit: BoxFit.cover,
+            ),
           ),
           ContactSupportButton(userAuthInfo: widget.userAuthInfo),
           AppBarWidget(

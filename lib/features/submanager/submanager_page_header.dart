@@ -69,10 +69,15 @@ class _SubmanagerPageHeader extends State<SubmanagerPageHeader> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: width * (80 / 1920),
-                height: width * (80 / 1920),
-                child: Image.asset('assets/images/profilePhoto-icon.png'),
+              Container(
+                width: width * (76 / 1920),
+                height: width * (76 / 1920),
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: Image.asset(
+                  'assets/images/Estate_hub.png',
+                  fit: BoxFit.cover,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: width * (20 / 1920)),

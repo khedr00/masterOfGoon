@@ -10,6 +10,7 @@ import 'package:untitled1/core/widgets/constants.dart';
 import 'package:untitled1/core/widgets/custom_text_field/custom_text_field.dart';
 import 'package:untitled1/core/widgets/deal_card/deal_card.dart';
 import 'package:untitled1/features/deal_feature/datasources/change_deal_employee.dart';
+import 'package:untitled1/features/deal_feature/deal_page.dart';
 import 'package:untitled1/features/deals_back/deal_card_info/deal_card_info.dart';
 import 'package:untitled1/features/deals_back/get_deal_cards_info.dart';
 import 'package:untitled1/providers/theme_provider.dart';
@@ -182,6 +183,15 @@ class _EmployeeInfoForSmState extends State<EmployeeInfoForSm> {
                   padding: EdgeInsets.only(bottom: width * (28 / 1920)),
                   child: GestureDetector(
                     onTap: () => _reassignDeal(_deals[index]),
+                    onDoubleTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => DealPage(
+                          userAuthInfo: widget.userAuthInfo,
+                          dealId: _deals[index].id.toString(),
+                        ),
+                      ),
+                    ),
                     child: DealCard(dealCardInfo: _deals[index]),
                   ),
                 ),

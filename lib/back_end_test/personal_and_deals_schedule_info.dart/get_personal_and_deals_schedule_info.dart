@@ -113,21 +113,27 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
   //   },
   // ];
 
+  // A meeting exists once per participant. Keep only its accepted copy; all
+  // other schedule types must remain untouched.
+  final schedules = temp.where((item) {
+    return item['title'] != 'MEETING' || item['acceptOn'] != null;
+  }).toList();
+
   List<dynamic> scheduleNote = [];
-  for (int i = 0; i < temp.length; i++) {
-    if (temp[i]['type'] == 'BUY_RENT_DEAL' ||
-        temp[i]['type'] == 'SALE_LEASE_DEAL') {
+  for (int i = 0; i < schedules.length; i++) {
+    if (schedules[i]['type'] == 'BUY_RENT_DEAL' ||
+        schedules[i]['type'] == 'SALE_LEASE_DEAL') {
       scheduleNote.add(
         DealNoteWidget(
           scheduleDealNote: ScheduleDealNote(
             employeeId: 1,
             time:
-                '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
-            title: temp[i]['title'],
-            description: temp[i]['description'],
-            dealId: temp[i]['type'] == 'BUY_RENT_DEAL'
-                ? temp[i]['buyRentDeal']['id']
-                : temp[i]['saleLeaseDeal']['id'],
+                '${DateTime.parse(schedules[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(schedules[i]['date']).minute.toString().padLeft(2, '0')}',
+            title: schedules[i]['title'],
+            description: schedules[i]['description'],
+            dealId: schedules[i]['type'] == 'BUY_RENT_DEAL'
+                ? schedules[i]['buyRentDeal']['id']
+                : schedules[i]['saleLeaseDeal']['id'],
             propertyNameCode: '',
             dealName: '',
           ),
@@ -138,9 +144,9 @@ Future<dynamic> getPersonalAndDealsScheduleInfo({
         PersonalNoteWidget(
           scheduleNote: ScheduleNote(
             time:
-                '${DateTime.parse(temp[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(temp[i]['date']).minute.toString().padLeft(2, '0')}',
-            title: temp[i]['title'],
-            description: temp[i]['description'],
+                '${DateTime.parse(schedules[i]['date']).hour.toString().padLeft(2, '0')}:${DateTime.parse(schedules[i]['date']).minute.toString().padLeft(2, '0')}',
+            title: schedules[i]['title'],
+            description: schedules[i]['description'],
           ),
         ),
       );

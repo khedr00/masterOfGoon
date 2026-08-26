@@ -213,7 +213,7 @@ class _ComplaintCardState extends State<ComplaintCard> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width * 1.12;
     final cardHeight = _isExpanded
         ? width * (418 / 1920)
         : width * (246 / 1920);
