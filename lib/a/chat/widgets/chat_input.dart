@@ -10,7 +10,7 @@ class ChatInput extends StatelessWidget {
   });
 
   final TextEditingController controller;
-  final VoidCallback onSend;
+  final VoidCallback? onSend;
   final double scale;
 
   @override
@@ -32,7 +32,7 @@ class ChatInput extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: controller,
-              onSubmitted: (_) => onSend(),
+              onSubmitted: (_) => onSend?.call(),
               style: TextStyle(
                 fontFamily: 'NunitoSans',
                 fontSize: 14 * scale,

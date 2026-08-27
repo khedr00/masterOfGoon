@@ -41,15 +41,28 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
             SizedBox(height: 4 * scale),
-            Text(
-              _formatTime(message.timestamp),
-              style: TextStyle(
-                fontFamily: 'NunitoSans',
-                fontSize: 10 * scale,
-                color: message.isMe
-                    ? lightCardColor.withValues(alpha: .72)
-                    : getTertiaryTextColor(isDark),
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  _formatTime(message.timestamp),
+                  style: TextStyle(
+                    fontFamily: 'NunitoSans',
+                    fontSize: 10 * scale,
+                    color: message.isMe
+                        ? lightCardColor.withValues(alpha: .72)
+                        : getTertiaryTextColor(isDark),
+                  ),
+                ),
+                if (message.isMe) ...[
+                  SizedBox(width: 6 * scale),
+                  Icon(
+                    message.isRead ? Icons.check : Icons.done_all,
+                    size: 14 * scale,
+                    color: lightCardColor.withValues(alpha: .78),
+                  ),
+                ],
+              ],
             ),
           ],
         ),

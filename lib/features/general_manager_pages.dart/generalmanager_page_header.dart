@@ -8,12 +8,12 @@ import 'package:untitled1/core/widgets/floating_notification/floating_notificati
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_component.dart';
 import 'package:untitled1/core/widgets/header/app_bar/app_bar_widget.dart';
 import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
+import 'package:untitled1/features/general_manager_pages.dart/generalmanager_dashboard_page.dart';
 import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/presentation/screens/generalmanager_home_page.dart';
 import 'package:untitled1/features/notification/modules/notification_model.dart';
 import 'package:untitled1/features/notification/services/socket_service.dart';
 import 'package:untitled1/features/property_feature/screen/property_page.dart';
 import 'package:untitled1/features/submanager/employees_feature/employees_page.dart';
-import 'package:untitled1/features/submanager/submanager_dashbourd/submanager_dashbourd.dart';
 import 'package:untitled1/providers/generalmanager_page_selector_provider.dart';
 
 class GeneralmanagerPageHeader extends StatefulWidget
@@ -131,7 +131,9 @@ class _GeneralmanagerPageHeader extends State<GeneralmanagerPageHeader> {
                 appBarCopmonentName: 'Dashbrd',
                 onTap: () {
                   generalmanagerPageSelectorProvider.selectPage(
-                    SubmanagerDashbourd(userAuthInfo: widget.userAuthInfo),
+                    GeneralManagerDashboardPage(
+                      userAuthInfo: widget.userAuthInfo,
+                    ),
                   );
                 },
               ),
