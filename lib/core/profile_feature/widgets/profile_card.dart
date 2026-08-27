@@ -65,10 +65,11 @@ class _ProfileCardState extends State<ProfileCard> {
         height: width * (950 / 1920),
         color: themeProvider.isDarkMode ? darkBackGroundColor : backGroundColor,
         child: _loadError == null
-            ? CircularProgressIndicator(
-                padding: EdgeInsets.symmetric(
-                  vertical: width * (428 / 1920),
-                  horizontal: width * (180 / 1920),
+            ? Center(
+                child: SizedBox(
+                  width: width * (44 / 1920),
+                  height: width * (44 / 1920),
+                  child: const CircularProgressIndicator(strokeWidth: 3),
                 ),
               )
             : Center(child: Text(_loadError!)),

@@ -21,10 +21,11 @@ class SubmanagerHomePage extends StatefulWidget {
 }
 
 class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
-  String propertyId = '';
+  DealRequestCardInfo? _selectedDealRequest;
   List<DealRequestCardInfo> dealRequestCardInfo1 = [];
   final List<DealRequestCard> _dealRequestList = [];
   final CancelToken _cancelToken = CancelToken();
+
   void getDealList() async {
     DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
     List<DealRequestCardInfo> dealRequestList = await getAllRequests(
@@ -36,8 +37,11 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
     }
     setState(() {
       dealRequestCardInfo1 = dealRequestList;
+      _dealRequestList.clear();
 
-      propertyId = dealRequestList[0].id;
+      if (dealRequestList.isNotEmpty) {
+        _selectedDealRequest = dealRequestList[0];
+      }
 
       for (int i = 0; i < dealRequestList.length; i++) {
         _dealRequestList.add(
@@ -48,7 +52,9 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
         );
       }
       _falsingcardIsClicked();
-      _cardIsClicked[0] = true;
+      if (_cardIsClicked.isNotEmpty) {
+        _cardIsClicked[0] = true;
+      }
     });
   }
 
@@ -173,9 +179,8 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
                                                 setState(() {
                                                   _falsingcardIsClicked();
                                                   _cardIsClicked[i] = true;
-                                                  propertyId =
-                                                      dealRequestCardInfo1[i]
-                                                          .id;
+                                                  _selectedDealRequest =
+                                                      dealRequestCardInfo1[i];
                                                 });
                                               },
                                               child: _dealRequestList[i],
@@ -245,10 +250,13 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
               borderRadius: BorderRadius.circular(width * (10 / 1920)),
             ),
             child: SingleChildScrollView(
-              child: RightSideOfSmHome(
-                key: ValueKey(propertyId),
-                propertyId: propertyId,
-              ),
+              child: _selectedDealRequest == null
+                  ? const Center(child: CircularProgressIndicator())
+                  : RightSideOfSmHome(
+                      key: ValueKey(_selectedDealRequest!.id),
+                      userAuthInfo: widget.userAuthInfo,
+                      dealRequest: _selectedDealRequest!,
+                    ),
             ),
           ),
         ],

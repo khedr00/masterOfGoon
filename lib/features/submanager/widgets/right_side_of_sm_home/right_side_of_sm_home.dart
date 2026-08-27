@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
+import 'package:untitled1/back_end_test/sales_manager_requests/sales_manager_request_model.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/features/property_feature/data/property_image_source.dart';
 import 'package:untitled1/features/property_feature/widgets/property_card/property_card.dart';
 import 'package:untitled1/features/property_feature/widgets/property_photos_shower/property_photos_shower_widget.dart';
 import 'package:untitled1/features/submanager/widgets/choose_employee/choose_employee_widget.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 class RightSideOfSmHome extends StatefulWidget {
-  const RightSideOfSmHome({super.key, required this.propertyId});
-  final String propertyId;
+  const RightSideOfSmHome({
+    super.key,
+    required this.userAuthInfo,
+    required this.dealRequest,
+  });
+
+  final UserAuthInfo userAuthInfo;
+  final DealRequestCardInfo dealRequest;
 
   @override
   State<RightSideOfSmHome> createState() => _RightSideOfSmHomeState();
@@ -41,7 +50,7 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
             ),
             child: Center(
               child: Text(
-                'Lead Info :',
+                'Client Info :',
                 style: TextStyle(
                   color: getTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-Bold',
@@ -52,8 +61,8 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
           ),
         ),
         Container(
-          width: width * (1120 / 1920),
-          height: width * (200 / 1920),
+          width: width * (760 / 1920),
+          height: width * (150 / 1920),
           decoration: BoxDecoration(
             color: themeProvider.isDarkMode
                 ? darkSecondaryColor
@@ -77,8 +86,8 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
                   Row(
                     children: [
                       Container(
-                        width: width * (189 / 1920),
-                        height: width * (200 / 1920),
+                        width: width * (170 / 1920),
+                        height: width * (150 / 1920),
                         decoration: BoxDecoration(
                           color: themeProvider.isDarkMode
                               ? darkSecondaryColor
@@ -92,37 +101,40 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: width * (80 / 1920),
+                              height: width * (65 / 1920),
                               child: SizedBox(
-                                width: width * (100 / 1920),
-                                height: width * (100 / 1920),
-                                child: Image.asset(
+                                width: width * (70 / 1920),
+                                height: width * (70 / 1920),
+                                child: PropertyImageSource.image(
+                                  PropertyImageSource.normalize(
+                                    widget.dealRequest.clientPhoto,
+                                    'assets/images/profilePhoto-icon.png',
+                                  ),
                                   'assets/images/profilePhoto-icon.png',
                                 ),
                               ),
                             ),
                             SizedBox(
-                              width: width * (189 / 1920),
-                              height: width * ((200 - 80) / 1920),
+                              width: width * (170 / 1920),
+                              height: width * ((150 - 65) / 1920),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
-                                    'Khedr Issa',
+                                    widget.dealRequest.clientName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontFamily: 'NunitoSans-Bold',
                                       fontSize: width * (22 / 1920),
+                                      color: getPrimaryTextColor(
+                                        themeProvider.isDarkMode,
+                                      ),
                                     ),
                                   ),
-                                  Text(
-                                    'lead Scoring: 86%',
-                                    style: TextStyle(
-                                      fontFamily: 'NunitoSans-Regular',
-                                      fontSize: width * (18 / 1920),
-                                    ),
-                                  ),
+                                  SizedBox(height: width * (5 / 1920)),
                                 ],
                               ),
                             ),
@@ -131,8 +143,8 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
                       ),
                       Container(
                         padding: EdgeInsets.all(width * (5 / 1920)),
-                        width: width * (170 / 1920),
-                        height: width * (140 / 1920),
+                        width: width * (210 / 1920),
+                        height: width * (95 / 1920),
                         decoration: BoxDecoration(
                           color: getCardColor(themeProvider.isDarkMode),
                           borderRadius: BorderRadius.circular(
@@ -141,8 +153,12 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
                         ),
                         child: Center(
                           child: Text(
-                            'I would like to know more about this property',
+                            widget.dealRequest.message.isEmpty
+                                ? 'I would like to know more about this property'
+                                : widget.dealRequest.message,
                             textAlign: TextAlign.center,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: getPrimaryTextColor(
                                 themeProvider.isDarkMode,
@@ -161,70 +177,18 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
                 padding: EdgeInsets.all(width * (10 / 1920)),
                 child: Container(
                   width: width * (1 / 1920),
-                  height: width * (200 / 1920),
+                  height: width * (130 / 1920),
                   color: getDividerColor(themeProvider.isDarkMode),
                 ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Convertion Probability : 79%',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (22 / 1920),
-                    ),
-                  ),
-                  Text(
-                    'Expected revenue : 1100\$',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (22 / 1920),
-                    ),
-                  ),
-                  Text(
-                    'Budget : 17000\$',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (22 / 1920),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(width * (10 / 1920)),
-                child: Container(
-                  width: width * (1 / 1920),
-                  height: width * (200 / 1920),
-                  color: getDividerColor(themeProvider.isDarkMode),
+              Text(
+                '${widget.dealRequest.type.toUpperCase()} Request',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: getPrimaryTextColor(themeProvider.isDarkMode),
+                  fontFamily: 'NunitoSans-Bold',
+                  fontSize: width * (24 / 1920),
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'Lead Segmentation :',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (22 / 1920),
-                    ),
-                  ),
-                  Text(
-                    'Hot',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: themeProvider.isDarkMode
-                          ? darkSixthColorSecondaryLightRed
-                          : sixthColorSecondaryLightRed,
-                      fontFamily: 'NunitoSans-Bold',
-                      fontSize: width * (32 / 1920),
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
@@ -269,13 +233,16 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                widget.propertyId == ''
+                widget.dealRequest.id == ''
                     ? SizedBox()
                     : PropertyCard(
-                        // key: ValueKey(propertyId),
-                        propertyId: 'bbae6c38-d791-48b7-84b1-225fd5f96f38',
+                        key: ValueKey(widget.dealRequest.id),
+                        propertyId: widget.dealRequest.id,
                       ),
-                PropertyPhotosShowerWidget(isPrimaryPropertyPhotos: true),
+                PropertyPhotosShowerWidget(
+                  key: ValueKey('photos-${widget.dealRequest.id}'),
+                  isPrimaryPropertyPhotos: true,
+                ),
               ],
             ),
           ),
@@ -300,7 +267,7 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
             ),
             child: Center(
               child: Text(
-                'Choose Employee :',
+                'Create Deal :',
                 style: TextStyle(
                   color: getTextColor(themeProvider.isDarkMode),
                   fontFamily: 'NunitoSans-Bold',
@@ -310,7 +277,11 @@ class _RightSideOfSmHomeState extends State<RightSideOfSmHome> {
             ),
           ),
         ),
-        ChooseEmployeeWidget(),
+        ChooseEmployeeWidget(
+          key: ValueKey('employees-${widget.dealRequest.id}'),
+          userAuthInfo: widget.userAuthInfo,
+          dealRequest: widget.dealRequest,
+        ),
       ],
     );
   }
