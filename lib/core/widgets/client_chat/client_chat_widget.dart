@@ -1,8 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/back_end_test/login/dio_client.dart';
+import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/providers/auth_provider.dart';
 import 'package:untitled1/providers/theme_provider.dart';
 
 typedef ClientChatSendMessage = FutureOr<void> Function(String message);
@@ -70,6 +75,9 @@ class ClientChatWidget extends StatefulWidget {
     this.hintText = 'Write a message...',
     this.emptyStateTitle = 'No messages yet',
     this.emptyStateSubtitle = 'Start the conversation with your client.',
+    this.userAuthInfo,
+    this.dealId,
+    this.roomId,
     this.onSendMessage,
     this.onCallPressed,
     this.onMorePressed,
@@ -91,6 +99,9 @@ class ClientChatWidget extends StatefulWidget {
   final String hintText;
   final String emptyStateTitle;
   final String emptyStateSubtitle;
+  final UserAuthInfo? userAuthInfo;
+  final String? dealId;
+  final String? roomId;
   final ClientChatSendMessage? onSendMessage;
   final VoidCallback? onCallPressed;
   final VoidCallback? onMorePressed;
@@ -104,17 +115,36 @@ class _ClientChatWidgetState extends State<ClientChatWidget> {
   final ScrollController _scrollController = ScrollController();
   late List<ClientChatMessage> _localMessages;
   bool _isSending = false;
+  bool _isBackendLoading = false;
+  bool _didTryBackendSetup = false;
+  String? _backendErrorText;
+  String? _backendRoomId;
+  String _backendCurrentUserId = '';
+  UserAuthInfo? _backendAuthInfo;
+  Dio? _backendDio;
+  List<ClientChatMessage> _backendMessages = [];
 
-  bool get _usesLocalMessages => widget.onSendMessage == null;
+  bool get _usesBackendMessages {
+    return _backendDio != null && _backendRoomId != null;
+  }
+
+  bool get _usesLocalMessages {
+    return !_usesBackendMessages && widget.onSendMessage == null;
+  }
 
   List<ClientChatMessage> get _visibleMessages {
+    if (_usesBackendMessages) {
+      return _backendMessages;
+    }
     return _usesLocalMessages ? _localMessages : widget.messages;
   }
 
   bool get _canSend {
     return !widget.readOnly &&
         !widget.isLoading &&
+        !_isBackendLoading &&
         !_isSending &&
+        (_backendErrorText == null || _usesBackendMessages) &&
         _messageController.text.trim().isNotEmpty;
   }
 
@@ -123,6 +153,9 @@ class _ClientChatWidgetState extends State<ClientChatWidget> {
     super.initState();
     _localMessages = List<ClientChatMessage>.of(widget.messages);
     _messageController.addListener(_refreshComposer);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _setupBackendChatIfPossible();
+    });
     _scrollToBottom();
   }
 
@@ -135,6 +168,14 @@ class _ClientChatWidgetState extends State<ClientChatWidget> {
     if (widget.messages.length != oldWidget.messages.length ||
         widget.isTyping != oldWidget.isTyping) {
       _scrollToBottom();
+    }
+    if (widget.userAuthInfo != oldWidget.userAuthInfo ||
+        widget.dealId != oldWidget.dealId ||
+        widget.roomId != oldWidget.roomId) {
+      _didTryBackendSetup = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _setupBackendChatIfPossible();
+      });
     }
   }
 
@@ -158,6 +199,35 @@ class _ClientChatWidgetState extends State<ClientChatWidget> {
     }
 
     final message = _messageController.text.trim();
+
+    if (_usesBackendMessages) {
+      setState(() => _isSending = true);
+      _messageController.clear();
+
+      try {
+        final sentMessage = await _sendBackendMessage(message);
+        if (!mounted) {
+          return;
+        }
+        setState(() {
+          _upsertBackendMessage(sentMessage);
+        });
+        _scrollToBottom();
+      } catch (error) {
+        if (!mounted) {
+          return;
+        }
+        _messageController.text = message;
+        ScaffoldMessenger.maybeOf(
+          context,
+        )?.showSnackBar(SnackBar(content: Text(error.toString())));
+      } finally {
+        if (mounted) {
+          setState(() => _isSending = false);
+        }
+      }
+      return;
+    }
 
     if (_usesLocalMessages) {
       final now = DateTime.now();
@@ -197,6 +267,304 @@ class _ClientChatWidgetState extends State<ClientChatWidget> {
         setState(() => _isSending = false);
       }
     }
+  }
+
+  Future<void> _setupBackendChatIfPossible() async {
+    if (_didTryBackendSetup || !mounted) {
+      return;
+    }
+    _didTryBackendSetup = true;
+
+    final resolvedAuthInfo = widget.userAuthInfo ?? _authInfoFromContext();
+    final resolvedDealId = _firstText([widget.dealId, _dealIdFromAncestor()]);
+    final resolvedRoomId = _firstText([widget.roomId]);
+
+    if (resolvedAuthInfo == null ||
+        resolvedAuthInfo.accessToken.trim().isEmpty ||
+        (resolvedRoomId.isEmpty && resolvedDealId.isEmpty)) {
+      return;
+    }
+
+    setState(() {
+      _isBackendLoading = true;
+      _backendErrorText = null;
+      _backendAuthInfo = resolvedAuthInfo;
+      _backendCurrentUserId =
+          _userIdFromToken(resolvedAuthInfo.accessToken) ?? resolvedAuthInfo.id;
+      _backendDio = DioClient(userAuthInfo: resolvedAuthInfo).dio;
+    });
+
+    try {
+      final roomId = resolvedRoomId.isNotEmpty
+          ? resolvedRoomId
+          : await _findRoomIdForDeal(resolvedDealId);
+      if (roomId.isEmpty) {
+        throw Exception('No chat room found for this deal');
+      }
+
+      final messages = await _loadBackendMessages(roomId);
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _backendRoomId = roomId;
+        _backendMessages = _uniqueMessages(messages);
+        _isBackendLoading = false;
+      });
+      _scrollToBottom();
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _backendErrorText = _cleanError(error);
+        _isBackendLoading = false;
+      });
+    }
+  }
+
+  UserAuthInfo? _authInfoFromContext() {
+    final ancestorAuthInfo = _authInfoFromAncestor();
+    if (ancestorAuthInfo != null) {
+      return ancestorAuthInfo;
+    }
+
+    try {
+      final authProvider = context.read<AuthProvider>();
+      final accessToken = authProvider.accessToken ?? '';
+      final id = authProvider.id ?? '';
+      if (accessToken.trim().isEmpty && id.trim().isEmpty) {
+        return null;
+      }
+      return UserAuthInfo(
+        id: id,
+        role: authProvider.role ?? '',
+        accessToken: accessToken,
+        refreshToken: authProvider.refreshToken ?? '',
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  UserAuthInfo? _authInfoFromAncestor() {
+    UserAuthInfo? authInfo;
+    context.visitAncestorElements((element) {
+      final widget = element.widget;
+      try {
+        final candidate = (widget as dynamic).userAuthInfo;
+        if (candidate is UserAuthInfo) {
+          authInfo = candidate;
+          return false;
+        }
+      } catch (_) {}
+      return true;
+    });
+    return authInfo;
+  }
+
+  String _dealIdFromAncestor() {
+    var dealId = '';
+    context.visitAncestorElements((element) {
+      final widget = element.widget;
+      try {
+        final candidate = (widget as dynamic).dealId;
+        final text = candidate?.toString().trim() ?? '';
+        if (text.isNotEmpty) {
+          dealId = text;
+          return false;
+        }
+      } catch (_) {}
+      return true;
+    });
+    return dealId;
+  }
+
+  Future<String> _findRoomIdForDeal(String dealId) async {
+    final dio = _backendDio;
+    if (dio == null || dealId.trim().isEmpty) {
+      return '';
+    }
+
+    final response = await dio.get('api/v1/chat/myDeals');
+    final rooms = _responseList(
+      response.data,
+    ).map(_asMap).whereType<Map<String, dynamic>>();
+
+    for (final room in rooms) {
+      if (_roomMatchesDeal(room, dealId)) {
+        return _roomIdFromJson(room);
+      }
+    }
+
+    return '';
+  }
+
+  bool _roomMatchesDeal(Map<String, dynamic> room, String dealId) {
+    final normalizedDealId = dealId.trim();
+    if (normalizedDealId.isEmpty) {
+      return false;
+    }
+
+    final ids = <String>{
+      _firstText([
+        room['dealId'],
+        room['buyRentDealId'],
+        room['saleLeaseDealId'],
+      ]),
+      ..._idsFromNestedValue(room['buyRentDeal']),
+      ..._idsFromNestedValue(room['saleLeaseDeal']),
+      ..._idsFromNestedValue(room['deal']),
+    }..removeWhere((id) => id.isEmpty);
+
+    return ids.contains(normalizedDealId);
+  }
+
+  Set<String> _idsFromNestedValue(Object? value, [int depth = 0]) {
+    if (value == null || depth > 4) {
+      return const {};
+    }
+
+    if (value is String || value is num) {
+      final text = value.toString().trim();
+      return text.isEmpty ? const {} : {text};
+    }
+
+    if (value is Map) {
+      final data = Map<String, dynamic>.from(value);
+      final ids = <String>{
+        _firstText([
+          data['id'],
+          data['_id'],
+          data['dealId'],
+          data['buyRentDealId'],
+          data['saleLeaseDealId'],
+        ]),
+      };
+      for (final nestedValue in data.values) {
+        ids.addAll(_idsFromNestedValue(nestedValue, depth + 1));
+      }
+      ids.removeWhere((id) => id.isEmpty);
+      return ids;
+    }
+
+    if (value is Iterable) {
+      final ids = <String>{};
+      for (final nestedValue in value) {
+        ids.addAll(_idsFromNestedValue(nestedValue, depth + 1));
+      }
+      return ids;
+    }
+
+    return const {};
+  }
+
+  Future<List<ClientChatMessage>> _loadBackendMessages(String roomId) async {
+    final dio = _backendDio;
+    if (dio == null) {
+      return const [];
+    }
+
+    final response = await dio.get('api/v1/chat/$roomId/messages');
+    return _responseList(response.data)
+        .map(_asMap)
+        .whereType<Map<String, dynamic>>()
+        .map(_messageFromJson)
+        .toList();
+  }
+
+  Future<ClientChatMessage> _sendBackendMessage(String message) async {
+    final dio = _backendDio;
+    final roomId = _backendRoomId;
+    if (dio == null || roomId == null || roomId.isEmpty) {
+      throw Exception('Chat room is not ready');
+    }
+
+    final response = await dio.post(
+      'api/v1/chat/$roomId/messages',
+      data: {'message': message},
+    );
+    return _messageFromJson(_responseMap(response.data));
+  }
+
+  ClientChatMessage _messageFromJson(Map<String, dynamic> data) {
+    final sender = _firstMap([
+      data['sender'],
+      data['senderEmployee'],
+      data['employee'],
+      data['user'],
+    ]);
+    final senderId = _firstText([
+      data['userId'],
+      data['user_id'],
+      data['senderId'],
+      data['sender_id'],
+      data['employeeId'],
+      sender?['id'],
+      sender?['_id'],
+      sender?['userId'],
+      sender?['employeeId'],
+    ]);
+    final createdAt =
+        _dateFrom(
+          _firstText([data['createdAt'], data['updatedAt'], data['timestamp']]),
+        ) ??
+        DateTime.now();
+
+    return ClientChatMessage(
+      id: _firstText([
+        data['id'],
+        data['_id'],
+        data['messageId'],
+        data['message_id'],
+      ], fallback: 'message_${createdAt.microsecondsSinceEpoch}'),
+      senderId: senderId,
+      text: _firstText([
+        data['message'],
+        data['text'],
+        data['content'],
+        data['body'],
+      ]),
+      createdAt: createdAt,
+      senderName: _firstText([
+        sender?['name'],
+        sender?['fullName'],
+        sender?['email'],
+        data['senderName'],
+      ]),
+      isMine:
+          data['isMine'] == true ||
+          (_backendCurrentUserId.isNotEmpty &&
+              senderId == _backendCurrentUserId) ||
+          (_backendAuthInfo?.id.isNotEmpty == true &&
+              senderId == _backendAuthInfo!.id),
+      status: data['isRead'] == true || data['readAt'] != null
+          ? ClientChatMessageStatus.read
+          : ClientChatMessageStatus.sent,
+    );
+  }
+
+  List<ClientChatMessage> _uniqueMessages(List<ClientChatMessage> messages) {
+    final unique = <String, ClientChatMessage>{};
+    for (final message in messages) {
+      unique[message.id] = message;
+    }
+    return unique.values.toList()
+      ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+  }
+
+  void _upsertBackendMessage(ClientChatMessage message) {
+    final index = _backendMessages.indexWhere(
+      (existingMessage) => existingMessage.id == message.id,
+    );
+    if (index == -1) {
+      _backendMessages.add(message);
+    } else {
+      _backendMessages[index] = message;
+    }
+    _backendMessages = _uniqueMessages(_backendMessages);
   }
 
   void _scrollToBottom() {
@@ -258,8 +626,8 @@ class _ClientChatWidgetState extends State<ClientChatWidget> {
               dealStatusTitle: widget.dealStatusTitle,
               dealStatusSubtitle: widget.dealStatusSubtitle,
               isTyping: widget.isTyping,
-              isLoading: widget.isLoading,
-              errorText: widget.errorText,
+              isLoading: widget.isLoading || _isBackendLoading,
+              errorText: _backendErrorText ?? widget.errorText,
               emptyStateTitle: widget.emptyStateTitle,
               emptyStateSubtitle: widget.emptyStateSubtitle,
             ),
@@ -1184,4 +1552,168 @@ class _ChatFeedItem {
   final _ChatFeedItemType type;
   final DateTime? day;
   final ClientChatMessage? message;
+}
+
+Map<String, dynamic> _responseMap(Object? raw) {
+  final data = _asMap(raw);
+  if (data == null) {
+    return const {};
+  }
+
+  final nestedData = _asMap(data['data']);
+  if (nestedData != null) {
+    return nestedData;
+  }
+
+  final message = _asMap(data['message']);
+  if (message != null) {
+    return message;
+  }
+
+  final chat = _asMap(data['chat']);
+  if (chat != null) {
+    return chat;
+  }
+
+  return data;
+}
+
+List<Object?> _responseList(Object? raw) {
+  if (raw is List) {
+    return raw;
+  }
+
+  final data = _asMap(raw);
+  if (data == null) {
+    return const [];
+  }
+
+  final directData = data['data'];
+  if (directData is List) {
+    return directData;
+  }
+
+  final nestedData = _asMap(directData);
+  if (nestedData != null) {
+    final nestedList = _firstList([
+      nestedData['data'],
+      nestedData['chats'],
+      nestedData['messages'],
+      nestedData['rooms'],
+      nestedData['items'],
+      nestedData['results'],
+    ]);
+    if (nestedList.isNotEmpty) {
+      return nestedList;
+    }
+  }
+
+  return _firstList([
+    data['chats'],
+    data['messages'],
+    data['rooms'],
+    data['items'],
+    data['results'],
+  ]);
+}
+
+List<Object?> _firstList(List<Object?> values) {
+  for (final value in values) {
+    if (value is List) {
+      return value;
+    }
+  }
+  return const [];
+}
+
+Map<String, dynamic>? _firstMap(List<Object?> values) {
+  for (final value in values) {
+    final map = _asMap(value);
+    if (map != null) {
+      return map;
+    }
+  }
+  return null;
+}
+
+Map<String, dynamic>? _asMap(Object? value) {
+  if (value is Map<String, dynamic>) {
+    return value;
+  }
+  if (value is Map) {
+    return Map<String, dynamic>.from(value);
+  }
+  return null;
+}
+
+String _firstText(List<Object?> values, {String fallback = ''}) {
+  for (final value in values) {
+    if (value == null) {
+      continue;
+    }
+    final text = value.toString().trim();
+    if (text.isNotEmpty && text.toLowerCase() != 'null') {
+      return text;
+    }
+  }
+  return fallback;
+}
+
+String _roomIdFromJson(Map<String, dynamic> data) {
+  return _firstText([
+    data['id'],
+    data['_id'],
+    data['chatId'],
+    data['chat_id'],
+    data['roomId'],
+    data['room_id'],
+  ]);
+}
+
+DateTime? _dateFrom(Object? value) {
+  if (value is DateTime) {
+    return value;
+  }
+  if (value == null) {
+    return null;
+  }
+  return DateTime.tryParse(value.toString());
+}
+
+String _cleanError(Object error) {
+  if (error is DioException) {
+    final data = _asMap(error.response?.data);
+    final message = data?['message'] ?? data?['error'] ?? error.message;
+    final text = message?.toString().trim();
+    if (text != null && text.isNotEmpty) {
+      return text;
+    }
+  }
+
+  return error.toString().replaceFirst('Exception: ', '');
+}
+
+String? _userIdFromToken(String token) {
+  final parts = token.split('.');
+  if (parts.length < 2) {
+    return null;
+  }
+
+  try {
+    final normalized = base64Url.normalize(parts[1]);
+    final payload = utf8.decode(base64Url.decode(normalized));
+    final decoded = jsonDecode(payload);
+    if (decoded is! Map) {
+      return null;
+    }
+
+    final id = decoded['id'] ?? decoded['userId'] ?? decoded['sub'];
+    final text = id?.toString().trim();
+    if (text == null || text.isEmpty || text.toLowerCase() == 'null') {
+      return null;
+    }
+    return text;
+  } catch (_) {
+    return null;
+  }
 }
