@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/a/chat/data/mock_data.dart';
+import 'package:untitled1/a/chat/widgets/chat_dialog.dart';
 import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/core/widgets/constants.dart';
+import 'package:untitled1/core/widgets/header/internal_chat_button.dart';
 import 'package:untitled1/features/support_employee_feature/data_sourses/get_all_complaints.dart';
 import 'package:untitled1/features/support_employee_feature/models/complaint_card_info.dart';
 import 'package:untitled1/features/support_employee_feature/presentation/complaint_card.dart';
@@ -168,6 +171,12 @@ class _SupportHomePageState extends State<SupportHomePage> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            InternalChatButton(
+              onTap: () {
+                ChatDialog.show(context, UserType.support);
+              },
+            ),
+            SizedBox(width: width * (20 / 1920)),
             _buildFilterButton(
               width: width,
               label: 'All',

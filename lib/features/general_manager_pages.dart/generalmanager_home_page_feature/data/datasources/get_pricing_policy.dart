@@ -13,11 +13,15 @@ Future<PricingPolicyModel> getPricingPolicy({
     final dynamic response;
     response = await dioClient.dio.get(
       '${base}api/v1/properties/pricingPolicies?propertyType=$propertyType&city=$city',
+      cancelToken: cancelToken,
     );
 
-    PricingPolicyModel result = PricingPolicyModel.fromJson(
-      response.data['data'],
-    );
+    final pricingPolicyJson = _pricingPolicyJsonFromResponse(response.data);
+    if (pricingPolicyJson == null) {
+      throw Exception('Pricing policy was not found for $city $propertyType');
+    }
+
+    PricingPolicyModel result = PricingPolicyModel.fromJson(pricingPolicyJson);
 
     return result;
   } on DioException catch (e) {
@@ -33,4 +37,32 @@ Future<PricingPolicyModel> getPricingPolicy({
   } catch (e) {
     throw Exception(e);
   }
+}
+
+Map<String, dynamic>? _pricingPolicyJsonFromResponse(dynamic responseData) {
+  if (responseData is! Map) {
+    return null;
+  }
+
+  final data = responseData['data'];
+
+  if (data is Map) {
+    final nestedPolicy = data['pricingPolicy'] ?? data['policy'];
+    if (nestedPolicy is Map) {
+      return Map<String, dynamic>.from(nestedPolicy);
+    }
+
+    return Map<String, dynamic>.from(data);
+  }
+
+  if (data is List && data.isNotEmpty && data.first is Map) {
+    return Map<String, dynamic>.from(data.first as Map);
+  }
+
+  final directPolicy = responseData['pricingPolicy'] ?? responseData['policy'];
+  if (directPolicy is Map) {
+    return Map<String, dynamic>.from(directPolicy);
+  }
+
+  return null;
 }

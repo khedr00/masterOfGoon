@@ -9,7 +9,6 @@ import 'package:untitled1/back_end_test/login/dio_client.dart';
 import 'package:untitled1/back_end_test/login/user_auth_info.dart';
 import 'package:untitled1/back_end_test/sales_manager_requests/sales_manager_request_model.dart';
 import 'package:untitled1/core/widgets/constants.dart';
-import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/data/datasources/get_pricing_policy.dart';
 import 'package:untitled1/features/general_manager_pages.dart/generalmanager_home_page_feature/data/models/pricing_policy_model.dart';
 import 'package:untitled1/features/submanager/data/create_sales_manager_deal.dart';
 import 'package:untitled1/features/submanager/widgets/choose_employee/choose_employee_card.dart/choose_employee_card.dart';
@@ -90,13 +89,14 @@ class _ChooseEmployeeWidgetState extends State<ChooseEmployeeWidget> {
             ..shuffle();
 
       PricingPolicyModel? pricingPolicy;
+
       if (_isSaleLease) {
-        pricingPolicy = await getPricingPolicy(
-          dioClient: dioClient,
-          cancelToken: _cancelToken,
-          city: 'Jadah',
-          propertyType: 'APARTMENT',
-        );
+        // pricingPolicy = await getPricingPolicy(
+        //   dioClient: dioClient,
+        //   cancelToken: _cancelToken,
+        //   city: 'Jadah',
+        //   propertyType: 'APARTMENT',
+        // );
       }
 
       if (!mounted) return;
@@ -127,6 +127,7 @@ class _ChooseEmployeeWidgetState extends State<ChooseEmployeeWidget> {
 
     try {
       final dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
+
       if (_isSaleLease) {
         await createSaleLeaseDeal(
           dioClient: dioClient,
@@ -144,6 +145,10 @@ class _ChooseEmployeeWidgetState extends State<ChooseEmployeeWidget> {
               : null,
         );
       } else {
+        print(widget.dealRequest.id);
+        print(widget.dealRequest.clientId);
+        print(employee.employeeId);
+        print(_dealType);
         await createBuyRentDeal(
           dioClient: dioClient,
           cancelToken: _cancelToken,
@@ -354,12 +359,12 @@ class _PricingPolicyInfo extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final width = MediaQuery.of(context).size.width;
     final isSale = dealType == 'SALE';
-    final profitMargin = isSale
-        ? pricingPolicy?.sellProfitMargin
-        : pricingPolicy?.rentProfitMargin;
-    final listingMargin = isSale
-        ? pricingPolicy?.saleListingMargin
-        : pricingPolicy?.rentListingMargin;
+    // final profitMargin = isSale
+    //     ? pricingPolicy?.sellProfitMargin
+    //     : pricingPolicy?.rentProfitMargin;
+    // final listingMargin = isSale
+    //     ? pricingPolicy?.saleListingMargin
+    //     : pricingPolicy?.rentListingMargin;
 
     return Container(
       width: width * (820 / 1920),
@@ -376,21 +381,22 @@ class _PricingPolicyInfo extends StatelessWidget {
         children: [
           _PolicyValue(
             title: isSale ? 'Sell Profit Margin' : 'Rent Profit Margin',
-            value: _percentText(profitMargin),
+            value: '5%',
           ),
           _PolicyValue(
             title: isSale ? 'Sale Listing Margin' : 'Rent Listing Margin',
-            value: _percentText(listingMargin),
+            value: '9%',
           ),
+          _PolicyValue(title: 'expected price', value: '10200'),
         ],
       ),
     );
   }
 
-  String _percentText(double? value) {
-    if (value == null) return '-';
-    return '${(value * 100).toStringAsFixed(1)}%';
-  }
+  // String _percentText(double? value) {
+  //   if (value == null) return '-';
+  //   return '${(value * 100).toStringAsFixed(1)}%';
+  // }
 }
 
 class _PolicyValue extends StatelessWidget {

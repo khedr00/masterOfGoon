@@ -25,14 +25,14 @@ class PricingPolicyModel {
     return PricingPolicyModel(
       id: (json['id'] ?? json['_id'] ?? json['pricingPolicyId'] ?? '')
           .toString(),
-      city: json['city'] as String,
-      propertyType: json['propertyType'] as String,
-      sellProfitMargin: (json['sellProfitMargin'] as num).toDouble(),
-      rentProfitMargin: (json['rentProfitMargin'] as num).toDouble(),
-      saleListingMargin: (json['saleListingMargin'] as num).toDouble(),
-      rentListingMargin: (json['rentListingMargin'] as num).toDouble(),
-      saleGlobalAdjust: (json['saleGlobalAdjust'] as num).toDouble(),
-      rentGlobalAdjust: (json['rentGlobalAdjust'] as num).toDouble(),
+      city: _readString(json['city'], 'city'),
+      propertyType: _readString(json['propertyType'], 'propertyType'),
+      sellProfitMargin: _readDouble(json['sellProfitMargin']),
+      rentProfitMargin: _readDouble(json['rentProfitMargin']),
+      saleListingMargin: _readDouble(json['saleListingMargin']),
+      rentListingMargin: _readDouble(json['rentListingMargin']),
+      saleGlobalAdjust: _readDouble(json['saleGlobalAdjust']),
+      rentGlobalAdjust: _readDouble(json['rentGlobalAdjust']),
     );
   }
 
@@ -58,5 +58,29 @@ class PricingPolicyModel {
       'saleGlobalAdjust': saleGlobalAdjust,
       'rentGlobalAdjust': rentGlobalAdjust,
     };
+  }
+
+  static String _readString(dynamic value, String fieldName) {
+    final text = value?.toString().trim() ?? '';
+    if (text.isEmpty) {
+      throw FormatException('Pricing policy $fieldName is missing');
+    }
+
+    return text;
+  }
+
+  static double _readDouble(dynamic value) {
+    if (value is num) {
+      return value.toDouble();
+    }
+
+    if (value is String) {
+      final parsed = double.tryParse(value.trim());
+      if (parsed != null) {
+        return parsed;
+      }
+    }
+
+    return 0;
   }
 }

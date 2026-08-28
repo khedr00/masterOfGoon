@@ -93,7 +93,7 @@ class PropertyCardUpperSection extends StatelessWidget {
                                   themeProvider.isDarkMode,
                                 ),
                                 fontFamily: 'NunitoSans-Medium',
-                                fontSize: width * (28 / 1920),
+                                fontSize: width * (22 / 1920),
                               ),
                             ),
                           ),

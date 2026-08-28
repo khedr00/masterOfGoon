@@ -733,7 +733,7 @@ class _ChatHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  clientName,
+                  'nour rostom',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

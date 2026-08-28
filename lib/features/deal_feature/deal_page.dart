@@ -176,7 +176,7 @@ class _DealPageState extends State<DealPage> {
                       ),
                     TabOfTabableCard(
                       tabName: 'Property',
-                      tabColor: fourthColorPrimaryBrown,
+                      tabColor: thirdColorPrimary,
                       bodyOfTheTab: Container(
                         width: width * (881 / 1920),
                         height: width * (910 / 1920),

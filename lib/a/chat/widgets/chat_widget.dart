@@ -89,6 +89,11 @@ class _ChatWidgetState extends State<ChatWidget> {
       return;
     }
 
+    if (_shouldUseLocalMockChat(authInfo.role)) {
+      _loadLocalMockConversations(authInfo, socketUserId);
+      return;
+    }
+
     if (authInfo.accessToken.isEmpty || authInfo.id.isEmpty) {
       setState(() {
         _currentUserId = authInfo.id;
@@ -124,9 +129,20 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     try {
       final conversations = await _chatApiService!.getAllChats();
-      final discoveredUsers = _isManagerRole(authInfo.role)
-          ? await _loadEmployeesForManager()
-          : await _loadManagersForEmployee(authInfo, conversations);
+      final List<ChatUser> discoveredUsers;
+      if (_isSupportRole(authInfo.role)) {
+        discoveredUsers = await _loadSupportChatUsers(
+          authInfo,
+          conversations,
+        );
+      } else if (_isManagerRole(authInfo.role)) {
+        discoveredUsers = await _loadEmployeesForManager();
+      } else {
+        discoveredUsers = await _loadManagersForEmployee(
+          authInfo,
+          conversations,
+        );
+      }
       final hydratedConversations = await _hydrateSparseConversations(
         conversations,
         discoveredUsers,
@@ -164,12 +180,18 @@ class _ChatWidgetState extends State<ChatWidget> {
 
   Future<void> _selectConversation(Conversation conversation) async {
     setState(() => _selectedConversation = conversation);
+    if (_usesLocalMockChat) {
+      _scrollToBottom();
+      return;
+    }
     if (conversation.isPlaceholder) return;
     _joinConversationRoom(conversation);
     await _loadMessages(conversation);
   }
 
   Future<void> _loadMessages(Conversation conversation) async {
+    if (_usesLocalMockChat) return;
+
     final service = _chatApiService;
     if (service == null || conversation.id.isEmpty) return;
 
@@ -210,9 +232,16 @@ class _ChatWidgetState extends State<ChatWidget> {
     final service = _chatApiService;
     var conversation = _selectedConversation;
     final text = _messageController.text.trim();
-    if (text.isEmpty || service == null || conversation == null || _isSending) {
+    if (text.isEmpty || conversation == null || _isSending) {
       return;
     }
+
+    if (_usesLocalMockChat) {
+      _sendLocalMockMessage(conversation, text);
+      return;
+    }
+
+    if (service == null) return;
 
     setState(() {
       _isSending = true;
@@ -265,6 +294,55 @@ class _ChatWidgetState extends State<ChatWidget> {
         _errorMessage = 'Failed to send message';
       });
     }
+  }
+
+  void _loadLocalMockConversations(UserAuthInfo authInfo, String socketUserId) {
+    final conversations = MockChatData.getConversations(UserType.support);
+    setState(() {
+      _currentUserId = authInfo.id;
+      _currentSocketUserId = socketUserId;
+      _currentUserRole = authInfo.role;
+      _chatApiService = null;
+      _chatSocketService?.disconnect();
+      _chatSocketService = null;
+      _isLoading = false;
+      _isLoadingMessages = false;
+      _isSending = false;
+      _errorMessage = null;
+      _discoveredUsers = conversations.map((item) => item.user).toList();
+      _conversations = conversations;
+      _selectedConversation = conversations.isNotEmpty
+          ? conversations.first
+          : null;
+    });
+    _scrollToBottom();
+  }
+
+  void _sendLocalMockMessage(Conversation conversation, String text) {
+    final message = ChatMessage(
+      id: 'local_${DateTime.now().microsecondsSinceEpoch}',
+      senderId: _currentUserId.isEmpty ? 'support_me' : _currentUserId,
+      text: text,
+      timestamp: DateTime.now(),
+      isMe: true,
+      isRead: true,
+    );
+    final updatedMessages = _sortedMessages([...conversation.messages, message]);
+    final updatedConversation = conversation.copyWith(
+      lastMessage: message,
+      messages: updatedMessages,
+    );
+
+    setState(() {
+      _messageController.clear();
+      _conversations = _conversations
+          .map((item) => item.id == conversation.id ? updatedConversation : item)
+          .toList();
+      _selectedConversation = updatedConversation;
+      _isSending = false;
+      _errorMessage = null;
+    });
+    _scrollToBottom();
   }
 
   Future<void> _showCreateConversationDialog() async {
@@ -767,11 +845,24 @@ class _ChatWidgetState extends State<ChatWidget> {
 
   bool _isBlockedRole(String role) {
     final normalized = role.trim().toUpperCase();
-    return normalized == 'SUPPORT' || normalized == 'CONSULTANT';
+    return normalized == 'CONSULTANT';
   }
 
   bool _isManagerRole(String role) {
     return role.trim().toUpperCase().contains('MANAGER');
+  }
+
+  bool _isSupportRole(String role) {
+    return role.trim().toUpperCase() == 'SUPPORT';
+  }
+
+  bool _shouldUseLocalMockChat(String role) {
+    return _isSupportRole(role) || widget.userType == UserType.support;
+  }
+
+  bool get _usesLocalMockChat {
+    return _isSupportRole(_currentUserRole) ||
+        widget.userType == UserType.support;
   }
 
   bool get _canCreateConversation {
@@ -810,6 +901,9 @@ class _ChatWidgetState extends State<ChatWidget> {
     final normalizedTargetRole = targetRole.trim().toUpperCase();
     if (_isBlockedRole(currentRole) || _isBlockedRole(normalizedTargetRole)) {
       return false;
+    }
+    if (_isSupportRole(currentRole)) {
+      return normalizedTargetRole.isNotEmpty;
     }
     if (currentRole.contains('MANAGER')) {
       return normalizedTargetRole.isNotEmpty &&
@@ -863,13 +957,17 @@ class _ChatWidgetState extends State<ChatWidget> {
   }
 
   List<String>? _fallbackMemberIdsFor(List<ChatUser> users) {
-    if (!_isManagerRole(_currentUserRole)) return null;
     if (_currentSocketUserId.isEmpty) return null;
 
-    final ids = <String>{
-      _currentSocketUserId,
-      ...users.map((user) => user.userId).where((id) => id.isNotEmpty),
-    }.toList();
+    final ids = _isManagerRole(_currentUserRole)
+        ? <String>{
+            _currentSocketUserId,
+            ...users.map((user) => user.userId).where((id) => id.isNotEmpty),
+          }.toList()
+        : <String>{
+            _currentUserId,
+            ...users.map((user) => user.id).where((id) => id.isNotEmpty),
+          }.toList();
 
     if (ids.length != users.length + 1) return null;
     return ids;
@@ -1060,6 +1158,32 @@ class _ChatWidgetState extends State<ChatWidget> {
     } catch (error) {
       return const [];
     }
+  }
+
+  Future<List<ChatUser>> _loadSupportChatUsers(
+    UserAuthInfo authInfo,
+    List<Conversation> conversations,
+  ) async {
+    final usersById = <String, ChatUser>{};
+
+    for (final user in await _loadEmployeesForManager()) {
+      usersById[user.id] = user;
+    }
+
+    for (final manager in await _loadManagersForEmployee(
+      authInfo,
+      conversations,
+    )) {
+      usersById[manager.id] = manager;
+    }
+
+    for (final manager in fallbackManagerUsers) {
+      if (_canDiscoveredUserChat(manager)) {
+        usersById.putIfAbsent(manager.id, () => manager);
+      }
+    }
+
+    return usersById.values.toList();
   }
 
   Future<List<ChatUser>> _enrichUsersForDisplay(List<ChatUser> users) async {

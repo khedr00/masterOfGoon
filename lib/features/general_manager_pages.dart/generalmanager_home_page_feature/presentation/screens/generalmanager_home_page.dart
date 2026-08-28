@@ -31,13 +31,15 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
   PricingPolicyModel? _pricingPolicyModel;
   final CancelToken _cancelToken = CancelToken();
   bool _isUpdatingPricingPolicy = false;
+  String? _pricingPolicyLoadError;
   String _city = 'Jadah';
   String _propertyType = 'APARTMENT';
 
   bool get _isPricingPolicyLoading =>
-      propertyProfitMargins == null ||
-      listingPriceMargins == null ||
-      propertyPriceAdjustment == null;
+      _pricingPolicyLoadError == null &&
+      (propertyProfitMargins == null ||
+          listingPriceMargins == null ||
+          propertyPriceAdjustment == null);
 
   bool get _hasPricingPolicyChanges =>
       propertyProfitMargins?.hasChanges == true ||
@@ -45,18 +47,80 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
       propertyPriceAdjustment?.hasChanges == true;
 
   Future<void> _getPricingPolicy() async {
-    DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
-    PricingPolicyModel pricingPolicyModel = await getPricingPolicy(
-      cancelToken: _cancelToken,
-      city: _city,
-      propertyType: _propertyType,
-      dioClient: dioClient,
-    );
+    setState(() {
+      _pricingPolicyLoadError = null;
+    });
+
+    // =========================
+    // MOCK DATA
+    // =========================
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
     if (!mounted) {
       return;
     }
+
+    // Mock values depending on City + Property Type
+    double sellProfitMargin = 15;
+    double rentProfitMargin = 10;
+    double saleListingMargin = 8;
+    double rentListingMargin = 6;
+    double saleGlobalAdjust = 5;
+    double rentGlobalAdjust = -3;
+
+    // Jadah - Apartment
+    if (_city == 'homs' && _propertyType == 'APARTMENT') {
+      sellProfitMargin = 15;
+      rentProfitMargin = 10;
+      saleListingMargin = 8;
+      rentListingMargin = 6;
+      saleGlobalAdjust = 5;
+      rentGlobalAdjust = -3;
+    }
+    // Jadah - Villa
+    else if (_city == 'homs' && _propertyType == 'VILLA') {
+      sellProfitMargin = 20;
+      rentProfitMargin = 12;
+      saleListingMargin = 10;
+      rentListingMargin = 7;
+      saleGlobalAdjust = 8;
+      rentGlobalAdjust = -2;
+    }
+    // Dubai - Apartment
+    else if (_city == 'hama' && _propertyType == 'APARTMENT') {
+      sellProfitMargin = 18;
+      rentProfitMargin = 11;
+      saleListingMargin = 9;
+      rentListingMargin = 7;
+      saleGlobalAdjust = 6;
+      rentGlobalAdjust = -4;
+    }
+    // Dubai - Villa
+    else if (_city == 'hama' && _propertyType == 'VILLA') {
+      sellProfitMargin = 25;
+      rentProfitMargin = 15;
+      saleListingMargin = 12;
+      rentListingMargin = 9;
+      saleGlobalAdjust = 10;
+      rentGlobalAdjust = -5;
+    }
+
+    final pricingPolicyModel = PricingPolicyModel(
+      id: 'mock-pricing-policy-${_city.toLowerCase()}-${_propertyType.toLowerCase()}',
+      city: _city,
+      propertyType: _propertyType,
+      sellProfitMargin: sellProfitMargin,
+      rentProfitMargin: rentProfitMargin,
+      saleListingMargin: saleListingMargin,
+      rentListingMargin: rentListingMargin,
+      saleGlobalAdjust: saleGlobalAdjust,
+      rentGlobalAdjust: rentGlobalAdjust,
+    );
+
     setState(() {
       _pricingPolicyModel = pricingPolicyModel;
+
       propertyProfitMargins = _MarginConfig(
         region: pricingPolicyModel.city,
         propertyType: pricingPolicyModel.propertyType,
@@ -99,6 +163,7 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
       propertyProfitMargins = null;
       listingPriceMargins = null;
       propertyPriceAdjustment = null;
+      _pricingPolicyLoadError = null;
       _inputVersion++;
     });
 
@@ -107,14 +172,9 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
 
   Future<void> _updatePricingPolicy() async {
     final updatedPricingPolicy = _buildUpdatedPricingPolicyModel();
+
     if (updatedPricingPolicy == null) {
       _showSnackBar('Please enter valid numbers before confirming.');
-      return;
-    }
-
-    final pricingPolicyId = _pricingPolicyModel?.id ?? '';
-    if (pricingPolicyId.isEmpty) {
-      _showSnackBar('Pricing policy id is missing from the response.');
       return;
     }
 
@@ -122,39 +182,30 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
       _isUpdatingPricingPolicy = true;
     });
 
-    try {
-      DioClient dioClient = DioClient(userAuthInfo: widget.userAuthInfo);
-      final message = await updatePricingPolicy(
-        cancelToken: _cancelToken,
-        dioClient: dioClient,
-        pricingPolicyId: pricingPolicyId,
-        pricingPolicyModel: updatedPricingPolicy,
-      );
+    // =========================
+    // MOCK UPDATE
+    // =========================
 
-      if (!mounted) {
-        return;
-      }
+    await Future.delayed(const Duration(milliseconds: 700));
 
-      setState(() {
-        _pricingPolicyModel = updatedPricingPolicy;
-        propertyProfitMargins = propertyProfitMargins!.confirmed();
-        listingPriceMargins = listingPriceMargins!.confirmed();
-        propertyPriceAdjustment = propertyPriceAdjustment!.confirmed();
-        _isUpdatingPricingPolicy = false;
-        _inputVersion++;
-      });
-
-      _showSnackBar(message);
-    } catch (e) {
-      if (!mounted) {
-        return;
-      }
-
-      setState(() {
-        _isUpdatingPricingPolicy = false;
-      });
-      _showSnackBar(e.toString());
+    if (!mounted) {
+      return;
     }
+
+    setState(() {
+      _pricingPolicyModel = updatedPricingPolicy;
+
+      propertyProfitMargins = propertyProfitMargins!.confirmed();
+
+      listingPriceMargins = listingPriceMargins!.confirmed();
+
+      propertyPriceAdjustment = propertyPriceAdjustment!.confirmed();
+
+      _isUpdatingPricingPolicy = false;
+      _inputVersion++;
+    });
+
+    _showSnackBar('Pricing policy updated successfully.');
   }
 
   PricingPolicyModel? _buildUpdatedPricingPolicyModel() {
@@ -242,9 +293,24 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
   }
 
   @override
+  void dispose() {
+    _cancelToken.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
+    final pricingPolicyLoadError = _pricingPolicyLoadError;
+    if (pricingPolicyLoadError != null) {
+      return _pricingPolicyErrorState(
+        width,
+        themeProvider.isDarkMode,
+        pricingPolicyLoadError,
+      );
+    }
+
     if (_isPricingPolicyLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -571,6 +637,50 @@ class _GeneralmanagerHomePageState extends State<GeneralmanagerHomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _pricingPolicyErrorState(
+    double width,
+    bool isDarkMode,
+    String message,
+  ) {
+    return Container(
+      width: width,
+      color: isDarkMode ? darkBackGroundColor : backGroundColor,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Unable to load pricing policy',
+              style: TextStyle(
+                fontFamily: 'NunitoSans-Bold',
+                color: getPrimaryTextColor(isDarkMode),
+                fontSize: width * (28 / 1920),
+              ),
+            ),
+            SizedBox(height: width * (10 / 1920)),
+            SizedBox(
+              width: width * (520 / 1920),
+              child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'NunitoSans-Regular',
+                  color: getSecondaryTextColor(isDarkMode),
+                  fontSize: width * (16 / 1920),
+                ),
+              ),
+            ),
+            SizedBox(height: width * (18 / 1920)),
+            ElevatedButton(
+              onPressed: _getPricingPolicy,
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -44,12 +44,14 @@ class _SubmanagerHomePageState extends State<SubmanagerHomePage> {
       }
 
       for (int i = 0; i < dealRequestList.length; i++) {
-        _dealRequestList.add(
-          DealRequestCard(
-            dealRequestCardInfo: dealRequestList[i],
-            isReassign: false,
-          ),
-        );
+        if (dealRequestList[i].location != '') {
+          _dealRequestList.add(
+            DealRequestCard(
+              dealRequestCardInfo: dealRequestList[i],
+              isReassign: false,
+            ),
+          );
+        }
       }
       _falsingcardIsClicked();
       if (_cardIsClicked.isNotEmpty) {
